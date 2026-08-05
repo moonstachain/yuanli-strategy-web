@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const tools = [
+  {
+    module: 'A1',
+    title: 'AI 清算卡',
+    description: '清算会被 AI 平权的表层能力，形成一条带置信度的原力母体候选。',
+    href: `${base}/tools/ai-clearance/`,
+  },
+  {
+    module: 'B2',
+    title: '贵任务与价值账户卡',
+    description: '把用户症状翻译为贵任务、价值账户与两个竞争性新品类假设。',
+    href: `${base}/tools/category-hypothesis/`,
+  },
+  {
+    module: 'C4',
+    title: '项目回写卡',
+    description: '区分 Output、Action、Evidence、Outcome 与 Changed Rule，并定义 Task2 的加载方式。',
+    href: `${base}/tools/project-backwrite/`,
+  },
+];
+---
+<BaseLayout title="原力战略工具" description="把文章中的判断转化为可执行、可验收、可回写的最小行动。">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Tools · Sprint 01</p>
+      <h1 class="display">不要只读懂，<br />留下一个可见资产。</h1>
+      <p class="lead">每张工具卡都包含输入、步骤、输出与边界。结果只保存在当前浏览器；是否有效，要由真实行动与后续证据判断。</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container grid cols-3">
+      {tools.map((tool) => (
+        <a class="card tool-card" href={tool.href}>
+          <span class="tag">{tool.module}</span>
+          <h2>{tool.title}</h2>
+          <p>{tool.description}</p>
+          <strong>开始填写 →</strong>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .tool-card h2 { font-family: Georgia, "Noto Serif SC", serif; font-size: 1.6rem; margin: 18px 0 10px; }
+  .tool-card p { color: var(--muted); min-height: 6.5em; }
+</style>

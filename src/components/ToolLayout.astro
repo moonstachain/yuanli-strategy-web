@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const {
+  title,
+  module,
+  description,
+  principle,
+} = Astro.props;
+---
+<BaseLayout title={`${title} · 原力战略工具`} description={description}>
+  <section class="tool-hero">
+    <div class="prose">
+      <span class="tag">{module} · 行动工具</span>
+      <h1>{title}</h1>
+      <p class="lead">{description}</p>
+      <blockquote>{principle}</blockquote>
+    </div>
+  </section>
+
+  <section class="container tool-layout">
+    <aside class="tool-note">
+      <p class="eyebrow">使用协议</p>
+      <h2>先形成假设，再进入现实检验</h2>
+      <p>本工具只在当前浏览器内加工输入，不自动上传或保存数据。请不要填写客户姓名、隐私、密钥或未经授权的经营真账。</p>
+      <p>输出不是结论，更不是 Outcome。它是一张等待行动、证据与 Human Gate 校准的工作卡。</p>
+    </aside>
+    <div class="tool-main"><slot /></div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .tool-hero { padding: 76px 0 44px; border-bottom: 1px solid var(--line); }
+  .tool-hero h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); margin: 20px 0 14px; }
+  .tool-layout { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 28px; padding-top: 48px; padding-bottom: 80px; align-items: start; }
+  .tool-note { position: sticky; top: 94px; padding: 24px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,253,248,.78); }
+  .tool-note h2 { font-family: Georgia, "Noto Serif SC", serif; font-size: 1.35rem; line-height: 1.35; }
+  .tool-note p { color: var(--muted); }
+  .tool-form { display: grid; gap: 18px; }
+  .tool-section { border: 1px solid var(--line); border-radius: 20px; padding: 24px; background: var(--surface); }
+  .tool-section h2 { font-family: Georgia, "Noto Serif SC", serif; margin: 0 0 8px; }
+  .tool-section > p { margin-top: 0; color: var(--muted); }
+  .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .field { display: grid; gap: 8px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-weight: 760; }
+  .field small { color: var(--muted); }
+  .tool-form input, .tool-form textarea, .tool-form select, .output-panel textarea {
+    width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: #fff; color: var(--ink); font: inherit;
+  }
+  .tool-form textarea { min-height: 118px; resize: vertical; }
+  .tool-form input:focus, .tool-form textarea:focus, .tool-form select:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+  .tool-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .tool-actions button { cursor: pointer; }
+  .output-panel { margin-top: 24px; padding: 24px; border: 1px solid var(--line); border-radius: 20px; background: #211d19; color: #fffdf8; }
+  .output-panel h2 { margin-top: 0; }
+  .output-panel textarea { min-height: 360px; background: #161310; color: #fffdf8; border-color: #4b443d; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; }
+  .output-panel .button { border-color: #fffdf8; color: #fffdf8; background: transparent; }
+  .tool-status { min-height: 1.5em; color: #d9c6b6; }
+  @media (max-width: 760px) {
+    .tool-layout { grid-template-columns: 1fr; }
+    .tool-note { position: static; }
+    .field-grid { grid-template-columns: 1fr; }
+  }
+</style>

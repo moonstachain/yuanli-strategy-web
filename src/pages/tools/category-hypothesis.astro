@@ -1,0 +1,98 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout
+  title="贵任务与价值账户卡"
+  module="B2 品类独创"
+  description="从用户原话出发，找到真正昂贵的进步任务、付款账户，并形成两个需要真人验证的新品类假设。"
+  principle="品类独创不是先发明名字，而是改变用户如何理解问题、比较方案、分配预算与转述选择。"
+>
+  <form class="tool-form" id="category-form">
+    <section class="tool-section">
+      <h2>1. 固定真人与真实症状</h2>
+      <div class="field-grid">
+        <div class="field">
+          <label for="user">甜用户</label>
+          <textarea id="user" placeholder="不要写“所有创业者”，写具体阶段、处境与触发时刻。"></textarea>
+        </div>
+        <div class="field">
+          <label for="symptom">用户原话</label>
+          <textarea id="symptom" placeholder="记录用户会自己说出的症状，不要先替他使用原力术语。"></textarea>
+        </div>
+        <div class="field full">
+          <label for="job">贵任务</label>
+          <textarea id="job" placeholder="用户愿意为了什么重要进步支付金钱、时间、风险和改变成本？"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <h2>2. 找到账户与旧比较框架</h2>
+      <div class="field-grid">
+        <div class="field">
+          <label for="account">主要价值账户</label>
+          <select id="account">
+            <option value="存量账户｜在旧品类内追求极致性价比">存量账户｜极致性价比</option>
+            <option value="增量账户｜为新的结果、新身份或未来可能性开预算">增量账户｜创新十倍好</option>
+            <option value="待验证｜尚不确定预算从哪里来">待验证｜尚不确定</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="old">用户当前把它当成什么旧品类</label>
+          <textarea id="old" placeholder="例如：咨询、课程、个人品牌、知识库、软件……"></textarea>
+        </div>
+        <div class="field full">
+          <label for="failure">旧方案为什么无法完成贵任务</label>
+          <textarea id="failure" placeholder="必须解释机制缺口，而不是只说旧方案不好。"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <h2>3. 形成两个竞争假设</h2>
+      <div class="field-grid">
+        <div class="field">
+          <label for="a">新品类假设 A</label>
+          <textarea id="a" placeholder="为谁，在什么触发时刻，以什么新机制，获得什么新结果？"></textarea>
+        </div>
+        <div class="field">
+          <label for="b">新品类假设 B</label>
+          <textarea id="b" placeholder="必须是真正竞争的解释，不是同一句话换名字。"></textarea>
+        </div>
+        <div class="field full">
+          <label for="test">真人测试</label>
+          <textarea id="test" placeholder="至少测试：无辅助复述、与旧品类区分、预算来源、愿意采取的下一步行动。"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <div class="tool-actions">
+      <button class="button primary" type="button" id="generate">生成品类假设包</button>
+      <button class="button" type="reset">清空</button>
+    </div>
+  </form>
+
+  <section class="output-panel" aria-live="polite">
+    <h2>Category Hypothesis Package</h2>
+    <textarea id="result" readonly placeholder="填写后点击“生成品类假设包”。"></textarea>
+    <div class="tool-actions"><button class="button" type="button" id="copy">复制结果</button></div>
+    <p class="tool-status" id="status"></p>
+  </section>
+
+  <script>
+    const value = (id) => document.getElementById(id)?.value.trim() || '待补充';
+    const result = document.getElementById('result');
+    const status = document.getElementById('status');
+
+    document.getElementById('generate')?.addEventListener('click', () => {
+      result.value = `# B2 品类假设包\n\n## 用户与任务\n- 甜用户：${value('user')}\n- 用户原话：${value('symptom')}\n- 贵任务：${value('job')}\n\n## 价值进入方式\n- 价值账户：${value('account')}\n- 当前旧品类：${value('old')}\n- 旧方案机制缺口：${value('failure')}\n\n## 竞争性新品类假设\n### 假设 A\n${value('a')}\n\n### 假设 B\n${value('b')}\n\n## 真人测试协议\n${value('test')}\n\n## 最小证据门\n1. 用户能无辅助复述；\n2. 能与旧品类区分；\n3. 能指出预算从哪里来；\n4. 出现咨询、试用、付款或其他真实行动；\n5. 同时保留拒绝与错误理解。`;
+      status.textContent = '已生成。下一步必须去见真人，而不是继续改名字。';
+    });
+
+    document.getElementById('copy')?.addEventListener('click', async () => {
+      if (!result.value) return;
+      await navigator.clipboard.writeText(result.value);
+      status.textContent = '已复制到剪贴板。';
+    });
+  </script>
+</ToolLayout>
