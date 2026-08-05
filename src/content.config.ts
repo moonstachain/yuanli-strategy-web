@@ -35,9 +35,9 @@ const articles = defineCollection({
     featured: z.boolean().default(false),
     readingMinutes: z.number().int().positive(),
     nextAction: z.object({
-      label: z.string(),
-      href: z.string(),
-    }).optional(),
+      label: z.string().min(1),
+      href: z.string().min(1),
+    }),
   }),
 });
 

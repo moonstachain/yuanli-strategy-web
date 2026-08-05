@@ -41,7 +41,7 @@ D90 时至少满足：
 
 ### Exit Gate
 
-- `npm ci && npm run build` 通过；
+- `npm install --no-audit --no-fund && npm run build` 通过；
 - 所有已发布文章通过 Schema；
 - 导航不存在 404；
 - 每篇文章拥有模块、主题、贵任务、证据等级、正典状态与下一步行动；

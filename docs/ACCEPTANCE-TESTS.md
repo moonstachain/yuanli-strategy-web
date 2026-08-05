@@ -3,7 +3,7 @@
 ## AT-WEB-001 · 工程可构建
 
 ```bash
-npm ci
+npm install --no-audit --no-fund
 npm run build
 ```
 
