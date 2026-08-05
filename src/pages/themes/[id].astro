@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { themes } from '../../data/themes';
+
+export async function getStaticPaths() {
+  return themes.map((theme) => ({ params: { id: theme.id }, props: { theme } }));
+}
+
+const { theme } = Astro.props;
+const articles = (await getCollection('articles', ({ data }) => data.status === 'published' && data.theme === theme.id))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+---
+<BaseLayout title={`${theme.title} · 原力战略`} description={theme.description}>
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">主题</p>
+      <h1 class="display small">{theme.title}</h1>
+      <p class="lead">{theme.question}<br />{theme.description}</p>
+      <div class="grid cols-3 article-grid">
+        {articles.length ? articles.map((article) => <ArticleCard article={article} />) : <p class="meta">首批文章正在按内容协议生产。</p>}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .small { font-size: clamp(2.8rem, 7vw, 5rem); }
+  .article-grid { margin-top: 48px; }
+</style>

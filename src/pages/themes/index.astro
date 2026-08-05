@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { themes } from '../../data/themes';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<BaseLayout title="主题 · 原力战略" description="原力战略六大前台内容主题。">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Themes</p>
+      <h1 class="display small">六个入口，<br />同一套事业生命观。</h1>
+      <div class="grid cols-2 theme-grid">
+        {themes.map((theme) => (
+          <a class="card" href={`${base}/themes/${theme.id}/`}>
+            <p class="meta">{theme.question}</p>
+            <h2>{theme.title}</h2>
+            <p>{theme.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .small { font-size: clamp(2.5rem, 6vw, 4.6rem); }
+  .theme-grid { margin-top: 50px; }
+  h2 { font-family: Georgia, "Noto Serif SC", serif; }
+</style>

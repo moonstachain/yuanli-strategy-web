@@ -1,0 +1,18 @@
+---
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <strong>原力战略</strong>
+      <p>把你的不可复制，变成会复利的事业系统。</p>
+    </div>
+    <p class="meta">公开安全投影 · 正典真源位于 yuanli-strategy-soul<br />© {year} Yuanli Strategy</p>
+  </div>
+</footer>
+<style>
+  footer { margin-top: 80px; padding: 44px 0; border-top: 1px solid var(--line); }
+  .footer-grid { display: flex; justify-content: space-between; gap: 32px; align-items: flex-end; }
+  p { margin-bottom: 0; }
+  @media (max-width: 640px) { .footer-grid { display: block; } }
+</style>
