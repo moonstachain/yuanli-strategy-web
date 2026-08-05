@@ -1,0 +1,96 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout
+  title="项目回写卡"
+  module="C4 一条链路"
+  description="把一次任务拆成 Output、Action、Evidence、Outcome、Attribution 与 Changed Rule，并明确下一次如何加载。"
+  principle="任务做完不等于能力留下。只有有效规则进入下一次真实任务，才可能从 Done 走向 Compounding。"
+>
+  <form class="tool-form" id="backwrite-form">
+    <section class="tool-section">
+      <h2>1. 记录 Task1，而不是美化结果</h2>
+      <div class="field-grid">
+        <div class="field full">
+          <label for="task">Task1 目标与边界</label>
+          <textarea id="task" placeholder="要解决什么，允许做什么，禁止做什么，验收是什么？"></textarea>
+        </div>
+        <div class="field">
+          <label for="output">Output｜产生了什么</label>
+          <textarea id="output" placeholder="页面、方案、工具、报告、内容、流程……"></textarea>
+        </div>
+        <div class="field">
+          <label for="action">Action｜谁采取了什么行动</label>
+          <textarea id="action" placeholder="没有真实行动时，请明确写 NOT_RUN。"></textarea>
+        </div>
+        <div class="field">
+          <label for="evidence">Evidence｜证据在哪里</label>
+          <textarea id="evidence" placeholder="链接、日志、付款、调用记录、访谈确认、反例……"></textarea>
+        </div>
+        <div class="field">
+          <label for="outcome">Outcome｜现实发生了什么变化</label>
+          <textarea id="outcome" placeholder="没有可判断变化时写 NOT_RUN，不要用点赞或页面存在代替。"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <h2>2. 从结果中提取可治理学习</h2>
+      <div class="field-grid">
+        <div class="field">
+          <label for="attribution">Attribution｜为什么可能发生</label>
+          <textarea id="attribution" placeholder="区分事实、推论与其他可能原因。"></textarea>
+        </div>
+        <div class="field">
+          <label for="counter">反例与边界</label>
+          <textarea id="counter" placeholder="哪里无效、谁不适用、什么证据冲突？"></textarea>
+        </div>
+        <div class="field full">
+          <label for="rule">Changed Rule 候选</label>
+          <textarea id="rule" placeholder="句式：当____时，应____，因为____；除非____。"></textarea>
+        </div>
+        <div class="field">
+          <label for="gate">Human Gate</label>
+          <select id="gate">
+            <option value="PENDING｜尚未裁决">PENDING｜尚未裁决</option>
+            <option value="APPROVED｜有权人类已批准">APPROVED｜已批准</option>
+            <option value="REJECTED｜已拒绝，需保留理由">REJECTED｜已拒绝</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="task2">Task2 如何在开始前读取</label>
+          <textarea id="task2" placeholder="文件、模板、检查门、启动问题或工作流中的明确加载位置。"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <div class="tool-actions">
+      <button class="button primary" type="button" id="generate">生成回写候选包</button>
+      <button class="button" type="reset">清空</button>
+    </div>
+  </form>
+
+  <section class="output-panel" aria-live="polite">
+    <h2>Evolution Note Candidate</h2>
+    <textarea id="result" readonly placeholder="填写后点击“生成回写候选包”。"></textarea>
+    <div class="tool-actions"><button class="button" type="button" id="copy">复制结果</button></div>
+    <p class="tool-status" id="status"></p>
+  </section>
+
+  <script>
+    const value = (id) => document.getElementById(id)?.value.trim() || '待补充';
+    const result = document.getElementById('result');
+    const status = document.getElementById('status');
+
+    document.getElementById('generate')?.addEventListener('click', () => {
+      result.value = `# C4 Evolution Note 候选\n\n## Task1\n- 目标与边界：${value('task')}\n- Output：${value('output')}\n- Action：${value('action')}\n- Evidence：${value('evidence')}\n- Outcome：${value('outcome')}\n\n## 学习\n- Attribution：${value('attribution')}\n- 反例与边界：${value('counter')}\n- Changed Rule 候选：${value('rule')}\n- Human Gate：${value('gate')}\n\n## Task2 加载合同\n${value('task2')}\n\n## 状态裁决\n- 只有 Output：最多 Done；\n- 有真实 Action 与 Outcome：可申请 Validated；\n- Changed Rule 经批准并在 Task2 开始前明确读取：才可申请 Compounding。`;
+      status.textContent = '已生成。请保留 NOT_RUN，不要把缺失证据补写成成功。';
+    });
+
+    document.getElementById('copy')?.addEventListener('click', async () => {
+      if (!result.value) return;
+      await navigator.clipboard.writeText(result.value);
+      status.textContent = '已复制到剪贴板。';
+    });
+  </script>
+</ToolLayout>

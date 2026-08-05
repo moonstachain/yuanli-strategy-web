@@ -1,0 +1,103 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout
+  title="AI 清算卡"
+  module="A1 发现母体"
+  description="把“我会什么”拆成会被 AI 平权的表层能力、仍持续出现的差异线索，以及一条可被证伪的母体候选。"
+  principle="母体不是 AI 做不了的剩余能力，而是你为什么长期注意、判断、创造并愿意承担某类问题的生成源。"
+>
+  <form class="tool-form" id="ai-clearance-form">
+    <section class="tool-section">
+      <h2>1. 先清算表层能力</h2>
+      <p>不要保护已有身份。列出你当前最常出售、最依赖、也最可能被标准化的工作。</p>
+      <div class="field-grid">
+        <div class="field full">
+          <label for="current">我目前最常被购买的能力或任务</label>
+          <textarea id="current" placeholder="例如：写方案、做行业研究、课程设计、咨询诊断……"></textarea>
+        </div>
+        <div class="field full">
+          <label for="ai">其中哪些部分会被 AI 平权</label>
+          <textarea id="ai" placeholder="例如：资料搜集、初稿、标准分析、格式化表达、重复交付……"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <h2>2. 寻找跨时间重复的差异</h2>
+      <p>母体线索必须跨职业、跨项目、跨载体重复出现，而不是一次成功或一种工具。</p>
+      <div class="field-grid">
+        <div class="field">
+          <label for="attention">我会长期自动注意什么</label>
+          <textarea id="attention" placeholder="哪些问题、矛盾、异常总能抓住你的注意？"></textarea>
+        </div>
+        <div class="field">
+          <label for="judgment">我反复形成什么不同判断</label>
+          <textarea id="judgment" placeholder="别人通常怎样看，你为什么总会看到另一层？"></textarea>
+        </div>
+        <div class="field">
+          <label for="gift">他人反复从我这里获得什么</label>
+          <textarea id="gift" placeholder="清晰、勇气、秩序、美感、连接、转化、结果……"></textarea>
+        </div>
+        <div class="field">
+          <label for="commitment">我愿意长期为谁、为何承担</label>
+          <textarea id="commitment" placeholder="即使短期没有掌声，你仍愿意解决什么问题？"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <h2>3. 形成一个可被证伪的候选</h2>
+      <div class="field-grid">
+        <div class="field full">
+          <label for="candidate">目前最高可信的母体候选</label>
+          <textarea id="candidate" placeholder="句式：我持续在____中，看见____，并把它转化为____，帮助____。"></textarea>
+        </div>
+        <div class="field">
+          <label for="confidence">当前置信度</label>
+          <select id="confidence">
+            <option value="30%｜只有主观线索">30%｜只有主观线索</option>
+            <option value="50%｜能解释多个经历">50%｜能解释多个经历</option>
+            <option value="70%｜有作品和他人反馈">70%｜有作品和他人反馈</option>
+            <option value="85%｜有跨场景结果与反证校准">85%｜有跨场景结果与反证校准</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="falsify">什么证据会推翻它</label>
+          <textarea id="falsify" placeholder="写出至少一个反证条件。"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <div class="tool-actions">
+      <button class="button primary" type="button" id="generate">生成原力候选卡</button>
+      <button class="button" type="reset">清空</button>
+    </div>
+  </form>
+
+  <section class="output-panel" aria-live="polite">
+    <h2>原力候选卡</h2>
+    <textarea id="result" readonly placeholder="填写后点击“生成原力候选卡”。"></textarea>
+    <div class="tool-actions">
+      <button class="button" type="button" id="copy">复制结果</button>
+    </div>
+    <p class="tool-status" id="status"></p>
+  </section>
+
+  <script>
+    const value = (id) => document.getElementById(id)?.value.trim() || '待补充';
+    const result = document.getElementById('result');
+    const status = document.getElementById('status');
+
+    document.getElementById('generate')?.addEventListener('click', () => {
+      result.value = `# A1 原力母体候选卡\n\n## 表层能力清算\n- 当前常被购买：${value('current')}\n- 可能被 AI 平权：${value('ai')}\n\n## 跨时间差异线索\n- 长期注意力：${value('attention')}\n- 重复判断：${value('judgment')}\n- 他人获得物：${value('gift')}\n- 长期责任：${value('commitment')}\n\n## 当前假设\n- 母体候选：${value('candidate')}\n- 置信度：${value('confidence')}\n- 推翻条件：${value('falsify')}\n\n## 下一步现实验证\n选择一个真实任务，让该候选生成一个判断、作品或用户结果；同时保留不符合候选的反例。`;
+      status.textContent = '已生成。请把它视为候选假设，而不是身份结论。';
+    });
+
+    document.getElementById('copy')?.addEventListener('click', async () => {
+      if (!result.value) return;
+      await navigator.clipboard.writeText(result.value);
+      status.textContent = '已复制到剪贴板。';
+    });
+  </script>
+</ToolLayout>
