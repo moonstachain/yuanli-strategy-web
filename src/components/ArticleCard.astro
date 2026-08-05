@@ -1,0 +1,21 @@
+---
+const { article } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const data = article.data;
+---
+<a class="card article-card" href={`${base}/articles/${article.id}/`}>
+  <div class="card-top">
+    <span class="tag">{data.module}</span>
+    <span class="meta">{data.readingMinutes} 分钟</span>
+  </div>
+  <h3>{data.title}</h3>
+  <p>{data.description}</p>
+  <span class="read">继续阅读 →</span>
+</a>
+<style>
+  .article-card { display: flex; min-height: 260px; flex-direction: column; }
+  .card-top { display: flex; justify-content: space-between; align-items: center; }
+  h3 { font-family: Georgia, "Noto Serif SC", serif; font-size: 1.45rem; line-height: 1.35; margin: 22px 0 10px; }
+  p { color: var(--muted); margin: 0; }
+  .read { margin-top: auto; padding-top: 22px; font-weight: 700; color: var(--accent); }
+</style>
