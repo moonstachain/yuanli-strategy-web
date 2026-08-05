@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { moduleNames } from '../../data/modules';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles', ({ data }) => data.status === 'published');
+  return articles.map((article) => ({ params: { id: article.id }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const moduleName = article.data.module === 'ROOT' ? '总纲' : moduleNames[article.data.module];
+---
+<BaseLayout title={`${article.data.title} · 原力战略`} description={article.data.description}>
+  <article>
+    <header class="article-hero">
+      <div class="prose">
+        <div class="article-meta">
+          <span class="tag">{article.data.module} · {moduleName}</span>
+          <span class="meta">{article.data.readingMinutes} 分钟 · {article.data.evidenceLevel}</span>
+        </div>
+        <h1>{article.data.title}</h1>
+        <p class="lead">{article.data.description}</p>
+      </div>
+    </header>
+    <div class="prose article-body"><Content /></div>
+    <footer class="prose next-step">
+      <p class="eyebrow">下一步不是继续阅读</p>
+      <h2>{article.data.nextAction?.label ?? '把今天的判断写成一张行动卡'}</h2>
+      <p>原力文章的验收，不是“读完”，而是是否发生了新的判断、行动、证据与回写。</p>
+      <a class="button primary" href={article.data.nextAction?.href ? `${base}${article.data.nextAction.href}` : `${base}/articles/`}>进入下一步</a>
+    </footer>
+  </article>
+</BaseLayout>
+<style>
+  .article-hero { padding: 88px 0 52px; border-bottom: 1px solid var(--line); }
+  .article-hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); margin: 22px 0 16px; }
+  .article-meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .article-body { padding-top: 52px; }
+  .next-step { margin-top: 72px; padding: 36px; border: 1px solid var(--line); border-radius: 22px; background: var(--surface); }
+  .next-step h2 { margin-top: 8px; }
+</style>

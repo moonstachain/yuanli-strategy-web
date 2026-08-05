@@ -1,0 +1,107 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { themes } from '../data/themes';
+import { modules } from '../data/modules';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const articles = (await getCollection('articles', ({ data }) => data.status === 'published'))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const featured = articles.filter((article) => article.data.featured).slice(0, 3);
+---
+<BaseLayout>
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">Yuanli Strategy · AI 时代事业进化系统</p>
+      <h1 class="display">把你的不可复制，<br />变成会复利的事业系统。</h1>
+      <p class="lead">找到原力母体，把它放进时代与市场，再用文脉、大脑、地图和链路，让每一次结果都成为下一次的输入。</p>
+      <div class="actions">
+        <a class="button primary" href={`${base}/articles/what-is-yuanli-strategy-trilogy/`}>从三部曲开始</a>
+        <a class="button" href="#diagnosis">判断我卡在哪里</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section statement">
+    <div class="container statement-grid">
+      <p class="eyebrow">今天最重要的判断</p>
+      <blockquote>AI 不会首先淘汰专家。它首先平权专家身上已经被标准化的部分。</blockquote>
+      <p class="lead">真正稀缺的，不是会不会使用更多工具，而是持续定义什么值得看见、判断、创造和承担。</p>
+    </div>
+  </section>
+
+  <section id="diagnosis" class="section">
+    <div class="container">
+      <p class="eyebrow">从你的真实症状进入</p>
+      <h2 class="section-title">你现在卡在哪里？</h2>
+      <div class="grid cols-3 diagnosis">
+        <article class="card"><span class="tag">原力资产</span><h3>有经验，却说不清自己的独特性</h3><p>从能力清单回到持续生成差异的源头。</p></article>
+        <article class="card"><span class="tag">原力创业</span><h3>有人认可，却无法形成可放大的生意</h3><p>让时代放大原力，让市场认出价值，让三条链形成利润容器。</p></article>
+        <article class="card"><span class="tag">原力 OS</span><h3>项目很多，但每一次仍然从零开始</h3><p>把判断、案例、数据与行动写成会递归升级的事业系统。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section themes">
+    <div class="container">
+      <p class="eyebrow">六大内容主题</p>
+      <h2 class="section-title">从时代进入，从行动离开</h2>
+      <div class="grid cols-3">
+        {themes.map((theme) => (
+          <a class="card" href={`${base}/themes/${theme.id}/`}>
+            <span class="meta">{theme.question}</span>
+            <h3>{theme.title}</h3>
+            <p>{theme.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="trilogy" class="section trilogy">
+    <div class="container">
+      <p class="eyebrow">三部十二模块</p>
+      <h2 class="section-title">自我 → 世界 → 时间</h2>
+      <div class="module-grid">
+        {modules.map((module) => (
+          <div class="module">
+            <strong>{module.id} · {module.title}</strong>
+            <span>{module.question}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div><p class="eyebrow">首发文章</p><h2 class="section-title">先建立三张总图</h2></div>
+        <a href={`${base}/articles/`}>查看全部文章 →</a>
+      </div>
+      <div class="grid cols-3">
+        {featured.map((article) => <ArticleCard article={article} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .hero { padding: 108px 0 88px; background: radial-gradient(circle at 82% 24%, rgba(138,75,42,.16), transparent 34%); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .statement { background: var(--ink); color: var(--surface); }
+  .statement-grid { display: grid; grid-template-columns: .7fr 2fr 1fr; gap: 32px; align-items: center; }
+  blockquote { margin: 0; font-family: Georgia, "Noto Serif SC", serif; font-size: clamp(1.7rem, 3.8vw, 3rem); line-height: 1.25; }
+  .statement .lead { color: #c8beb2; font-size: 1rem; }
+  .diagnosis h3, .themes h3 { font-family: Georgia, "Noto Serif SC", serif; font-size: 1.35rem; line-height: 1.4; }
+  .diagnosis p, .themes p { color: var(--muted); }
+  .themes { background: rgba(234,216,199,.32); }
+  .module-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .module { min-height: 138px; padding: 18px; display: flex; flex-direction: column; gap: 10px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .module span { color: var(--muted); font-size: .9rem; }
+  .section-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 24px; }
+  @media (max-width: 780px) {
+    .statement-grid { grid-template-columns: 1fr; }
+    .module-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

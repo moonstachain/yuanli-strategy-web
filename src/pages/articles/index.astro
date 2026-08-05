@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+const articles = (await getCollection('articles', ({ data }) => data.status === 'published'))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+---
+<BaseLayout title="文章 · 原力战略" description="原力战略的时势洞察、正典概念、案例、工具与跨学科文章。">
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Journal</p>
+      <h1 class="display small">文章不是终点，<br />是行动的入口。</h1>
+      <p class="lead">每篇文章都应帮助读者完成一个判断、一个动作，或留下一个可以回写的原力资产。</p>
+      <div class="grid cols-3 article-grid">
+        {articles.map((article) => <ArticleCard article={article} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .small { font-size: clamp(2.5rem, 6vw, 4.6rem); }
+  .article-grid { margin-top: 44px; }
+</style>
