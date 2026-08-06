@@ -1,14 +1,25 @@
 ---
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const currentPath = Astro.url.pathname;
-const links = [
-  { label: '前哨', href: `${base}/columns/observation/`, match: '/columns/observation/' },
-  { label: '商业物种', href: `${base}/columns/business-species/`, match: '/columns/business-species/' },
-  { label: '诊断室', href: `${base}/columns/diagnosis/`, match: '/columns/diagnosis/' },
-  { label: 'OS实验室', href: `${base}/columns/os-lab/`, match: '/columns/os-lab/' },
+
+const taskLinks = [
+  { label: '看时代', href: `${base}/columns/observation/`, match: '/columns/observation/' },
+  { label: '找原力', href: `${base}/start/?path=A`, match: '/start/' },
+  { label: '做生意', href: `${base}/start/?path=B`, match: '/start/' },
+  { label: '建系统', href: `${base}/start/?path=C`, match: '/start/' },
   { label: '工具', href: `${base}/tools/`, match: '/tools/' },
-  { label: '正典', href: `${base}/columns/canon/`, match: '/columns/canon/' },
 ];
+
+const exploreLinks = [
+  { label: '原力正典', href: `${base}/columns/canon/` },
+  { label: '商业物种志', href: `${base}/columns/business-species/` },
+  { label: '原力诊断室', href: `${base}/columns/diagnosis/` },
+  { label: '原力OS实验室', href: `${base}/columns/os-lab/` },
+  { label: '全部文章', href: `${base}/articles/` },
+  { label: '透明建设账', href: `${base}/status/` },
+  { label: '关于', href: `${base}/about/` },
+];
+
 const isActive = (match: string) => currentPath.includes(match);
 ---
 <header class="site-header">
@@ -16,23 +27,31 @@ const isActive = (match: string) => currentPath.includes(match);
     <a class="brand" href={`${base}/`} aria-label="原力战略首页">
       <span class="brand-mark" aria-hidden="true">原</span>
       <span>原力战略</span>
-      <small>前沿战略媒体</small>
     </a>
 
-    <nav class="desktop-nav" aria-label="主导航">
-      {links.map((link) => (
+    <nav class="desktop-nav task-nav" aria-label="按任务进入">
+      {taskLinks.map((link) => (
         <a class="nav-link" href={link.href} aria-current={isActive(link.match) ? 'page' : undefined}>{link.label}</a>
       ))}
+      <details class="explore-menu">
+        <summary>探索</summary>
+        <div class="explore-panel">
+          <p class="eyebrow">网站里有什么</p>
+          {exploreLinks.map((link) => <a href={link.href}>{link.label}<span aria-hidden="true">→</span></a>)}
+        </div>
+      </details>
+      <a class="search-link" href={`${base}/articles/#article-search`} aria-label="搜索文章">⌕</a>
     </nav>
 
     <details class="mobile-menu">
       <summary aria-label="打开导航菜单"><span aria-hidden="true">菜单</span></summary>
       <nav class="mobile-panel" aria-label="移动端主导航">
-        <p class="eyebrow">从变化进入行动</p>
-        {links.map((link) => (
+        <p class="eyebrow">我来做什么</p>
+        {taskLinks.map((link) => (
           <a href={link.href} aria-current={isActive(link.match) ? 'page' : undefined}>{link.label}<span aria-hidden="true">→</span></a>
         ))}
-        <a href={`${base}/about/`}>关于原力战略<span aria-hidden="true">→</span></a>
+        <p class="eyebrow mobile-explore-label">继续探索</p>
+        {exploreLinks.map((link) => <a href={link.href}>{link.label}<span aria-hidden="true">→</span></a>)}
       </nav>
     </details>
   </div>
@@ -43,20 +62,28 @@ const isActive = (match: string) => currentPath.includes(match);
   .nav-shell { min-height: var(--header-h); display: flex; align-items: center; justify-content: space-between; gap: var(--sp-6); }
   .brand { display: inline-flex; align-items: center; gap: var(--sp-3); font-family: var(--serif); font-weight: 800; letter-spacing: .02em; }
   .brand:hover { color: var(--ink); }
-  .brand small { color: var(--ink3); font-family: var(--sans); font-size: .68rem; font-weight: 700; letter-spacing: .08em; }
   .brand-mark { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid var(--accent); border-radius: 50%; color: var(--accent); font-size: .8rem; }
-  .desktop-nav { display: flex; align-items: center; gap: clamp(10px, 1.5vw, 20px); }
+  .desktop-nav { display: flex; align-items: center; gap: clamp(10px, 1.35vw, 20px); }
   .nav-link { position: relative; padding: 22px 0 19px; color: var(--ink2); font-size: .88rem; }
   .nav-link::after { content: ''; position: absolute; right: 0; bottom: 13px; left: 0; height: 1px; transform: scaleX(0); background: var(--accent); transition: transform var(--dur-1) var(--ease); }
   .nav-link:hover, .nav-link[aria-current='page'] { color: var(--ink); }
   .nav-link:hover::after, .nav-link[aria-current='page']::after { transform: scaleX(1); }
+  .explore-menu { position: relative; }
+  .explore-menu summary { list-style: none; padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--r-pill); color: var(--ink2); cursor: pointer; font-size: .84rem; }
+  .explore-menu summary::-webkit-details-marker { display: none; }
+  .explore-menu[open] summary, .explore-menu summary:hover { border-color: var(--accent); color: var(--ink); }
+  .explore-panel { position: absolute; top: calc(100% + 14px); right: 0; width: 280px; padding: var(--sp-5); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--panel-deep); box-shadow: var(--shadow); }
+  .explore-panel a { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-3) 0; border-bottom: 1px solid var(--line); color: var(--ink2); font-size: .9rem; }
+  .explore-panel a:last-child { border-bottom: 0; }
+  .explore-panel a:hover { color: var(--accent); }
+  .search-link { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--ink2); font-size: 1.15rem; }
+  .search-link:hover { border-color: var(--accent); color: var(--accent); }
   .mobile-menu { display: none; position: relative; }
   .mobile-menu summary { list-style: none; padding: var(--sp-2) var(--sp-4); border: 1px solid var(--line); border-radius: var(--r-pill); cursor: pointer; font-size: .84rem; font-weight: 760; }
   .mobile-menu summary::-webkit-details-marker { display: none; }
-  .mobile-panel { position: absolute; top: calc(100% + var(--sp-3)); right: 0; width: min(340px, calc(100vw - 32px)); padding: var(--sp-6); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--panel-deep); box-shadow: var(--shadow); }
-  .mobile-panel a { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-4) 0; border-bottom: 1px solid var(--line); color: var(--ink2); font-family: var(--serif); font-size: 1.15rem; }
-  .mobile-panel a:last-child { border-bottom: 0; }
+  .mobile-panel { position: absolute; top: calc(100% + var(--sp-3)); right: 0; width: min(350px, calc(100vw - 32px)); max-height: calc(100vh - 96px); overflow-y: auto; padding: var(--sp-6); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--panel-deep); box-shadow: var(--shadow); }
+  .mobile-panel a { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-4) 0; border-bottom: 1px solid var(--line); color: var(--ink2); font-family: var(--serif); font-size: 1.08rem; }
   .mobile-panel a[aria-current='page'] { color: var(--accent); }
-  @media (max-width: 980px) { .brand small { display: none; } }
-  @media (max-width: 820px) { .desktop-nav { display: none; } .mobile-menu { display: block; } }
+  .mobile-explore-label { margin-top: var(--sp-7); }
+  @media (max-width: 980px) { .desktop-nav { display: none; } .mobile-menu { display: block; } }
 </style>
