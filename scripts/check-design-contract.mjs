@@ -5,6 +5,7 @@ const requiredFiles = [
   'src/styles/themes/paper.css',
   'src/styles/themes/field.css',
   'src/styles/themes/cockpit.css',
+  'src/styles/home-v2.css',
   'docs/PORTAL-DESIGN-SYSTEM-v1.md',
 ];
 
@@ -18,6 +19,8 @@ const checks = [
   ['src/components/Header.astro', ['mobile-menu', '<details', 'aria-current']],
   ['src/components/ToolLayout.astro', ['localStorage', 'tool-progress-bar', 'clear-local-draft']],
   ['src/pages/articles/[...id].astro', ['article-toc', 'reading-progress-bar', 'EvidenceBadge', 'ModuleCoordinate']],
+  ['src/pages/index.astro', ['mode="field"', 'data-article-ledger', 'timeline-stage', 'ledger-search', 'evidence-filter', 'article-result-count']],
+  ['src/styles/home-v2.css', ['.trilogy-matrix', '.column-table', '.timeline-stage', '.article-row[hidden]']],
   ['src/styles/global.css', ["@import './tokens/system.css'", "@import './themes/paper.css'", 'prefers-reduced-motion', ':focus-visible']],
 ];
 
@@ -37,4 +40,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('Design contract passed: paper/field/cockpit, accessibility, reading and local-work states are present.');
+console.log('Design contract passed: paper/field/cockpit, homepage ledger, accessibility, reading and local-work states are present.');
