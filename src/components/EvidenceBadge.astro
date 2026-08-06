@@ -1,0 +1,10 @@
+---
+const { level = 'hypothesis' } = Astro.props;
+const labels = {
+  hypothesis: '待验证假设',
+  derived: '证据推论',
+  verified: '已核验事实',
+  canon: '正典对齐',
+};
+---
+<span class:list={['status', `status-${level}`]}>{labels[level] ?? level}</span>
