@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const completed = [
+  '公开文章站、栏目页与三张行动工具已存在',
+  '内容协议已区分事实、推论、假设与正典',
+  '首页已从方法论控制台重排为媒体化首次用户旅程',
+  '3分钟原力导航v0.1已建立，并明确为导航性假设',
+  'A/B/C真实症状入口、工具收益翻译与本地续接已进入工程验证',
+  '文章搜索与筛选已迁回文章中心',
+  '首个“AI正在蒸馏你”认知行动包进入发布链',
+];
+
+const inProgress = [
+  '修复并通过PR #20的CI、设计契约与静态构建',
+  '完成5—8名目标用户的桌面端与移动端首次成功测试',
+  '让至少10名用户完成原力导航或AI清算并留下行动回执',
+  '校准导航题目、结果解释和唯一下一步的误判边界',
+  '完成首个授权、脱敏的原力诊断室试点',
+  '完成首个商业物种事实包与人工编辑裁决',
+  '建立Web到Soul的Evolution Note候选接口',
+];
+
+const notObserved = [
+  '30秒首次理解效率：NOT_RUN',
+  '90秒入口选择正确率：NOT_RUN',
+  '3分钟原力导航完成率：NOT_RUN',
+  '推荐工具完成率：NOT_RUN',
+  '回访连续性与继续上次进度使用率：NOT_RUN',
+  '30天Outcome回访：NOT_RUN',
+  '至少一个Validated公开案例：NOT_RUN',
+  'Changed Rule在第二次真实任务中被事前加载：NOT_RUN',
+];
+---
+<BaseLayout title="透明建设账 · 原力战略" description="区分页面、行动、结果与复用，公开原力战略Web的真实建设状态。" mode="paper">
+  <section class="status-hero">
+    <div class="container status-grid">
+      <div>
+        <p class="eyebrow">BUILD LEDGER · 透明建设账</p>
+        <h1>页面存在，只证明工程Output。<br />用户是否成功，要看理解、行动、结果与第二次复用。</h1>
+        <p class="lead">这里不把策划完成包装成真实运行，也不把导航结果、点赞、阅读和工具上线直接当作Outcome。</p>
+      </div>
+      <aside class="yl-card yl-card--panel yl-card--static">
+        <p class="eyebrow">状态纪律</p>
+        <strong>Done ≠ Validated ≠ Compounding</strong>
+        <p>Done：输出与当前验收存在。Validated：真实行动与结果由有权人类判定。Compounding：规则在下一次真实任务中被读取并改变行动。</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container ledger-columns">
+      <article class="ledger-card">
+        <span class="status status-live">DONE / 已完成</span>
+        <h2>已经存在并可检查</h2>
+        <ul>{completed.map((item) => <li>{item}</li>)}</ul>
+      </article>
+      <article class="ledger-card">
+        <span class="status status-execution-ready">IN PROGRESS / 运行中</span>
+        <h2>协议已建，仍需真实执行</h2>
+        <ul>{inProgress.map((item) => <li>{item}</li>)}</ul>
+      </article>
+      <article class="ledger-card">
+        <span class="status status-planning-baseline">NOT RUN / 尚未运行</span>
+        <h2>不得提前宣称通过</h2>
+        <ul>{notObserved.map((item) => <li>{item}</li>)}</ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section next-gate">
+    <div class="container">
+      <p class="eyebrow">NEXT GATE</p>
+      <h2>下一道真正的门：陌生用户能否完成第一次成功</h2>
+      <p>先验证用户能否在30秒理解价值、90秒找到入口、3—10分钟完成一个动作。通过之后，再验证一条Changed Rule是否改变第二次真实行动。</p>
+      <div class="actions">
+        <a class="button primary" href={`${import.meta.env.BASE_URL}start/`}>体验3分钟原力导航</a>
+        <a class="button" href={`${import.meta.env.BASE_URL}columns/os-lab/`}>进入OS实验室</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .status-hero { padding: var(--sp-10) 0; border-bottom: 1px solid var(--line); }
+  .status-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: var(--sp-9); align-items: end; }
+  .status-hero h1 { margin: 0 0 var(--sp-6); font-family: var(--serif); font-size: clamp(2.8rem, 6vw, 5.6rem); line-height: 1.03; letter-spacing: -.05em; }
+  .status-grid aside strong { font-family: var(--serif); font-size: 1.45rem; }
+  .status-grid aside p:last-child { color: var(--ink2); }
+  .ledger-columns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-5); }
+  .ledger-card { padding: var(--sp-7); border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--panel); }
+  .ledger-card h2 { margin: var(--sp-5) 0; font-family: var(--serif); font-size: 1.8rem; }
+  .ledger-card ul { margin: 0; padding-left: 1.2rem; color: var(--ink2); }
+  .ledger-card li + li { margin-top: var(--sp-3); }
+  .next-gate { border-top: 1px solid var(--line); background: var(--panel-soft); }
+  .next-gate h2 { max-width: 820px; margin: 0; font-family: var(--serif); font-size: clamp(2rem, 4vw, 4rem); line-height: 1.12; }
+  .next-gate p:not(.eyebrow) { max-width: 760px; color: var(--ink2); font-size: 1.08rem; }
+  .next-gate .actions { margin-top: var(--sp-6); }
+  @media (max-width: 900px) { .status-grid, .ledger-columns { grid-template-columns: 1fr; } }
+</style>

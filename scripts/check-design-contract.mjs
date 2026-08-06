@@ -6,7 +6,11 @@ const requiredFiles = [
   'src/styles/themes/field.css',
   'src/styles/themes/cockpit.css',
   'src/styles/home-v2.css',
+  'src/styles/first-success.css',
+  'src/pages/start.astro',
+  'src/pages/status.astro',
   'docs/PORTAL-DESIGN-SYSTEM-v1.md',
+  'docs/FIRST-SUCCESS-JOURNEY-v1.md',
 ];
 
 const failures = [];
@@ -15,12 +19,14 @@ for (const file of requiredFiles) {
 }
 
 const checks = [
-  ['src/layouts/BaseLayout.astro', ['data-mode={mode}', 'skip-link', 'reading-progress']],
-  ['src/components/Header.astro', ['mobile-menu', '<details', 'aria-current']],
-  ['src/components/ToolLayout.astro', ['localStorage', 'tool-progress-bar', 'clear-local-draft']],
+  ['src/layouts/BaseLayout.astro', ['data-mode={mode}', 'skip-link', 'reading-progress', "../styles/first-success.css"]],
+  ['src/components/Header.astro', ['task-nav', 'explore-menu', 'aria-current']],
+  ['src/components/ToolLayout.astro', ['localStorage', 'tool-progress-bar', 'clear-local-draft', 'yuanli-journey:last']],
   ['src/pages/articles/[...id].astro', ['article-toc', 'reading-progress-bar', 'EvidenceBadge', 'ModuleCoordinate']],
-  ['src/pages/index.astro', ['mode="field"', 'data-article-ledger', 'timeline-stage', 'ledger-search', 'evidence-filter', 'article-result-count']],
-  ['src/styles/home-v2.css', ['.trilogy-matrix', '.column-table', '.timeline-stage', '.article-row[hidden]']],
+  ['src/pages/articles/index.astro', ['article-search', 'article-result-count', 'data-search-item']],
+  ['src/pages/index.astro', ['mode="field"', 'data-first-success-journey', 'primary-diagnostic-cta', 'symptom-entry-grid', 'journey-resume', 'truth-card']],
+  ['src/pages/start.astro', ['yuanli-navigation:v0.1', 'navigation-result', 'navigation-disclaimer', 'localStorage']],
+  ['src/styles/first-success.css', ['.symptom-entry-grid', '.resume-card', '.tool-outcome-grid', '.story-track-grid']],
   ['src/styles/global.css', ["@import './tokens/system.css'", "@import './themes/paper.css'", 'prefers-reduced-motion', ':focus-visible']],
 ];
 
@@ -40,4 +46,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('Design contract passed: paper/field/cockpit, homepage ledger, accessibility, reading and local-work states are present.');
+console.log('Design contract passed: first-success journey, task navigation, article search, truth ledger, reading and local continuity states are present.');

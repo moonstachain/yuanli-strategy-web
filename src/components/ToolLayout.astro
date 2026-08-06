@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const { title, module, description, principle } = Astro.props;
 ---
 <BaseLayout title={`${title} · 原力战略工具`} description={description} mode="cockpit">
-  <section class="tool-hero">
+  <section class="tool-hero" data-tool-title={title} data-tool-module={module}>
     <div class="container tool-hero-grid">
       <div>
         <span class="chip">{module} · 行动工具</span>
@@ -38,11 +38,25 @@ const { title, module, description, principle } = Astro.props;
       const form = document.querySelector('.tool-form');
       if (!form) return;
       const key = `yuanli-tool:${location.pathname}`;
+      const lastKey = 'yuanli-journey:last';
+      const hero = document.querySelector('.tool-hero');
+      const toolTitle = hero?.dataset.toolTitle || document.title;
+      const toolModule = hero?.dataset.toolModule || '工具';
       const controls = [...form.querySelectorAll('input, textarea, select')].filter((el) => el.id && el.type !== 'button' && el.type !== 'submit' && el.type !== 'reset');
       const status = document.getElementById('autosave-status');
       const label = document.getElementById('tool-progress-label');
       const bar = document.getElementById('tool-progress-bar');
       const clear = document.getElementById('clear-local-draft');
+
+      const rememberJourney = (percent) => {
+        localStorage.setItem(lastKey, JSON.stringify({
+          type: 'tool',
+          label: `${toolModule}｜${toolTitle}`,
+          href: location.pathname,
+          progress: percent,
+          updatedAt: new Date().toISOString(),
+        }));
+      };
 
       const updateProgress = () => {
         const filled = controls.filter((el) => String(el.value || '').trim()).length;
@@ -52,6 +66,8 @@ const { title, module, description, principle } = Astro.props;
           bar.style.setProperty('--progress', `${percent}%`);
           bar.style.width = `${percent}%`;
         }
+        if (percent > 0) rememberJourney(percent);
+        return percent;
       };
 
       const save = () => {

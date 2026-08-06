@@ -2,379 +2,359 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/home-v2.css';
-import StatusChip from '../components/StatusChip.astro';
-import { themes } from '../data/themes';
-import { modules } from '../data/modules';
-import { columns, regularColumns, flagshipColumns } from '../data/columns';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const articles = (await getCollection('articles', ({ data }) => data.status === 'published'))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const campaignArticles = articles.filter((article) => article.data.campaign === 'AI 正在蒸馏你').slice(0, 3);
+const resolveHref = (href: string) => href.startsWith('http') ? href : `${base}${href}`;
+const byIds = (ids: string[]) => ids.map((id) => articles.find((article) => article.id === id)).filter(Boolean);
 
-const themeMap = Object.fromEntries(themes.map((theme) => [theme.id, theme.title]));
-const evidenceMap = {
-  hypothesis: '假设',
-  derived: '派生',
-  verified: '已验证',
-  canon: '正典',
-};
-const articleTypeMap = {
-  insight: '洞察',
-  canon: '正典',
-  case: '案例',
-  tool: '工具',
-  library: '书房',
-};
+const firstTimeArticles = byIds([
+  'what-is-yuanli-strategy-trilogy',
+  'ai-era-why-yuanli-strategy',
+  'from-irreplaceable-to-compounding',
+]);
+const actionArticles = byIds([
+  'ai-clearance-action-guide',
+  'b2-category-is-choice-standard',
+  'c4-chain-turns-judgment-into-action',
+]);
 
-const trilogyGroups = [
-  { id: 'A', title: '第一部 · 原力资产', question: '我从哪里来', modules: modules.slice(0, 4) },
-  { id: 'B', title: '第二部 · 原力创业', question: '我如何进入世界', modules: modules.slice(4, 8) },
-  { id: 'C', title: '第三部 · 原力 OS', question: '我如何让下一次更强', modules: modules.slice(8, 12) },
+const symptomPaths = [
+  {
+    index: '01',
+    coordinate: 'A｜找到不可复制',
+    title: '我说不清自己真正不可复制的是什么',
+    symptoms: ['做过很多事，却无法提炼一条主线', '能力很多，但没有形成稳定辨识度', 'AI越强，越不知道自己还剩什么'],
+    promise: '判断你最值得先验证A1、A2还是A3/A4。',
+    href: '/start/?path=A',
+    action: '找到我的原力',
+  },
+  {
+    index: '02',
+    coordinate: 'B｜让市场选择你',
+    title: '用户认可我，却没有形成可放大的生意',
+    symptoms: ['内容有人喜欢，却很少转化为付费', '客户觉得很好，却讲不清为什么选择你', '越增长越累，利润和控制权没有留下'],
+    promise: '判断问题主要发生在借势、品类、模式还是壁垒。',
+    href: '/start/?path=B',
+    action: '诊断我的生意',
+  },
+  {
+    index: '03',
+    coordinate: 'C｜让事业持续进化',
+    title: '团队和AI越来越多，事业仍然离不开我',
+    symptoms: ['重要判断仍然等待创始人', 'AI产出越来越多，却越来越不像本人', '项目结束留下文件，下一次仍然从头开始'],
+    promise: '找出文脉、大脑与链路中最先需要补的一环。',
+    href: '/start/?path=C',
+    action: '让创始人变成系统',
+  },
 ];
 
-const stats = [
-  { n: '3', label: '部' },
-  { n: '12', label: '正典模块' },
-  { n: '7', label: '常设栏目' },
-  { n: '4', label: '旗舰系列' },
-  { n: '6', label: '用户主题' },
-];
-
-const ledger = [
-  { label: '已发布文章', value: articles.length },
-  { label: '已上线工具', value: 3 },
-  { label: '已有正式内容的栏目', value: regularColumns.filter((item) => item.status === 'live').length },
-  { label: '执行就绪栏目', value: regularColumns.filter((item) => item.status === 'execution-ready').length },
-  { label: '策划基线', value: columns.filter((item) => item.status === 'planning-baseline').length },
-];
-
-const timeline = [
-  { year: '1771', title: '工厂', echo: '机器开始重写劳动、时间与组织' },
-  { year: '1844', title: '电报', echo: '信息第一次跑得比人更快' },
-  { year: '1882', title: '电网', echo: '单品升级为通用基础设施' },
-  { year: '1913', title: '流水线', echo: '效率成为商业模式' },
-  { year: '1971', title: '芯片', echo: '通用可编程能力吞噬专用设备' },
-  { year: '2022', title: '聊天框', echo: '语言成为新的人机操作界面' },
+const signals = [
+  {
+    tag: '能力',
+    title: '可以被完整描述的能力，正在迅速成为公共算力。',
+    implication: '个人价值需要从“会做什么”转向“为何持续产生不同判断”。',
+  },
+  {
+    tag: '组织',
+    title: '公司正在把个人经验提取为流程、知识库、Agent与Skill。',
+    implication: '真正的主权不是藏住经验，而是保有持续生成新经验的母体。',
+  },
+  {
+    tag: '内容',
+    title: '内容供给趋近无限，可信解释与直接关系变得更稀缺。',
+    implication: '个人品牌的核心从曝光量转向问题解释权和入口控制权。',
+  },
 ];
 
 const tools = [
-  { coord: 'A1', name: 'AI 清算卡', desc: '区分正在被平权的能力与仍会持续生成差异的线索。', href: '/tools/ai-clearance/' },
-  { coord: 'B2', name: '贵任务与价值账户卡', desc: '把专家语言翻译成用户愿意理解、支付和转述的入口。', href: '/tools/category-hypothesis/' },
-  { coord: 'C4', name: '项目回写卡', desc: '把一次任务的判断、证据和结果写回下一轮。', href: '/tools/project-backwrite/' },
+  {
+    coord: 'A1',
+    title: '10分钟看清：你的哪些能力会被AI平权？',
+    name: 'AI清算卡',
+    forWhom: '适合觉得自己正在被AI替代、但说不清独特性的人',
+    input: '3段真实经历，约10分钟',
+    output: '一张表层能力清单＋一个母体候选',
+    next: '用一个真实任务验证候选',
+    href: '/tools/ai-clearance/',
+    action: '开始10分钟清算',
+  },
+  {
+    coord: 'B2',
+    title: '把“我很专业”变成用户愿意选择的问题',
+    name: '贵任务与价值账户卡',
+    forWhom: '适合内容有人认可、业务却没有稳定选择入口的人',
+    input: '一个目标用户＋一个真实购买场景',
+    output: '贵任务、价值账户与品类假设',
+    next: '找3位用户验证表达',
+    href: '/tools/category-hypothesis/',
+    action: '形成我的品类假设',
+  },
+  {
+    coord: 'C4',
+    title: '让这次项目成为下一次的起点',
+    name: '项目回写卡',
+    forWhom: '适合项目很多、但每次仍然从零开始的人',
+    input: '一次真实项目的行动、证据与结果',
+    output: 'Changed Rule候选＋下一次加载点',
+    next: '在第二次任务开始前读取它',
+    href: '/tools/project-backwrite/',
+    action: '完成一次项目回写',
+  },
 ];
 
-const resolveHref = (href: string) => href.startsWith('http') ? href : `${base}${href}`;
+const storyTracks = [
+  { eyebrow: '第一次来', title: '先建立一张足够清楚的全景', articles: firstTimeArticles },
+  { eyebrow: '正在发生', title: '跟随当前媒体战役进入现实变化', articles: campaignArticles },
+  { eyebrow: '开始行动', title: '把一个判断变成可见资产', articles: actionArticles },
+];
 ---
 <BaseLayout
   mode="field"
-  title="原力战略 · AI时代事业进化系统"
-  description="找到原力母体，把它放进时代与市场，再用原力 OS 让它持续自我繁殖。"
+  title="原力战略 · 从前沿认知到真实事业结果"
+  description="看见正在改变事业的力量，找到最值得优先验证的一环，并完成第一次有价值的行动。"
 >
-  <div class="symptom-strip" aria-label="按症状进入">
-    <div class="container symptom-inner">
-      <span class="micro-label">我卡在</span>
-      <a href="#diagnosis">说不清自己独特在哪 <b>→ A1</b></a>
-      <a href="#diagnosis">客户听不懂我的方法 <b>→ B2</b></a>
-      <a href="#diagnosis">增长与交付都卡在本人 <b>→ C4</b></a>
-      <a href="#diagnosis">项目做完什么也没留下 <b>→ C2</b></a>
-    </div>
-  </div>
-
-  <section class="portal-hero">
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">YUANLI STRATEGY · 三部十二模块</p>
-        <h1>把你的不可复制，<br />变成会复利的事业系统。</h1>
-        <p class="hero-lead">AI 正在平权已经被标准化的能力。原力战略回答另外三个问题：什么持续从你身上生成差异，它如何进入时代与市场，以及如何让每一次结果使下一次更强。</p>
-
-        <div class="life-chain" aria-label="原力战略生命链">
-          <span>母体</span><i>›</i><span>原力资产</span><i>›</i><span>时代与市场</span><i>›</i><span>生意</span><i>›</i><span>文脉 · 大脑 · 地图 · 链路</span><i>›</i><span>母体升级</span>
-        </div>
-
-        <div class="hero-actions">
-          <a class="button primary" href="#diagnosis">进入诊断室 · 自测卡点</a>
-          <a class="button" href={`${base}/articles/what-is-yuanli-strategy-trilogy/`}>什么是原力战略三部曲</a>
-        </div>
-
-        <div class="stats-grid" aria-label="门户内容规模">
-          {stats.map((stat) => <div><strong>{stat.n}</strong><span>{stat.label}</span></div>)}
-        </div>
-      </div>
-
-      <aside class="hero-aside">
-        <article class="judgment-card">
-          <div class="card-kicker"><span>TODAY'S JUDGMENT</span><span>原力裁决</span></div>
-          <blockquote>任务做完，不等于能力留下。项目结束后只剩收入、文件和疲惫，说明事业没有进化。</blockquote>
-          <a href={`${base}/articles/c4-chain-turns-judgment-into-action/`}>C4 一条链路 · 继续阅读 →</a>
-        </article>
-
-        <article class="ledger-card">
-          <div class="card-kicker"><span>BUILD LEDGER</span><span>真实建设状态</span></div>
-          <div class="ledger-list">
-            {ledger.map((row) => (
-              <div class="ledger-row">
-                <span>{row.label}</span>
-                <i aria-hidden="true"><b style={`width:${Math.min(100, row.value * 12 + 18)}%`}></b></i>
-                <strong>{row.value}</strong>
-              </div>
-            ))}
+  <div data-first-success-journey data-base={base}>
+    <section class="media-hero">
+      <div class="container media-hero-grid">
+        <div class="hero-main">
+          <p class="eyebrow">AI正在平权一切可以被描述、标准化和提取的能力</p>
+          <h1>把你的不可复制，<br />变成会复利的事业系统。</h1>
+          <p class="hero-lead">当经验、表达和执行逐渐成为公共能力，真正需要被找到和放大的，是你持续产生独特判断、作品与用户价值的生成源。</p>
+          <div class="hero-actions">
+            <a class="button primary" id="primary-diagnostic-cta" href={`${base}/start/`}>开始3分钟原力导航</a>
+            <a class="hero-secondary" href={`${base}/articles/what-is-yuanli-strategy-trilogy/`}>第一次来，先看原力战略是什么 →</a>
           </div>
-          <p>页面存在只代表工程 Output；用户理解、行动与 Outcome 仍需真实证据。</p>
-        </article>
-      </aside>
-    </div>
-  </section>
-
-  <section id="diagnosis" class="portal-section diagnosis-section">
-    <div class="container">
-      <div class="section-heading">
-        <div><p class="eyebrow">DIAGNOSIS · 先定位那一环</p><h2>先判断位置，再决定下一步做什么</h2></div>
-        <a href={`${base}/columns/diagnosis/`}>进入完整诊断室 →</a>
-      </div>
-      <div class="diagnosis-grid">
-        {trilogyGroups.map((group) => (
-          <a class="diagnosis-panel" href={`${base}/columns/diagnosis/`}>
-            <div class="panel-top"><span>{group.title}</span><span>{group.modules[0].id}—{group.modules[3].id}</span></div>
-            <h3>{group.question}</h3>
-            <p>{group.id === 'A' ? '我真正不可复制的生成源是什么？' : group.id === 'B' ? '时代为什么现在需要我，市场如何认得我？' : '如何让判断、知识与结果不再随项目消失？'}</p>
-            <div class="module-dots">{group.modules.map((module) => <span>{module.id}</span>)}</div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section id="canon" class="portal-section canon-ledger">
-    <div class="container">
-      <div class="section-heading">
-        <div><p class="eyebrow">CANON MATRIX · A1—C4</p><h2>三部不是三个主题，而是一条事业生命链</h2></div>
-        <a href={`${base}/columns/canon/`}>进入原力正典 →</a>
-      </div>
-      <div class="trilogy-matrix">
-        {trilogyGroups.map((group) => (
-          <section class="trilogy-row">
-            <header><span>{group.id}</span><div><strong>{group.title}</strong><small>{group.question}</small></div></header>
-            <div class="module-row">
-              {group.modules.map((module) => (
-                <article>
-                  <span>{module.id}</span>
-                  <strong>{module.title}</strong>
-                  <p>{module.question}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="portal-section columns-ledger">
-    <div class="container">
-      <div class="section-heading">
-        <div><p class="eyebrow">SEVEN COLUMNS · 常设生产协议</p><h2>七个栏目，不是七种版式，而是七种长期任务</h2></div>
-        <a href={`${base}/columns/`}>查看栏目总览 →</a>
-      </div>
-      <div class="column-table" role="table" aria-label="七个常设栏目状态总账">
-        <div class="column-head" role="row"><span>栏目</span><span>承诺</span><span>正典坐标</span><span>节奏</span><span>状态</span></div>
-        {regularColumns.map((column) => (
-          <a class="column-row" role="row" href={`${base}/columns/${column.id}/`}>
-            <strong>{column.title}</strong>
-            <span>{column.promise}</span>
-            <span>{column.modules.join(' · ')}</span>
-            <span>{column.cadence}</span>
-            <StatusChip status={column.status} label={column.statusLabel} />
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section id="flagship" class="portal-section flagship-section">
-    <div class="container">
-      <div class="section-heading">
-        <div><p class="eyebrow">FLAGSHIP · 四个跨周期思想资产</p><h2>从300年时代现场，进入人物、企业与反例</h2></div>
-        <a href={`${base}/columns/#flagships`}>查看全部旗舰 →</a>
-      </div>
-
-      <a class="timeline-stage" href={`${base}/columns/300-year-wave/`}>
-        <div class="timeline-intro">
-          <span>原力时代志</span>
-          <h3>《300年康波》</h3>
-          <p>以康波作为传播语言，以技术革命、资本安装、制度适配和社会扩散作为研究骨架。</p>
-          <strong>进入双时间线 →</strong>
+          <p class="hero-footnote">不测人格，不罗列优势。你将得到一个待验证的原力位置和一项现实行动。</p>
         </div>
-        <div class="timeline" aria-label="300年康波关键时刻">
-          {timeline.map((item) => (
-            <div class="timeline-node">
-              <span>{item.year}</span><i></i><strong>{item.title}</strong><small>{item.echo}</small>
-            </div>
+
+        <aside class="judgment-panel">
+          <p class="eyebrow">本周原力裁决</p>
+          <blockquote>当你的经验可以被组织提取、复制和调用，真正不可替代的就不再是经验本身，而是你持续产生新判断的生成源。</blockquote>
+          <a href={`${base}/articles/when-experience-becomes-skill/`}>阅读本周封面故事 →</a>
+        </aside>
+      </div>
+
+      <div class="container">
+        <aside class="resume-card" id="journey-resume" hidden aria-live="polite">
+          <div>
+            <span class="eyebrow">CONTINUE · 继续上次进度</span>
+            <strong id="resume-title">系统记得你做到哪里</strong>
+            <p id="resume-copy">继续完成上次导航或工具，不必重新寻找入口。</p>
+          </div>
+          <a class="button" id="resume-primary" href={`${base}/start/`}>继续上次行动</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="entry-section">
+      <div class="container">
+        <div class="section-heading compact-heading">
+          <div>
+            <p class="eyebrow">START FROM SYMPTOMS · 从现实症状开始</p>
+            <h2>你现在最像哪一种情况？</h2>
+          </div>
+          <p class="section-note">不要先选择模块。先选择正在反复发生的问题。</p>
+        </div>
+        <div class="symptom-entry-grid">
+          {symptomPaths.map((item) => (
+            <a class="symptom-card" href={resolveHref(item.href)}>
+              <div class="symptom-head"><span>{item.index}</span><small>{item.coordinate}</small></div>
+              <h3>{item.title}</h3>
+              <ul>{item.symptoms.map((symptom) => <li>{symptom}</li>)}</ul>
+              <p class="symptom-promise">你将得到：{item.promise}</p>
+              <strong>{item.action} →</strong>
+            </a>
           ))}
         </div>
-      </a>
+      </div>
+    </section>
 
-      <div class="flagship-grid">
-        {flagshipColumns.slice(1).map((column, index) => (
-          <a class="flagship-card" href={`${base}/columns/${column.id}/`} data-index={`0${index + 2}`}>
-            <div><span>{column.eyebrow}</span><StatusChip status={column.status} label={column.statusLabel} /></div>
-            <h3>{column.title}</h3>
-            <strong>{column.subtitle}</strong>
-            <p>{column.question}</p>
-            <small>{column.modules.join(' · ')}</small>
+    <section class="cover-section">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">COVER STORY · 本周封面</p>
+            <h2>当你的经验被公司蒸馏成 Skill，你还剩下什么？</h2>
+          </div>
+          <span class="campaign-status">战役01 · AI正在蒸馏你</span>
+        </div>
+
+        <div class="cover-grid">
+          <a class="cover-primary" href={`${base}/articles/when-experience-becomes-skill/`}>
+            <span>HOOK · 时代钩子</span>
+            <h3>经验变成组织资产之后，个人价值必须重新定价。</h3>
+            <p>不是拒绝经验被复制，而是辨认哪些东西只属于过去，哪些能力仍能不断生成未来。</p>
+            <strong>阅读封面文章 →</strong>
           </a>
-        ))}
+          <div class="cover-stack">
+            <a href={`${base}/articles/extractable-ability-vs-generative-source/`}>
+              <span>MECHANISM · 机制</span>
+              <h3>可提取能力，不等于生成性母体</h3>
+              <p>区分技能、优势、品牌和真正持续生成差异的源头。</p>
+            </a>
+            <a href={`${base}/articles/ai-clearance-action-guide/`}>
+              <span>ACTION · 手柄</span>
+              <h3>用一张AI清算卡，完成第一次现实盘点</h3>
+              <p>留下一个带置信度、反证条件和下一步实验的母体候选。</p>
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="articles" class="portal-section article-ledger" data-article-ledger>
-    <div class="container">
-      <div class="section-heading article-heading">
-        <div><p class="eyebrow">CANON LIBRARY · 已发布内容总账</p><h2>按主题、模块与证据等级检索</h2></div>
-        <span id="article-result-count">共 {articles.length} 篇</span>
-      </div>
-
-      <div class="filter-toolbar">
-        <label class="search-box"><span aria-hidden="true">⌕</span><input id="ledger-search" type="search" placeholder="搜索标题、贵任务、核心概念" /></label>
-        <select id="module-filter" aria-label="按模块筛选">
-          <option value="all">全部模块</option>
-          <option value="ROOT">ROOT</option>
-          {modules.map((module) => <option value={module.id}>{module.id} · {module.title}</option>)}
-        </select>
-        <select id="evidence-filter" aria-label="按证据等级筛选">
-          <option value="all">全部证据</option>
-          {Object.entries(evidenceMap).map(([value, label]) => <option value={value}>{label}</option>)}
-        </select>
-        <button id="reset-filters" type="button">清除筛选</button>
-      </div>
-
-      <div class="theme-filters" aria-label="按主题筛选">
-        <button type="button" class="active" data-theme-value="all" aria-pressed="true">全部主题</button>
-        {themes.map((theme) => <button type="button" data-theme-value={theme.id} aria-pressed="false">{theme.title}</button>)}
-      </div>
-
-      <div class="article-table">
-        <div class="article-head"><span>文章与坐标</span><span>贵任务与概念</span><span>证据</span><span>下一步</span></div>
-        {articles.map((article) => {
-          const nextHref = resolveHref(article.data.nextAction.href);
-          const searchText = [article.data.title, article.data.description, article.data.expensiveJob, ...article.data.coreConcepts].join(' ').toLowerCase();
-          return (
-            <article
-              class="article-row"
-              data-article-row
-              data-theme={article.data.theme}
-              data-module={article.data.module}
-              data-evidence={article.data.evidenceLevel}
-              data-search={searchText}
-            >
-              <div class="article-main">
-                <div><span>{article.data.module}</span><small>{articleTypeMap[article.data.articleType]} · {article.data.publishedAt.toISOString().slice(0, 10)}</small></div>
-                <a href={`${base}/articles/${article.id}/`}>{article.data.title}</a>
-                <p>{article.data.description}</p>
-              </div>
-              <div class="article-job"><small>EXPENSIVE JOB</small><strong>{article.data.expensiveJob}</strong><span>{article.data.coreConcepts.join(' · ')}</span></div>
-              <div class="article-evidence"><small>EVIDENCE</small><strong>{evidenceMap[article.data.evidenceLevel]}</strong><span>{themeMap[article.data.theme]} · {article.data.readingMinutes} 分钟</span></div>
-              <div class="article-action"><small>NEXT ACTION</small><a href={nextHref}>{article.data.nextAction.label} →</a></div>
+    <section class="signal-section">
+      <div class="container signal-layout">
+        <div class="signal-intro">
+          <p class="eyebrow">看懂时代 · 原力前哨</p>
+          <h2>不追逐所有新闻，只追踪会改变长期选择的力量</h2>
+          <p>每个信号必须回答：发生了什么、为什么重要、对谁影响最大、现在应改变什么判断。</p>
+          <a class="text-link" href={`${base}/columns/observation/`}>查看全部前哨内容 →</a>
+        </div>
+        <div class="signal-list">
+          {signals.map((signal, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div><small>{signal.tag}</small><h3>{signal.title}</h3><p>{signal.implication}</p></div>
             </article>
-          );
-        })}
-        <p id="article-empty" class="article-empty" hidden>没有匹配的内容。清除筛选，或从诊断室按症状进入。</p>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="tools" class="portal-section tool-section">
-    <div class="container tool-grid">
-      <div>
-        <p class="eyebrow">TOOLS · 阅读之后完成什么</p>
-        <h2>三张工具卡，把理解变成第一份证据</h2>
-        <p>草稿只保存在当前浏览器，不会自动上传。页面输出仍需进入真实行动、结果与回写。</p>
-        <a class="button" href={`${base}/tools/`}>进入工具中心</a>
+    <section class="tools-section">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow">完成一项行动</p><h2>工具先说你会得到什么</h2></div>
+          <a class="text-link" href={`${base}/tools/`}>进入工具中心 →</a>
+        </div>
+        <div class="tool-outcome-grid">
+          {tools.map((tool) => (
+            <a class="tool-outcome-card" href={resolveHref(tool.href)}>
+              <div class="tool-title-row"><span>{tool.coord}</span><small>{tool.name}</small></div>
+              <h3>{tool.title}</h3>
+              <dl>
+                <div><dt>适合谁</dt><dd>{tool.forWhom}</dd></div>
+                <div><dt>需要什么</dt><dd>{tool.input}</dd></div>
+                <div><dt>得到什么</dt><dd>{tool.output}</dd></div>
+                <div><dt>接下来</dt><dd>{tool.next}</dd></div>
+              </dl>
+              <strong>{tool.action} →</strong>
+            </a>
+          ))}
+        </div>
       </div>
-      <div class="tool-list">
-        {tools.map((tool) => (
-          <a href={`${base}${tool.href}`}>
-            <span>{tool.coord}</span><div><strong>{tool.name}</strong><p>{tool.desc}</p></div><small><i></i> live</small>
-          </a>
-        ))}
+    </section>
+
+    <section class="story-tracks-section">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow">THREE READING TRACKS</p><h2>首页不再展示文章总账，只提供三条清楚路径</h2></div>
+          <a class="text-link" href={`${base}/articles/`}>搜索与筛选全部文章 →</a>
+        </div>
+        <div class="story-track-grid">
+          {storyTracks.map((track) => (
+            <article class="story-track">
+              <span>{track.eyebrow}</span>
+              <h3>{track.title}</h3>
+              <div>
+                {track.articles.map((article) => article && (
+                  <a href={`${base}/articles/${article.id}/`}>
+                    <small>{article.data.module} · {article.data.readingMinutes}分钟</small>
+                    <strong>{article.data.title}</strong>
+                  </a>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="portal-section theme-section">
-    <div class="container theme-grid">
-      {themes.map((theme) => (
-        <a href={`${base}/themes/${theme.id}/`}>
-          <strong>{theme.title}</strong><p>{theme.description}</p><small>{theme.question}</small>
-        </a>
-      ))}
-    </div>
-  </section>
+    <section class="species-section">
+      <div class="container species-grid">
+        <div class="species-copy">
+          <p class="eyebrow">本月主展 · 原力商业物种志</p>
+          <h2>一家公司如何通过一个关键选择，成为不同于同行的新物种？</h2>
+          <p>不写成功学摘要。沿时代窗口、创始人原力、用户贵问题、品类、三条链路、四种控制权与OS遗传，拆解商业生命体。</p>
+          <a class="button" href={`${base}/columns/business-species/`}>进入商业物种志</a>
+        </div>
+        <div class="species-candidates">
+          <article><span>候选01</span><h3>丰田</h3><p>判断如何进入生产系统，而不是永远停留在管理者脑中。</p></article>
+          <article><span>候选02</span><h3>宜家</h3><p>用户劳动如何被重新配置，并成为商业模式的一部分。</p></article>
+          <article><span>候选03</span><h3>Costco</h3><p>低毛利如何转化为信任、留存与长期控制权。</p></article>
+        </div>
+      </div>
+    </section>
 
-  <section class="portal-section final-action">
-    <div class="container final-card">
-      <div><p class="eyebrow">MINIMUM ACTION</p><h2>今天只做一件事：判断自己卡在哪一个模块</h2><p>做会自我繁殖的事，不做一次性的事。先留下第一张可被验证、推翻和回写的证据卡。</p></div>
-      <div><a class="button primary" href="#diagnosis">开始定位</a><a class="button" href={`${base}/articles/what-is-yuanli-strategy-trilogy/`}>先读正典</a></div>
-    </div>
-  </section>
+    <section class="canon-section">
+      <div class="container canon-grid">
+        <div class="canon-intro">
+          <p class="eyebrow">诊断之后的地图</p>
+          <h2>用户问题在前，正典坐标在后</h2>
+          <p>首页只显示三个事业阶段。需要深入时，再展开A1—C4完整地图、边界与证据。</p>
+          <a class="text-link" href={`${base}/columns/canon/`}>查看三部十二模块完整地图 →</a>
+        </div>
+        <div class="canon-cards">
+          <article><span>A · 自我</span><h3>找到不可复制</h3><p>A1—A4｜发现、回到、获得并显化持续生成差异的原力母体。</p></article>
+          <article><span>B · 世界</span><h3>让市场选择你</h3><p>B1—B4｜让差异进入时代、用户、品类、模式与控制权。</p></article>
+          <article><span>C · 时间</span><h3>让事业持续进化</h3><p>C1—C4｜让文脉、证据、地图、行动与结果持续递归回写。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="outcome-section">
+      <div class="container outcome-grid">
+        <div>
+          <p class="eyebrow">证据与边界</p>
+          <h2>没有真实结果的内容，不写成成功案例</h2>
+        </div>
+        <div class="outcome-chain">
+          <span>看见我</span><i>→</i><span>理解我</span><i>→</i><span>定位我</span><i>→</i><span>完成一次</span><i>→</i><span>记住进度</span>
+        </div>
+        <div class="truth-card">
+          <strong>当前真实状态</strong>
+          <p>媒体化首页、3分钟导航与本地续接已经进入工程验证；首次理解效率、入口选择正确率、工具完成率和回访连续性仍为NOT_RUN。</p>
+          <a href={`${base}/status/`}>查看透明建设账 →</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const LAST_KEY = 'yuanli-journey:last';
+      const NAV_KEY = 'yuanli-navigation:v0.1';
+      const root = document.querySelector('[data-first-success-journey]');
+      const base = root?.dataset.base || '';
+      const card = document.getElementById('journey-resume');
+      const title = document.getElementById('resume-title');
+      const copy = document.getElementById('resume-copy');
+      const action = document.getElementById('resume-primary');
+
+      let last = null;
+      try { last = JSON.parse(localStorage.getItem(LAST_KEY) || 'null'); } catch { localStorage.removeItem(LAST_KEY); }
+
+      if (!last) {
+        try {
+          const navigation = JSON.parse(localStorage.getItem(NAV_KEY) || 'null');
+          if (navigation && Array.isArray(navigation.answers) && navigation.answers.some((value) => value !== null)) {
+            last = { type: 'navigation', label: '未完成的3分钟原力导航', href: `${base}/start/` };
+          }
+        } catch { localStorage.removeItem(NAV_KEY); }
+      }
+
+      if (last && card && title && copy && action) {
+        card.hidden = false;
+        title.textContent = last.label || '继续上次进度';
+        copy.textContent = last.type === 'tool'
+          ? '你的工具草稿仍保存在当前浏览器，可以从上次位置继续。'
+          : '你的导航位置仍保存在当前浏览器，可以继续完成或进入推荐行动。';
+        action.href = last.actionHref || last.href || `${base}/start/`;
+        action.textContent = last.actionHref ? '进入推荐行动' : '继续上次进度';
+      }
+    })();
+  </script>
 </BaseLayout>
-
-<script>
-  const ledgerRoot = document.querySelector('[data-article-ledger]');
-  if (ledgerRoot) {
-    const rows = Array.from(ledgerRoot.querySelectorAll('[data-article-row]'));
-    const search = ledgerRoot.querySelector('#ledger-search');
-    const moduleFilter = ledgerRoot.querySelector('#module-filter');
-    const evidenceFilter = ledgerRoot.querySelector('#evidence-filter');
-    const reset = ledgerRoot.querySelector('#reset-filters');
-    const count = ledgerRoot.querySelector('#article-result-count');
-    const empty = ledgerRoot.querySelector('#article-empty');
-    const themeButtons = Array.from(ledgerRoot.querySelectorAll('[data-theme-value]'));
-    let activeTheme = 'all';
-
-    const applyFilters = () => {
-      const query = (search?.value || '').trim().toLowerCase();
-      const moduleValue = moduleFilter?.value || 'all';
-      const evidenceValue = evidenceFilter?.value || 'all';
-      let visible = 0;
-
-      rows.forEach((row) => {
-        const matches =
-          (activeTheme === 'all' || row.dataset.theme === activeTheme) &&
-          (moduleValue === 'all' || row.dataset.module === moduleValue) &&
-          (evidenceValue === 'all' || row.dataset.evidence === evidenceValue) &&
-          (!query || (row.dataset.search || '').includes(query));
-        row.hidden = !matches;
-        if (matches) visible += 1;
-      });
-
-      if (count) count.textContent = `共 ${visible} 篇`;
-      if (empty) empty.hidden = visible !== 0;
-    };
-
-    search?.addEventListener('input', applyFilters);
-    moduleFilter?.addEventListener('change', applyFilters);
-    evidenceFilter?.addEventListener('change', applyFilters);
-    themeButtons.forEach((button) => button.addEventListener('click', () => {
-      activeTheme = button.dataset.themeValue || 'all';
-      themeButtons.forEach((item) => {
-        const active = item === button;
-        item.classList.toggle('active', active);
-        item.setAttribute('aria-pressed', String(active));
-      });
-      applyFilters();
-    }));
-    reset?.addEventListener('click', () => {
-      if (search) search.value = '';
-      if (moduleFilter) moduleFilter.value = 'all';
-      if (evidenceFilter) evidenceFilter.value = 'all';
-      activeTheme = 'all';
-      themeButtons.forEach((button) => {
-        const active = button.dataset.themeValue === 'all';
-        button.classList.toggle('active', active);
-        button.setAttribute('aria-pressed', String(active));
-      });
-      applyFilters();
-    });
-  }
-</script>

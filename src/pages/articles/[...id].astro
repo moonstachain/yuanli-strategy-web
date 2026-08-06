@@ -15,7 +15,22 @@ const { article } = Astro.props;
 const { Content } = await render(article);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const moduleName = article.data.module === 'ROOT' ? '总纲' : moduleNames[article.data.module];
-const actionHref = article.data.nextAction?.href ? `${base}${article.data.nextAction.href}` : `${base}/articles/`;
+const actionHref = article.data.nextAction?.href?.startsWith('http')
+  ? article.data.nextAction.href
+  : `${base}${article.data.nextAction?.href ?? '/articles/'}`;
+const roleLabels = {
+  hook: '时代钩子',
+  evidence: '证据包',
+  mechanism: '机制解释',
+  action: '行动手柄',
+  reflection: '复盘回写',
+};
+const sourceLabels = {
+  not_required: '无需外部来源',
+  source_pack_ready: '来源包就绪',
+  needs_sources: '来源待补',
+  verified_sources: '来源已核验',
+};
 ---
 <BaseLayout title={`${article.data.title} · 原力战略`} description={article.data.description} mode="paper" showReadingProgress={true}>
   <article>
@@ -25,15 +40,18 @@ const actionHref = article.data.nextAction?.href ? `${base}${article.data.nextAc
           <div class="article-meta">
             <ModuleCoordinate module={article.data.module} name={moduleName} compact={true} />
             <EvidenceBadge level={article.data.evidenceLevel} />
+            {article.data.contentRole && <span class="chip">{roleLabels[article.data.contentRole]}</span>}
             <span class="meta">{article.data.readingMinutes} 分钟</span>
           </div>
           <h1>{article.data.title}</h1>
           <p class="lead">{article.data.description}</p>
+          {article.data.campaign && <p class="campaign-line">战役：{article.data.campaign}</p>}
         </div>
         <aside class="hero-note yl-card yl-card--compact yl-card--static">
           <p class="eyebrow">阅读协议</p>
           <strong>区分事实、推论与行动。</strong>
           <p>本文的验收不是读完，而是能否形成一个更清晰的判断，并进入现实验证。</p>
+          {article.data.sourceStatus && <small>{sourceLabels[article.data.sourceStatus]}</small>}
         </aside>
       </div>
     </header>
@@ -51,6 +69,13 @@ const actionHref = article.data.nextAction?.href ? `${base}${article.data.nextAc
 
       <div>
         <div class="prose article-body" id="article-content"><Content /></div>
+        {article.data.outcomeQuestion && (
+          <section class="prose outcome-question" aria-labelledby="outcome-heading">
+            <p class="eyebrow">Outcome Question</p>
+            <h2 id="outcome-heading">如何知道这篇文章真的有用？</h2>
+            <blockquote>{article.data.outcomeQuestion}</blockquote>
+          </section>
+        )}
         <div class="prose">
           <ActionPanel
             title={article.data.nextAction?.label ?? '把今天的判断写成一张行动卡'}
@@ -106,8 +131,10 @@ const actionHref = article.data.nextAction?.href ? `${base}${article.data.nextAc
   .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: var(--sp-9); align-items: end; }
   .article-hero h1 { max-width: 920px; margin: var(--sp-7) 0 var(--sp-5); font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: 1.08; letter-spacing: -.04em; text-wrap: balance; }
   .article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); }
+  .campaign-line { margin: var(--sp-5) 0 0; color: var(--accent); font-size: .88rem; font-weight: 760; letter-spacing: .04em; }
   .hero-note strong { font-family: var(--serif); font-size: 1.2rem; }
-  .hero-note p:last-child { margin-bottom: 0; color: var(--ink2); font-size: .9rem; }
+  .hero-note p:last-of-type { margin-bottom: var(--sp-3); color: var(--ink2); font-size: .9rem; }
+  .hero-note small { color: var(--ink3); }
   .article-shell { display: grid; grid-template-columns: var(--rail) minmax(0, var(--reading)); gap: var(--sp-9); justify-content: center; padding-top: var(--sp-9); padding-bottom: var(--sp-10); }
   .article-rail { min-width: 0; }
   .rail-sticky { position: sticky; top: calc(var(--header-h) + var(--sp-6)); }
@@ -118,6 +145,8 @@ const actionHref = article.data.nextAction?.href ? `${base}${article.data.nextAc
   .rail-divider { height: 1px; margin: var(--sp-7) 0; background: var(--line); }
   .rail-note { color: var(--ink3); font-size: .84rem; }
   .article-body { width: 100%; }
+  .outcome-question { margin-top: var(--sp-9); padding-top: var(--sp-7); border-top: 1px solid var(--line); }
+  .outcome-question h2 { margin-top: 0; }
   @media (max-width: 900px) {
     .hero-grid, .article-shell { grid-template-columns: 1fr; }
     .hero-note { display: none; }
