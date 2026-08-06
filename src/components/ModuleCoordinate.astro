@@ -1,0 +1,13 @@
+---
+const { module, name, compact = false } = Astro.props;
+---
+<div class:list={['module-coordinate', compact && 'compact']}>
+  <span>{module}</span>
+  <strong>{name}</strong>
+</div>
+<style>
+  .module-coordinate { display: grid; gap: var(--sp-1); padding: var(--sp-4); border: 1px solid var(--line); border-radius: var(--r-m); background: var(--panel-soft); }
+  .module-coordinate span { color: var(--accent); font-family: var(--mono); font-size: var(--fs-2); font-weight: 780; letter-spacing: .08em; }
+  .module-coordinate strong { font-family: var(--serif); font-size: var(--fs-4); }
+  .module-coordinate.compact { display: inline-grid; padding: var(--sp-2) var(--sp-3); }
+</style>
