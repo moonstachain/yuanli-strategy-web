@@ -5,20 +5,111 @@ import ArticleCard from '../../components/ArticleCard.astro';
 
 const articles = (await getCollection('articles', ({ data }) => data.status === 'published'))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const types = [
+  ['all', '全部类型'],
+  ['insight', '时代洞察'],
+  ['canon', '正典解释'],
+  ['case', '案例'],
+  ['tool', '行动工具'],
+  ['library', '文明书房'],
+];
 ---
-<BaseLayout title="文章 · 原力战略" description="原力战略的时势洞察、正典概念、案例、工具与跨学科文章。">
-  <section class="section">
+<BaseLayout title="文章 · 原力战略" description="搜索原力战略的时势洞察、正典概念、案例、工具与跨学科文章。">
+  <section class="section article-center-hero">
     <div class="container">
-      <p class="eyebrow">Journal</p>
-      <h1 class="display small">文章不是终点，<br />是行动的入口。</h1>
-      <p class="lead">每篇文章都应帮助读者完成一个判断、一个动作，或留下一个可以回写的原力资产。</p>
-      <div class="grid cols-3 article-grid">
-        {articles.map((article) => <ArticleCard article={article} />)}
-      </div>
+      <p class="eyebrow">ARTICLE CENTER · 深度用户入口</p>
+      <h1 class="display small">第一次来不必筛选。<br />需要查资料时，再使用文章中心。</h1>
+      <p class="lead">首页负责推荐下一步；这里负责搜索、筛选和精确检索。每篇文章仍应连接一个判断、行动或可回写资产。</p>
     </div>
   </section>
+
+  <section class="section article-search-section" id="article-search">
+    <div class="container">
+      <div class="article-search-panel">
+        <div class="search-field">
+          <label for="article-search-input">搜索标题、症状、概念或模块</label>
+          <input id="article-search-input" type="search" placeholder="例如：品类、AI、C4、创始人依赖" autocomplete="off" />
+        </div>
+        <div class="type-filter" role="group" aria-label="文章类型筛选">
+          {types.map(([value, label], index) => (
+            <button class="filter-button" type="button" data-filter-type={value} aria-pressed={index === 0 ? 'true' : 'false'}>{label}</button>
+          ))}
+        </div>
+        <div class="search-meta">
+          <strong id="article-result-count">{articles.length}篇文章</strong>
+          <button class="button quiet" type="button" id="article-search-clear">清除筛选</button>
+        </div>
+      </div>
+
+      <div class="grid cols-3 article-grid" id="article-search-results">
+        {articles.map((article) => (
+          <div
+            data-search-item
+            data-type={article.data.articleType}
+            data-search={`${article.data.title} ${article.data.description} ${article.data.module} ${article.data.trilogy} ${article.data.userSymptoms.join(' ')} ${article.data.coreConcepts.join(' ')}`.toLowerCase()}
+          >
+            <ArticleCard article={article} />
+          </div>
+        ))}
+      </div>
+      <p class="empty-state" id="article-empty-state" hidden>没有找到匹配文章。尝试缩短关键词，或清除类型筛选。</p>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const input = document.getElementById('article-search-input');
+      const clear = document.getElementById('article-search-clear');
+      const count = document.getElementById('article-result-count');
+      const empty = document.getElementById('article-empty-state');
+      const items = [...document.querySelectorAll('[data-search-item]')];
+      const filters = [...document.querySelectorAll('[data-filter-type]')];
+      let activeType = 'all';
+
+      const apply = () => {
+        const query = String(input?.value || '').trim().toLowerCase();
+        let visible = 0;
+        items.forEach((item) => {
+          const typeMatch = activeType === 'all' || item.dataset.type === activeType;
+          const queryMatch = !query || String(item.dataset.search || '').includes(query);
+          item.hidden = !(typeMatch && queryMatch);
+          if (!item.hidden) visible += 1;
+        });
+        if (count) count.textContent = `${visible}篇文章`;
+        if (empty) empty.hidden = visible !== 0;
+      };
+
+      input?.addEventListener('input', apply);
+      filters.forEach((button) => button.addEventListener('click', () => {
+        activeType = button.dataset.filterType || 'all';
+        filters.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+        apply();
+      }));
+      clear?.addEventListener('click', () => {
+        if (input) input.value = '';
+        activeType = 'all';
+        filters.forEach((item) => item.setAttribute('aria-pressed', String(item.dataset.filterType === 'all')));
+        apply();
+        input?.focus();
+      });
+    })();
+  </script>
 </BaseLayout>
 <style>
   .small { font-size: clamp(2.5rem, 6vw, 4.6rem); }
-  .article-grid { margin-top: 44px; }
+  .article-center-hero { border-bottom: 1px solid var(--line); }
+  .article-search-section { padding-top: var(--sp-8); }
+  .article-search-panel { display: grid; gap: var(--sp-5); margin-bottom: var(--sp-8); padding: var(--sp-6); border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--panel); }
+  .search-field { display: grid; gap: var(--sp-2); }
+  .search-field label { font-weight: 760; }
+  .search-field input { width: 100%; padding: var(--sp-4) var(--sp-5); border: 1px solid var(--line); border-radius: var(--r-m); background: var(--panel-deep); color: var(--ink); font: inherit; }
+  .search-field input:focus { border-color: var(--accent); outline: 0; box-shadow: var(--glow); }
+  .type-filter { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+  .filter-button { padding: 7px 12px; border: 1px solid var(--line); border-radius: var(--r-pill); background: transparent; color: var(--ink2); cursor: pointer; }
+  .filter-button[aria-pressed='true'] { border-color: var(--accent); background: var(--accent); color: var(--accent-fg); }
+  .search-meta { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4); }
+  .article-grid { margin-top: 0; }
+  [data-search-item][hidden] { display: none; }
+  .empty-state { padding: var(--sp-8); border: 1px dashed var(--line); border-radius: var(--r-l); color: var(--ink2); text-align: center; }
+  @media (max-width: 680px) { .search-meta { align-items: flex-start; flex-direction: column; } }
 </style>
