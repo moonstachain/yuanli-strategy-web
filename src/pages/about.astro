@@ -1,20 +1,87 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const fourWealthHref = `${base}/articles/yuanli-startup-four-wealth/`;
 ---
-<BaseLayout title="关于 · 原力战略" description="原力战略文章网站的使命、边界与法权。">
+<BaseLayout title="关于 · 原力战略" description="原力战略文章网站的使命、母问题、正典边界与公开投影。" mode="paper">
+  <section class="about-hero">
+    <div class="container about-grid">
+      <div>
+        <p class="eyebrow">About Yuanli Strategy</p>
+        <h1>这不是一个普通博客。</h1>
+        <p class="lead">原力战略 Web 是正典的公开安全投影，也是从时代变化与真实症状进入判断、工具、案例和行动的入口。</p>
+      </div>
+      <aside class="yl-card yl-card--static">
+        <p class="eyebrow">母问题</p>
+        <blockquote>如何在不牺牲创始人独特性的前提下，实现价值的放大、复制与长期复利？</blockquote>
+      </aside>
+    </div>
+  </section>
+
   <section class="section">
-    <div class="prose">
-      <p class="eyebrow">About</p>
-      <h1>这不是一个普通博客。</h1>
-      <p class="lead">原力战略 Web 是正典的公开安全投影，也是从阅读进入诊断、工具、案例与真实行动的入口。</p>
-      <h2>我们的母问题</h2>
-      <blockquote>如何在不牺牲创始人独特性的前提下，实现价值的放大、复制与长期复利？</blockquote>
-      <h2>我们负责什么</h2>
-      <p>把原力战略的正典语言翻译为用户看得懂的现实症状、时代洞察、案例和行动工具；让文章不只产生阅读量，还产生判断、行动、证据与回写候选。</p>
-      <h2>我们不负责什么</h2>
-      <p>不在本仓修改最高正典，不存放私密资料，不把页面、工具或 Agent 的存在等同于真实 Outcome。</p>
-      <h2>法权边界</h2>
-      <p>方法论正典、Schema、Policy 与正典晋级由 <a href="https://github.com/moonstachain/yuanli-strategy-soul">yuanli-strategy-soul</a> 负责。本网站只展示允许被公开看见的投影。</p>
+    <div class="container prose-wide">
+      <p class="eyebrow">The Core Thesis</p>
+      <h2>找到原力，进入世界，形成复利。</h2>
+      <p class="lead">原力战略三部曲不是三组并列工具，而是一条递进生命链：找到原力母体，把它放进时代与市场，再用OS让它自我繁殖。</p>
+      <div class="trilogy-grid">
+        <article class="yl-card yl-card--static"><span>A</span><h3>原力资产</h3><p>找到持续生成差异的源头，并把它训练、外化和显化为真实世界可验证的原力。</p></article>
+        <article class="yl-card yl-card--static"><span>B</span><h3>原力创业</h3><p>让原力进入时代势能、用户心智、商业模式与四种控制权，形成会复利、守得住的生意。</p></article>
+        <article class="yl-card yl-card--static"><span>C</span><h3>原力 OS</h3><p>把文脉、知识、地图、行动与Outcome写成下一次能够明确加载的事业系统。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wealth-section">
+    <div class="container">
+      <div class="section-head">
+        <div><p class="eyebrow">Four Wealths</p><h2>原力进入世界的四次财富跃迁</h2></div>
+        <a href={fourWealthHref}>阅读完整总纲 →</a>
+      </div>
+      <div class="wealth-grid">
+        <a class="wealth-card" href={fourWealthHref}><strong>时</strong><span>时代的财富</span><p>借到历史的放大器：为什么偏偏是现在？</p></a>
+        <a class="wealth-card" href={fourWealthHref}><strong>名</strong><span>心智的财富</span><p>获得理解与定价：用户把你当成什么？</p></a>
+        <a class="wealth-card" href={fourWealthHref}><strong>器</strong><span>空间的财富</span><p>建出价值网络：怎样跨节点持续发生？</p></a>
+        <a class="wealth-card" href={fourWealthHref}><strong>权</strong><span>时间的财富</span><p>沉淀长期控制：成果为何未来仍属于你？</p></a>
+      </div>
+      <blockquote class="mother-line">母体生财富，时代放大它，心智定价它，空间复制它，时间留下它。</blockquote>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container boundary-grid">
+      <div class="prose-wide">
+        <p class="eyebrow">What We Do</p>
+        <h2>把正典翻译成现实入口。</h2>
+        <p>我们把原力战略的正典语言翻译为用户看得懂的现实症状、时代洞察、案例和行动工具；让文章不只产生阅读量，还产生判断、行动、证据与回写候选。</p>
+      </div>
+      <div class="prose-wide">
+        <p class="eyebrow">Authority Boundary</p>
+        <h2>公开投影不等于最高正典。</h2>
+        <p>本仓不保存私密资料，不把页面、工具或Agent的存在等同于真实Outcome，也不自动修改最高正典。方法论正典、Schema、Policy与晋级由 <a href="https://github.com/moonstachain/yuanli-strategy-soul">yuanli-strategy-soul</a> 负责。</p>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .about-hero { padding: var(--sp-10) 0 var(--sp-9); border-bottom: 1px solid var(--line); }
+  .about-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: var(--sp-9); align-items: end; }
+  h1 { margin: var(--sp-5) 0; font-family: var(--serif); font-size: clamp(3rem, 7vw, 6rem); line-height: 1.02; letter-spacing: -.05em; }
+  blockquote { margin: 0; font-family: var(--serif); font-size: clamp(1.35rem, 2.5vw, 2rem); line-height: 1.45; }
+  .prose-wide { max-width: 1060px; margin: 0 auto; }
+  .trilogy-grid, .wealth-grid, .boundary-grid { display: grid; gap: var(--sp-5); }
+  .trilogy-grid { grid-template-columns: repeat(3, 1fr); margin-top: var(--sp-7); }
+  .trilogy-grid span { color: var(--accent); font-family: var(--mono); font-weight: 800; }
+  .trilogy-grid h3 { margin: var(--sp-3) 0; font-family: var(--serif); font-size: 1.55rem; }
+  .trilogy-grid p, .wealth-card p { color: var(--ink2); }
+  .wealth-section { background: color-mix(in srgb, var(--panel) 50%, transparent); }
+  .wealth-grid { grid-template-columns: repeat(4, 1fr); }
+  .wealth-card { display: grid; min-height: 250px; padding: var(--sp-6); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--panel-soft); transition: transform .2s ease, border-color .2s ease; }
+  .wealth-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .wealth-card strong { color: var(--accent); font-family: var(--serif); font-size: 3rem; }
+  .wealth-card span { align-self: end; font-family: var(--serif); font-size: 1.45rem; font-weight: 760; }
+  .mother-line { max-width: 900px; margin: var(--sp-9) auto 0; text-align: center; }
+  .boundary-grid { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 900px) { .about-grid, .trilogy-grid, .wealth-grid, .boundary-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 620px) { .about-grid, .trilogy-grid, .wealth-grid, .boundary-grid { grid-template-columns: 1fr; } }
+</style>
