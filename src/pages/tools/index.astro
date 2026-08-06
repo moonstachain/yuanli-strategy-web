@@ -4,46 +4,78 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const tools = [
   {
     module: 'A1',
-    title: 'AI 清算卡',
-    description: '清算会被 AI 平权的表层能力，形成一条带置信度的原力母体候选。',
+    title: '10分钟看清：你的哪些能力会被AI平权？',
+    name: 'AI清算卡',
+    forWhom: '觉得自己正在被AI替代、但说不清独特性的专家',
+    input: '3段真实经历，约10分钟',
+    output: '一张表层能力清单和一个母体候选',
+    next: '用一个真实任务验证候选',
     href: `${base}/tools/ai-clearance/`,
+    action: '开始10分钟清算',
   },
   {
     module: 'B2',
-    title: '贵任务与价值账户卡',
-    description: '把用户症状翻译为贵任务、价值账户与两个竞争性新品类假设。',
+    title: '把“我很专业”变成用户愿意选择的问题',
+    name: '贵任务与价值账户卡',
+    forWhom: '内容有人认可、业务却没有稳定选择入口的人',
+    input: '一个目标用户和一个真实购买场景',
+    output: '贵任务、价值账户和两个竞争性品类假设',
+    next: '找3位用户验证表达',
     href: `${base}/tools/category-hypothesis/`,
+    action: '形成我的品类假设',
   },
   {
     module: 'C4',
-    title: '项目回写卡',
-    description: '区分 Output、Action、Evidence、Outcome 与 Changed Rule，并定义 Task2 的加载方式。',
+    title: '让这次项目成为下一次的起点',
+    name: '项目回写卡',
+    forWhom: '项目很多、但每次仍然从零开始的人',
+    input: '一次真实项目的行动、证据与结果',
+    output: 'Changed Rule候选和下一次加载点',
+    next: '在第二次任务开始前读取它',
     href: `${base}/tools/project-backwrite/`,
+    action: '完成一次项目回写',
   },
 ];
 ---
-<BaseLayout title="原力战略工具" description="把文章中的判断转化为可执行、可验收、可回写的最小行动。">
+<BaseLayout title="原力战略工具" description="从真实症状出发，完成一个判断、留下一个资产，并进入现实验证。">
   <section class="section">
     <div class="container">
-      <p class="eyebrow">Tools · Sprint 01</p>
-      <h1 class="display">不要只读懂，<br />留下一个可见资产。</h1>
-      <p class="lead">每张工具卡都包含输入、步骤、输出与边界。结果只保存在当前浏览器；是否有效，要由真实行动与后续证据判断。</p>
+      <p class="eyebrow">ACTION TOOLS · 从结果开始</p>
+      <h1 class="display">不要先学会工具名。<br />先看你会得到什么。</h1>
+      <p class="lead">每张工具卡都明确适合谁、需要什么、得到什么和接下来做什么。结果只保存在当前浏览器；是否有效，仍由真实行动与后续证据判断。</p>
+      <div class="actions"><a class="button" href={`${base}/start/`}>不知道从哪开始？先做3分钟原力导航</a></div>
     </div>
   </section>
   <section class="section">
-    <div class="container grid cols-3">
+    <div class="container tool-result-grid">
       {tools.map((tool) => (
-        <a class="card tool-card" href={tool.href}>
-          <span class="tag">{tool.module}</span>
+        <a class="tool-result-card" href={tool.href}>
+          <div class="tool-result-head"><span>{tool.module}</span><small>{tool.name}</small></div>
           <h2>{tool.title}</h2>
-          <p>{tool.description}</p>
-          <strong>开始填写 →</strong>
+          <dl>
+            <div><dt>适合谁</dt><dd>{tool.forWhom}</dd></div>
+            <div><dt>需要什么</dt><dd>{tool.input}</dd></div>
+            <div><dt>得到什么</dt><dd>{tool.output}</dd></div>
+            <div><dt>接下来</dt><dd>{tool.next}</dd></div>
+          </dl>
+          <strong>{tool.action} →</strong>
         </a>
       ))}
     </div>
   </section>
 </BaseLayout>
 <style>
-  .tool-card h2 { font-family: Georgia, "Noto Serif SC", serif; font-size: 1.6rem; margin: 18px 0 10px; }
-  .tool-card p { color: var(--muted); min-height: 6.5em; }
+  .tool-result-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-5); }
+  .tool-result-card { min-height: 580px; display: flex; flex-direction: column; padding: var(--sp-7); border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--panel); transition: transform var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease); }
+  .tool-result-card:hover { transform: translateY(var(--lift)); border-color: var(--accent); box-shadow: var(--shadow); color: var(--ink); }
+  .tool-result-head { display: flex; justify-content: space-between; gap: var(--sp-4); color: var(--ink3); font-size: .78rem; }
+  .tool-result-head span { color: var(--accent); font-weight: 800; }
+  .tool-result-card h2 { margin: var(--sp-7) 0 var(--sp-5); font-family: var(--serif); font-size: clamp(1.7rem, 3vw, 2.45rem); line-height: 1.18; }
+  .tool-result-card dl { display: grid; gap: var(--sp-3); margin: 0; }
+  .tool-result-card dl div { display: grid; grid-template-columns: 76px 1fr; gap: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--line); }
+  .tool-result-card dt { color: var(--ink3); font-size: .8rem; font-weight: 760; }
+  .tool-result-card dd { margin: 0; color: var(--ink2); font-size: .9rem; }
+  .tool-result-card > strong { margin-top: auto; padding-top: var(--sp-6); color: var(--accent); }
+  .actions { margin-top: var(--sp-6); }
+  @media (max-width: 900px) { .tool-result-grid { grid-template-columns: 1fr; } .tool-result-card { min-height: 0; } }
 </style>
