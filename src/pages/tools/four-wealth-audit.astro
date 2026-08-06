@@ -1,0 +1,131 @@
+---
+import ToolLayout from '../../components/ToolLayout.astro';
+---
+<ToolLayout
+  title="四种财富诊断卡"
+  module="B1—B4 原力创业"
+  description="用事实而不是感觉，判断你的事业拥有多少时代、心智、空间与时间财富，并把最薄弱的一环变成30天验证动作。"
+  principle="不要给四种财富平均打分。先写证据，再找断点；一次只验证最薄弱、最能改变后续链路的那一环。"
+>
+  <form class="tool-form" id="wealth-form">
+    <section class="tool-section">
+      <h2>1. 固定母体与当前事业</h2>
+      <p>先确认你在加工什么价值。没有母体连续性，四种财富可能只是短期机会的堆积。</p>
+      <div class="field-grid">
+        <div class="field">
+          <label for="mother">原力母体候选</label>
+          <textarea id="mother" placeholder="我为什么会持续生成这一类判断、作品、关系与结果？"></textarea>
+        </div>
+        <div class="field">
+          <label for="business">当前事业载体</label>
+          <textarea id="business" placeholder="具体产品、服务、用户与当前收入方式。不要只写行业名。"></textarea>
+        </div>
+        <div class="field full">
+          <label for="expensive-job">当前最贵的用户任务</label>
+          <textarea id="expensive-job" placeholder="用户愿意为哪项重要进步支付金钱、时间、风险和改变成本？"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <h2>2. 为四种财富写事实证据</h2>
+      <p>每一格都写“发生了什么”，不要写“我认为自己很强”。没有证据就标记待验证。</p>
+      <div class="field-grid">
+        <div class="field">
+          <label for="era">时代财富｜历史正在放大什么</label>
+          <textarea id="era" placeholder="外部变化、问题升值、成本下降、用户迁移、窗口时机，以及与你母体的匹配证据。"></textarea>
+        </div>
+        <div class="field">
+          <label for="mind">心智财富｜用户怎样理解和选择</label>
+          <textarea id="mind" placeholder="用户原话、无提示复述、首先想起、预算账户、与旧品类区分、愿意转述的证据。"></textarea>
+        </div>
+        <div class="field">
+          <label for="space">空间财富｜价值怎样跨节点发生</label>
+          <textarea id="space" placeholder="产品、团队、渠道、AI、供应商、用户网络如何协同；创始人不在场时是否仍能交付。"></textarea>
+        </div>
+        <div class="field">
+          <label for="time">时间财富｜今天怎样继续帮助明天</label>
+          <textarea id="time" placeholder="品牌、案例、数据、方法、入口、复购、习惯、关系、兼容资产和下一次明确加载的证据。"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <h2>3. 找到唯一断点</h2>
+      <div class="field-grid">
+        <div class="field">
+          <label for="weakest">当前最薄弱财富</label>
+          <select id="weakest">
+            <option value="时代财富｜窗口、问题升值或母体匹配尚未成立">时代财富｜为什么偏偏是现在</option>
+            <option value="心智财富｜用户尚未形成稳定理解、定价与转述">心智财富｜用户把我当成什么</option>
+            <option value="空间财富｜价值仍依赖创始人单点或系统无法承载">空间财富｜怎样跨节点持续发生</option>
+            <option value="时间财富｜结果没有沉淀为控制权和下一次输入">时间财富｜成果为何未来仍属于我</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="breakpoint">为什么它是上游断点</label>
+          <textarea id="breakpoint" placeholder="它怎样限制了后续财富？排除一个看似更紧急但并非根因的问题。"></textarea>
+        </div>
+        <div class="field full">
+          <label for="counterevidence">反证与未知项</label>
+          <textarea id="counterevidence" placeholder="哪些事实可能证明你的判断错了？还缺什么数据、访谈、付款或交付证据？"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-section">
+      <h2>4. 设计30天真实验证</h2>
+      <div class="field-grid">
+        <div class="field full">
+          <label for="action">唯一验证动作</label>
+          <textarea id="action" placeholder="谁在什么时间完成什么可观察动作？不要写“继续研究、加强品牌、优化系统”。"></textarea>
+        </div>
+        <div class="field">
+          <label for="leading">领先证据</label>
+          <textarea id="leading" placeholder="7—14天内可以观察的行为，例如复述、咨询、使用、转介绍、流程调用。"></textarea>
+        </div>
+        <div class="field">
+          <label for="outcome">结果证据</label>
+          <textarea id="outcome" placeholder="30天内希望发生的付款、用户结果、交付质量、成本或复用变化。"></textarea>
+        </div>
+        <div class="field">
+          <label for="stop">停止或转向规则</label>
+          <textarea id="stop" placeholder="什么结果出现时停止、缩小、换假设或升级Human Gate？"></textarea>
+        </div>
+        <div class="field">
+          <label for="writeback">回写位置</label>
+          <textarea id="writeback" placeholder="结果将修改哪篇文章、哪张工具卡、哪条规则候选，以及下一次从哪里加载？"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <div class="tool-actions">
+      <button class="button primary" type="button" id="generate">生成四种财富验证卡</button>
+      <button class="button" type="reset">清空</button>
+    </div>
+  </form>
+
+  <section class="output-panel" aria-live="polite">
+    <h2>Four Wealth Audit</h2>
+    <textarea id="result" readonly placeholder="填写后点击“生成四种财富验证卡”。"></textarea>
+    <div class="tool-actions"><button class="button" type="button" id="copy">复制结果</button></div>
+    <p class="tool-status" id="status"></p>
+  </section>
+
+  <script>
+    const value = (id) => document.getElementById(id)?.value.trim() || '待补充';
+    const result = document.getElementById('result');
+    const status = document.getElementById('status');
+
+    document.getElementById('generate')?.addEventListener('click', () => {
+      result.value = `# 四种财富诊断与30天验证卡\n\n## 0. 当前对象\n- 原力母体候选：${value('mother')}\n- 当前事业载体：${value('business')}\n- 用户贵任务：${value('expensive-job')}\n\n## 1. 四种财富事实账\n### 时代财富\n${value('era')}\n\n### 心智财富\n${value('mind')}\n\n### 空间财富\n${value('space')}\n\n### 时间财富\n${value('time')}\n\n## 2. 当前裁决\n- 最薄弱财富：${value('weakest')}\n- 上游断点说明：${value('breakpoint')}\n- 反证与未知项：${value('counterevidence')}\n\n## 3. 30天真实验证\n- 唯一动作：${value('action')}\n- 领先证据：${value('leading')}\n- Outcome证据：${value('outcome')}\n- 停止或转向规则：${value('stop')}\n- 回写位置：${value('writeback')}\n\n## 4. 证据纪律\n1. 导航性判断不是已验证战略结论；\n2. 没有真实用户行为、付款、交付或复用，不得标记Validated；\n3. 页面与输出存在只证明Done；\n4. 结果必须改变规则候选，并在下一次任务开始前被明确加载，才可能进入Compounding。`;
+      status.textContent = '已生成。下一步是在30天内完成唯一动作，并保留支持证据与反证。';
+    });
+
+    document.getElementById('copy')?.addEventListener('click', async () => {
+      if (!result.value) return;
+      await navigator.clipboard.writeText(result.value);
+      status.textContent = '已复制到剪贴板。';
+    });
+  </script>
+</ToolLayout>
