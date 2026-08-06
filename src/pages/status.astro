@@ -2,22 +2,26 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const completed = [
-  '公开文章站、栏目页与三张行动工具已存在',
+  '公开文章站、栏目页与四张行动工具已存在',
   '内容协议已区分事实、推论、假设与正典',
   '首页已从方法论控制台重排为媒体化首次用户旅程',
   '3分钟原力导航v0.1已建立，并明确为导航性假设',
   'A/B/C真实症状入口、工具收益翻译与本地续接已进入工程验证',
   '文章搜索与筛选已迁回文章中心',
   '首个“AI正在蒸馏你”认知行动包进入发布链',
+  '“原力创业·四种财富”解释层、编辑协议与来源事实账已进入main',
+  '四种财富专题已聚合总纲、四个正例、柯达反例与30天诊断工具',
+  '原力书房、原力商业物种志与原力反例志已接入专题内容',
+  'GitHub Pages部署成功；发布产物共46个HTML页面，1367个内部链接检查无缺失',
 ];
 
 const inProgress = [
-  '修复并通过PR #20的CI、设计契约与静态构建',
   '完成5—8名目标用户的桌面端与移动端首次成功测试',
-  '让至少10名用户完成原力导航或AI清算并留下行动回执',
+  '验证至少5名目标用户能无提示区分时代、心智、空间与时间四种财富',
+  '让至少10名用户完成原力导航、AI清算或四种财富诊断并留下行动回执',
   '校准导航题目、结果解释和唯一下一步的误判边界',
   '完成首个授权、脱敏的原力诊断室试点',
-  '完成首个商业物种事实包与人工编辑裁决',
+  '完成人工复核后的商业物种事实包与来源状态晋级',
   '建立Web到Soul的Evolution Note候选接口',
 ];
 
@@ -25,6 +29,7 @@ const notObserved = [
   '30秒首次理解效率：NOT_RUN',
   '90秒入口选择正确率：NOT_RUN',
   '3分钟原力导航完成率：NOT_RUN',
+  '四种财富无提示区分率：NOT_RUN',
   '推荐工具完成率：NOT_RUN',
   '回访连续性与继续上次进度使用率：NOT_RUN',
   '30天Outcome回访：NOT_RUN',
@@ -75,6 +80,7 @@ const notObserved = [
       <p>先验证用户能否在30秒理解价值、90秒找到入口、3—10分钟完成一个动作。通过之后，再验证一条Changed Rule是否改变第二次真实行动。</p>
       <div class="actions">
         <a class="button primary" href={`${import.meta.env.BASE_URL}start/`}>体验3分钟原力导航</a>
+        <a class="button" href={`${import.meta.env.BASE_URL}tools/four-wealth-audit/`}>完成四种财富诊断</a>
         <a class="button" href={`${import.meta.env.BASE_URL}columns/os-lab/`}>进入OS实验室</a>
       </div>
     </div>
