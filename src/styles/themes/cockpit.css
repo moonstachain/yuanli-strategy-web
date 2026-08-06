@@ -1,0 +1,28 @@
+html[data-mode="cockpit"] {
+  color-scheme: dark;
+  --bg: #07100f;
+  --bg2: #0c1918;
+  --panel: rgba(16, 34, 31, .86);
+  --panel-soft: rgba(24, 51, 46, .52);
+  --panel-deep: #0a1514;
+  --line: #29443f;
+  --line-strong: #527069;
+  --ink: #edf3ed;
+  --ink2: #bac9c0;
+  --ink3: #7d9188;
+  --accent: #bca263;
+  --accent-deep: #80692f;
+  --accent-light: #dfcb91;
+  --accent-soft: rgba(188, 162, 99, .15);
+  --accent-fg: #08100e;
+  --ok: #6fa17c;
+  --warn: #d0a95c;
+  --bad: #d47d78;
+  --info: #7da2bd;
+  --shadow: 0 16px 46px rgba(0, 0, 0, .38);
+  --glow: 0 0 0 3px rgba(188, 162, 99, .14);
+  --bg-scene: radial-gradient(800px 480px at 100% 0%, rgba(66, 116, 102, .2), transparent 60%), linear-gradient(180deg, #091513 0%, #06100f 100%);
+  --serif: Georgia, "Songti SC", "Noto Serif SC", serif;
+  --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+  --mono: "SFMono-Regular", Menlo, Consolas, monospace;
+}
