@@ -1,110 +1,155 @@
-# 原力战略 · Web
+# 原力战略 Web
 
-> **提前看见正在改变事业的力量，把变化转化为判断，把判断转化为行动，把行动沉淀成会复利的事业系统。**
+> **从前沿认知到真实事业结果：看见变化，找到最值得验证的一环，完成一次行动，并让结果进入下一次。**
 
-`yuanli-strategy-web` 是原力战略面向企业家、专家型创业者与高认知个体的：
+公开站点：`https://moonstachain.github.io/yuanli-strategy-web/`
+
+## 产品角色
+
+本仓不是 Soul、Brain、内容经营总账或 PMO。
+
+它是原力战略的：
+
+- 前沿战略媒体前台；
+- 首次用户成功旅程；
+- 公开文章、案例和工具入口；
+- public-safe Evidence / Outcome 投影；
+- 必要、匿名、最小化的用户行动界面。
+
+一句话边界：
+
+> **Web负责让用户看见、理解并采取行动；Soul管法，Brain管证据，Content Engine管内容经营，PMO管项目状态。**
+
+## 首次用户旅程
 
 ```text
-前沿战略媒体
-公开安全投影
-用户行动界面
-Outcome与回写入口
+前沿信号
+→ 真实症状
+→ 3分钟原力导航
+→ 优先验证坐标
+→ 唯一推荐工具
+→ 本地保存与继续上次进度
+→ 现实行动与Outcome
 ```
 
-它不是 Soul 的网页镜像，也不是只有方法论文章的课程官网。
+入口：
 
-## 1. 前台定位
+- `/`：媒体化首页与A/B/C三类症状入口；
+- `/start/`：3分钟原力导航v0.1；
+- `/tools/`：按“适合谁—需要什么—得到什么—下一步”组织的工具中心；
+- `/articles/`：深度用户使用的搜索与筛选中心；
+- `/status/`：Done / Validated / Compounding透明建设账。
 
-前台从真实变化和用户问题进入：
+导航结果当前状态为 `navigation hypothesis`，不是人格测评、能力评级或经验证诊断。
+
+## 内容发动机
+
+最小产品不是单篇文章，而是一个原力认知行动包：
 
 ```text
-Signal｜发生了什么
-Evidence｜证据支持什么
-Judgment｜原力战略如何裁决
-Action｜现在完成什么动作
-Outcome｜如何知道判断是否成立
+Signal
+→ Evidence
+→ Judgment
+→ Action
+→ Outcome
 ```
 
-母承诺：
+文章Front Matter支持：
 
-> **AI正在重写每一种职业。原力战略帮助你把不可复制，变成会复利的事业。**
+- `campaign`
+- `contentRole`
+- `sourceStatus`
+- `outcomeQuestion`
+- `evidenceLevel`
+- `canonStatus`
+- `nextAction`
 
-## 2. 当前四个重点内容引擎
+事实、推论、假设和正典必须显式区分；Evidence未完成时保持 `NOT_RUN / needs_sources`。
 
-1. **原力前哨**：追踪会改变长期选择的技术、组织、职业、媒介与商业力量；
-2. **原力商业物种志**：拆解关键选择如何成为品类、模式、控制权与事业OS；
-3. **原力诊断室**：从真人症状形成最小行动、回访与Changed Rule候选；
-4. **原力OS实验室**：公开内容和事业判断如何进入文脉、大脑、地图、链路与第二次复用。
+## 当前首个战役
 
-七个常设栏目、四个旗舰系列、六大用户主题与A1—C4继续作为后台治理结构，不要求陌生用户先理解完整体系。
+`AI正在蒸馏你`
 
-## 3. 法权边界
+- Hook：`when-experience-becomes-skill`
+- Mechanism：`extractable-ability-vs-generative-source`
+- Action：`ai-clearance-action-guide`
+- Evidence：任务包已建，真实事实包仍需Brain与人工核验
 
-- 方法论正典、术语、边界与Human Gate：[`moonstachain/yuanli-strategy-soul`](https://github.com/moonstachain/yuanli-strategy-soul)
-- 公开文章、页面、工具与用户行动入口：本仓
-- 证据、私域案例与连续记忆：Brain / 经登记的私域真源
-- 内容经营、战役、分发和效果回流：`moonstachain/yuanli-content-engine-os`
-- 视觉设计系统：`moonstachain/yuanli-taste`
-- 项目、WIP、Owner和节奏：`os-yuanli/yuanli-pmo`
+## 本地连续性
 
-总原则：
+默认只使用浏览器 `localStorage`：
 
-> **Soul定义什么不能变形；Brain保存事实与证据；Content Engine驱动持续生产；Web让用户看懂并行动；Taste约束品位；PMO保证任务真正发生。**
+```text
+yuanli-navigation:v0.1
+yuanli-journey:last
+yuanli-tool:<pathname>
+```
 
-本仓禁止：
+用途：
 
-- 修改原力战略最高正典；
-- 保存Founder或客户完整私密资料；
-- 复制Brain、PMO或Runtime的第二份真账；
-- 用页面、文章、工具或点赞冒充真实Outcome；
-- 将未完成事实包的推论标记为verified。
+- 恢复未完成导航；
+- 显示最近原力坐标；
+- 恢复工具草稿；
+- 在首页显示“继续上次进度”。
 
-## 4. 当前战役
+本地状态不自动上传，不应填写客户姓名、密钥或未经授权真账。
 
-首个认知行动包：**AI正在蒸馏你**。
-
-已发布角色：
-
-- Hook：《当你的经验被公司蒸馏成Skill，你还剩下什么？》；
-- Mechanism：《可提取能力，不等于生成性母体》；
-- Action：《AI清算行动指南：把焦虑变成三张清单》；
-- Evidence：证据任务已定义，当前仍为 `NOT_RUN`，见 `docs/campaigns/AI-DISTILLATION-EVIDENCE-PACKET-v0.1.md`。
-
-## 5. 工程
-
-技术栈：Astro Content Collections + Markdown/MDX + GitHub Pages。
+## 开发
 
 ```bash
-npm install --no-audit --no-fund
+npm install
+npm run dev
 npm run build
 ```
 
-关键文件：
+`npm run build` 会先运行设计契约：
 
-- `src/pages/index.astro`：媒体化首页；
-- `src/content.config.ts`：文章与战役元数据合同；
-- `src/content/articles/`：公开内容；
-- `src/pages/tools/`：最小行动工具；
-- `docs/CONTENT-PROTOCOL.md`：内容发布门；
-- `docs/INFORMATION-ARCHITECTURE.md`：前后台信息架构；
-- `docs/ROADMAP-90D.md`：90天运行路线；
-- `src/pages/status.astro`：透明建设账。
-
-## 6. Done、Validated、Compounding
-
-```text
-Done：页面、文章或工具存在并通过当前验收。
-Validated：真实用户完成行动，Outcome由有权人类判定。
-Compounding：Changed Rule在第二次真实任务中被事前加载并改变行动。
+```bash
+npm run check:design
 ```
 
-本仓的最高验收不是文章数量，而是至少跑通一条：
+设计契约检查：
+
+- paper / field / cockpit 三种主题；
+- 任务型主导航；
+- 3分钟导航与本地连续性；
+- 首页首次成功旅程；
+- 文章搜索；
+- 工具本地草稿；
+- 阅读进度和无障碍基础；
+- 透明状态账。
+
+## 核心文档
+
+- `docs/FIRST-SUCCESS-JOURNEY-v1.md`
+- `docs/CONTENT-PROTOCOL.md`
+- `docs/INFORMATION-ARCHITECTURE.md`
+- `docs/EDITORIAL-COLUMNS-MATRIX-v1.md`
+- `docs/ROADMAP-90D.md`
+- `docs/PORTAL-DESIGN-SYSTEM-v1.md`
+- `docs/campaigns/AI-DISTILLATION-EVIDENCE-PACKET-v0.1.md`
+
+## 跨仓依赖
+
+- Soul接口：`moonstachain/yuanli-strategy-soul#457`
+- Brain证据：`moonstachain/yuanli-brain#2`
+- Content Engine战役：`moonstachain/yuanli-content-engine-os#35`
+- Taste设计门：`moonstachain/yuanli-taste#1`
+- PMO运行总账：`os-yuanli/yuanli-pmo#23`
+
+## 状态纪律
+
+页面和代码存在只证明 `Done`。
+
+真人测试前保持：
 
 ```text
-内容
-→ 用户行动
-→ Outcome
-→ Changed Rule
-→ 第二次任务事前加载
-→ 行动发生变化
+首次理解效率：NOT_RUN
+入口选择正确率：NOT_RUN
+导航完成率：NOT_RUN
+工具完成率：NOT_RUN
+回访连续性：NOT_RUN
+Outcome：NOT_RUN
+Changed Rule：NOT_RUN
+第二任务复用：NOT_RUN
 ```
