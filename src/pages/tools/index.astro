@@ -25,6 +25,17 @@ const tools = [
     action: '形成我的品类假设',
   },
   {
+    module: 'B1—B4',
+    title: '看清你的事业，真正缺哪一种财富',
+    name: '四种财富诊断卡',
+    forWhom: '赶上趋势、品牌有影响或业务在增长，却说不清为什么没有形成长期复利的人',
+    input: '母体候选、当前事业和四类真实证据',
+    output: '唯一财富断点、30天验证动作、停止规则与回写位置',
+    next: '完成一个真实动作并保留支持证据与反证',
+    href: `${base}/tools/four-wealth-audit/`,
+    action: '诊断我的四种财富',
+  },
+  {
     module: 'C4',
     title: '让这次项目成为下一次的起点',
     name: '项目回写卡',
@@ -65,8 +76,8 @@ const tools = [
   </section>
 </BaseLayout>
 <style>
-  .tool-result-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-5); }
-  .tool-result-card { min-height: 580px; display: flex; flex-direction: column; padding: var(--sp-7); border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--panel); transition: transform var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease); }
+  .tool-result-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-5); }
+  .tool-result-card { min-height: 520px; display: flex; flex-direction: column; padding: var(--sp-7); border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--panel); transition: transform var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease); }
   .tool-result-card:hover { transform: translateY(var(--lift)); border-color: var(--accent); box-shadow: var(--shadow); color: var(--ink); }
   .tool-result-head { display: flex; justify-content: space-between; gap: var(--sp-4); color: var(--ink3); font-size: .78rem; }
   .tool-result-head span { color: var(--accent); font-weight: 800; }
