@@ -1,20 +1,110 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<BaseLayout title="关于 · 原力战略" description="原力战略文章网站的使命、边界与法权。">
-  <section class="section">
+<BaseLayout title="关于 · 原力战略" description="原力战略文章网站的使命、世界观、边界与法权。" mode="paper">
+  <section class="section about-hero">
     <div class="prose">
       <p class="eyebrow">About</p>
       <h1>这不是一个普通博客。</h1>
       <p class="lead">原力战略 Web 是正典的公开安全投影，也是从阅读进入诊断、工具、案例与真实行动的入口。</p>
+
+      <h2>我们面对的时代问题</h2>
+      <p>AI 正在平权大量“会做事”的同质化能力。真正稀缺的，不再只是工具熟练度，而是一个人不可复制的判断、品味、意义、责任，以及持续生成差异的能力。</p>
+
       <h2>我们的母问题</h2>
       <blockquote>如何在不牺牲创始人独特性的前提下，实现价值的放大、复制与长期复利？</blockquote>
+
+      <h2>我们的核心主张</h2>
+      <blockquote>不是复制创始人，而是让创始人的不可复制持续繁殖。</blockquote>
+      <p>原力战略要做的，是识别一个人的不可复制生成源，让它经过时代选择、心智命名、商业组织与控制权沉淀，最终成长为会递归进化的事业生命体。</p>
+    </div>
+  </section>
+
+  <section class="section worldview-stage">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Time · Name · System · Power</p>
+          <h2 class="section-title">原力进入世界的四次跃迁</h2>
+          <p class="lead">四个模块不是松散工具，而是一条从独特价值到长期事业的生命链。</p>
+        </div>
+      </div>
+
+      <div class="grid cols-2 worldview-grid">
+        <article class="yl-card yl-card--static">
+          <span class="meta">01 · 时</span>
+          <h3>原力借势</h3>
+          <p><strong>为什么偏偏是现在？</strong></p>
+          <p>让已经显化的原力与时代选择环境相遇，从“我能”走向“世界现在需要”。</p>
+        </article>
+        <article class="yl-card yl-card--static">
+          <span class="meta">02 · 名</span>
+          <h3>品类独创</h3>
+          <p><strong>世界如何理解和选择我？</strong></p>
+          <p>把独特价值翻译成用户能理解、记住、付费和转述的新市场入口。</p>
+        </article>
+        <article class="yl-card yl-card--static">
+          <span class="meta">03 · 器</span>
+          <h3>模式升维</h3>
+          <p><strong>独特价值如何持续生产？</strong></p>
+          <p>把价值承诺装进前链路、后链路和财链路，让系统卖得动、交得出、赚得到。</p>
+        </article>
+        <article class="yl-card yl-card--static">
+          <span class="meta">04 · 权</span>
+          <h3>壁垒锁定</h3>
+          <p><strong>经营成果如何跨时间留下？</strong></p>
+          <p>把成功沉淀为心智、交付、入口与留存控制权，让事业越运行越强。</p>
+        </article>
+      </div>
+
+      <div class="worldview-action">
+        <p>借势，让时代选择你；品类，让世界认出你；模式，让组织承接你；壁垒，让时间站在你这一边。</p>
+        <a class="button" href={`${base}/articles/yuanli-startup-time-name-system-power/`}>深入阅读：从时、名、器、权看懂原力战略 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose">
       <h2>我们负责什么</h2>
       <p>把原力战略的正典语言翻译为用户看得懂的现实症状、时代洞察、案例和行动工具；让文章不只产生阅读量，还产生判断、行动、证据与回写候选。</p>
+
       <h2>我们不负责什么</h2>
-      <p>不在本仓修改最高正典，不存放私密资料，不把页面、工具或 Agent 的存在等同于真实 Outcome。</p>
+      <p>不在本仓修改最高正典，不存放私密资料，不把页面、工具或 Agent 的存在等同于真实 Outcome，也不把解释层推导冒充已经通过现实验证的结论。</p>
+
       <h2>法权边界</h2>
       <p>方法论正典、Schema、Policy 与正典晋级由 <a href="https://github.com/moonstachain/yuanli-strategy-soul">yuanli-strategy-soul</a> 负责。本网站只展示允许被公开看见的投影。</p>
+
+      <div class="authority-chain" aria-label="原力战略的法权与回写链路">
+        <p><strong>Soul</strong><span>正典与治理源</span></p>
+        <p><strong>Web</strong><span>公开解释与行动入口</span></p>
+        <p><strong>真实项目</strong><span>证据与 Outcome 发生地</span></p>
+        <p><strong>回写</strong><span>将有效结果送入正典候选</span></p>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .about-hero { padding-bottom: var(--sp-8); }
+  .worldview-stage { background: linear-gradient(155deg, #0d2018, #091611); color: #f0e6d2; }
+  .worldview-stage .eyebrow, .worldview-stage .meta { color: #c9a961; }
+  .worldview-stage .lead { color: #cdbf9f; }
+  .worldview-grid { margin-top: var(--sp-7); }
+  .worldview-grid .yl-card { border-color: #304c39; background: rgba(20, 48, 31, .48); color: #f0e6d2; }
+  .worldview-grid h3 { margin: var(--sp-5) 0 var(--sp-3); font-family: var(--serif); font-size: 1.75rem; }
+  .worldview-grid p { color: #cdbf9f; }
+  .worldview-grid strong { color: #f0e6d2; }
+  .worldview-action { margin-top: var(--sp-8); padding-top: var(--sp-6); border-top: 1px solid #304c39; }
+  .worldview-action p { max-width: 800px; color: #cdbf9f; font-family: var(--serif); font-size: 1.3rem; line-height: 1.6; }
+  .worldview-action .button { margin-top: var(--sp-4); }
+  .authority-chain { margin-top: var(--sp-6); border-left: 1px solid var(--line); padding-left: var(--sp-6); }
+  .authority-chain p { display: flex; justify-content: space-between; gap: var(--sp-6); margin: 0; padding: var(--sp-3) 0; border-bottom: 1px solid var(--line); }
+  .authority-chain span { color: var(--ink3); text-align: right; }
+  @media (max-width: 720px) {
+    .authority-chain p { align-items: flex-start; flex-direction: column; gap: var(--sp-1); }
+    .authority-chain span { text-align: left; }
+  }
+</style>
