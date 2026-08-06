@@ -1,125 +1,166 @@
-# 内容生产与治理协议 v0.2｜Signal to Outcome
+# 原力战略Web · 内容协议 v2.1
 
-- 状态：`accepted / execution-baseline`
-- 日期：2026-08-06
-- 上位法：`moonstachain/yuanli-strategy-soul`
+- 状态：`execution-ready`
+- 原则：前台从现实变化和用户症状进入，后台用正典、证据、行动与回写保证不说散
 
-## 1. 内容的第一性目标
+## 1. 内容不是终点
 
-文章不是为了填满网站，也不是为了证明原力战略概念很多。
-
-每个内容产品必须尽可能推动这条链：
+每个内容对象都应进入：
 
 ```text
-现实变化或用户症状
-→ 事实与证据边界
+现实症状
+→ 旧有解释
 → 认知冲突
+→ 第一性问题
 → 原力裁决
+→ 模块坐标
+→ 案例或反例
 → 最小行动
 → Outcome Question
-→ 回访与Changed Rule候选
+→ 回写候选
 ```
 
-最低验收：读者形成一个判断、完成一个动作，或留下一个可见资产。
+Output不等于Outcome。
 
-更高验收：行动产生可观察结果，结果改变下一次内容、工具或任务。
+## 2. 认知行动包
 
-## 2. 五类文章继续有效
-
-| 类型 | 任务 | 主要证据 |
-|---|---|---|
-| insight | 从外部事件进入时代机制 | 可核验外部来源＋明确推论 |
-| canon | 讲透稳定概念和边界 | Soul正典引用 |
-| case | 展示真实对象如何发生 | Baseline、Action、Outcome、反例 |
-| tool | 帮用户完成一个动作 | 输入、步骤、输出、验收 |
-| library | 将经典学科翻译为原力视角 | 原始/权威来源＋边界声明 |
-
-文章类型回答“这篇内容承担什么任务”，不是栏目名。
-
-## 3. 战役角色
-
-一个完整认知行动包可包含五种角色：
-
-| 角色 | 任务 | 允许的最低证据状态 |
-|---|---|---|
-| hook | 建立与用户有关的时代冲突 | hypothesis，但必须显式标记 |
-| evidence | 核验关键事实与争议 | verified或明确的source pack |
-| mechanism | 给出原力战略解释 | derived或canon |
-| action | 推动最小现实行动 | canon-aligned工具合同 |
-| reflection | 记录Outcome、失败与规则变化 | verified的人类判定 |
-
-新增可选Front Matter字段：
-
-- `campaign`：所属媒体战役；
-- `contentRole`：hook / evidence / mechanism / action / reflection；
-- `sourceStatus`：not_required / source_pack_ready / needs_sources / verified_sources；
-- `outcomeQuestion`：怎样知道这篇内容在现实中有用。
-
-既有字段继续必填：
-
-- `trilogy` / `module`；
-- `theme`；
-- `articleType`；
-- `userSymptoms`；
-- `expensiveJob`；
-- `coreConcepts`；
-- `evidenceLevel`；
-- `canonStatus`；
-- `nextAction`。
-
-## 4. 标准文章结构
-
-1. 标题承诺；
-2. 30秒原力裁决；
-3. 发生了什么；
-4. 旧有解释为什么不够；
-5. 第一性机制与原力坐标；
-6. 对目标用户意味着什么；
-7. 案例、反例与边界；
-8. 24小时或7天最小行动；
-9. Outcome Question。
-
-对于纯canon或tool文章，“发生了什么”可以由稳定问题或使用场景替代，但必须说明为什么无需外部来源。
-
-## 5. 证据纪律
-
-- `canon`：由Soul正典明确支持；
-- `verified`：存在可核验事实、真实行动或有权人类确认；
-- `derived`：基于证据或正典的分析与推论，必须标明推论；
-- `hypothesis`：待检验假设，不得写成既成事实。
-
-来源状态与证据等级不得混用：
+最小生产单位：
 
 ```text
-sourceStatus说明外部来源包是否存在。
-evidenceLevel说明文章中的结论当前达到什么强度。
+Hook
+→ Evidence
+→ Mechanism
+→ Action
+→ Reflection
 ```
 
-例如，机制文章可以无需外部来源并标为canon；趋势Hook若尚无事实包，必须同时标记 `hypothesis + needs_sources`。
+### Hook
 
-Output不等于Outcome。页面上线、工具存在、用户点赞、阅读量和AI生成回执均不能单独证明业务结果。
+从事件、人物、身份威胁或结构冲突获得注意。
 
-## 6. 标题纪律
+### Evidence
 
-标题优先使用：
+只放事实、日期、来源、反例、冲突与未知项。
+
+### Mechanism
+
+形成原力战略独特解释，但只调用必要概念。
+
+### Action
+
+让用户完成一个判断、动作或可保存资产。
+
+### Reflection
+
+记录Outcome、误判、反例、Changed Rule候选和下一次加载位置。
+
+## 3. 首次用户成功内容纪律
+
+首页与3分钟导航不得要求用户先学习完整正典。
+
+顺序必须是：
+
+```text
+用户问题
+→ 导航性位置
+→ 正典坐标
+→ 唯一下一步
+```
+
+3分钟导航结果必须标明：
+
+> 这是导航性判断，不是人格结论、能力评级或已经验证的战略结论。
+
+任何导航规则升级为诊断规则前，必须具备真人样本、误判记录、回访结果与Human Gate。
+
+## 4. 文章类型与战役角色
+
+文章类型继续回答“这篇内容承担什么任务”：
+
+- `insight`
+- `canon`
+- `case`
+- `tool`
+- `library`
+
+战役角色回答“它在这场认知行动包中做什么”：
+
+- `hook`
+- `evidence`
+- `mechanism`
+- `action`
+- `reflection`
+
+类型不是栏目，战役角色也不是永久栏目。
+
+## 5. 文章标题
+
+优先采用：
 
 ```text
 熟悉对象
 ＋ 反常识变化
-＋ 与读者有关的后果
+＋ 个人后果
 ```
+
+标题不得先以内部模块名、正典编号或工程术语要求陌生用户理解系统。
 
 标题可以有张力，但必须满足：
 
 1. 承诺与正文一致；
-2. 不把可能性写成已发生事实；
+2. 不把可能性写成既成事实；
 3. 不用夸张替代证据；
 4. 正典术语不得为了传播而改变含义；
 5. 正文必须给出反例、边界或尚未知部分。
 
-## 7. B4最新口径
+## 6. 文章固定结构
 
-壁垒只使用四种控制权：
+1. 标题；
+2. 30秒原力裁决；
+3. 发生了什么；
+4. 为什么大多数解释不够；
+5. 原力机制；
+6. 对专家型创业者意味着什么；
+7. 反例与边界；
+8. 一个最小行动；
+9. Outcome Question。
+
+对于纯canon或tool文章，“发生了什么”可以由稳定问题或使用场景替代，但必须说明为什么无需外部来源。
+
+## 7. 证据等级与来源状态
+
+- `hypothesis`：待验证判断；
+- `derived`：由正典或证据推导，但尚未由真实结果验证；
+- `verified`：关键事实经过来源或真实行动核验；
+- `canon`：与公开正典对齐，不代表业务Outcome成立。
+
+来源状态：
+
+- `not_required`
+- `source_pack_ready`
+- `needs_sources`
+- `verified_sources`
+
+Evidence未完成时保持：
+
+```text
+sourceStatus: needs_sources
+Evidence: NOT_RUN
+```
+
+不允许因标题张力或AI摘要将hypothesis包装为verified趋势报告。
+
+## 8. 正典与B4边界
+
+正典状态：
+
+- `public_projection`
+- `canon_aligned`
+- `canon_candidate`
+
+Web文章不得自动修改Soul正典。
+
+B4只使用四种控制权：
 
 - 虚：心智控制权；
 - 实：交付控制权；
@@ -128,19 +169,39 @@ Output不等于Outcome。页面上线、工具存在、用户点赞、阅读量�
 
 飞轮是四权相互强化的动态结果，母体是生成源，不作为第五、第六壁垒并列。
 
-## 8. 隐私与公开边界
+## 9. 工具表达
+
+陌生用户看到的工具卡必须先回答：
+
+- 适合谁；
+- 需要什么；
+- 得到什么；
+- 接下来做什么。
+
+工具正典名与模块坐标作为副标题。
+
+工具生成结果只证明Output，必须进入真实行动和后续证据。
+
+## 10. 本地状态与隐私
+
+导航与工具默认只保存在浏览器本地。
+
+不得要求用户填写：
+
+- 客户姓名；
+- 凭证和密钥；
+- 未经授权经营真账；
+- 敏感关系与财务细节。
+
+本地保存不等于服务端账户，不得暗示跨设备同步。
 
 禁止进入本仓：
 
 - Founder完整私密身份与敏感经历；
 - 客户可识别隐私、原始对话和未授权材料；
-- 凭证、密钥、内部经营真账；
-- 未经确认的敏感推断；
 - Brain、PMO或Runtime的第二份事实账。
 
-案例必须脱敏、授权并标注证据成熟度。
-
-## 9. 发布门
+## 11. 发布门
 
 文章从draft进入published前必须满足：
 
@@ -154,21 +215,49 @@ Output不等于Outcome。页面上线、工具存在、用户点赞、阅读量�
 8. 内链与外链可访问；
 9. 不越过Web法权边界。
 
-## 10. 回写门
+## 12. 真人测试内容
 
-内容产生Changed Rule候选时，至少记录：
+首次成功测试必须记录用户原话，不将研究者解释替换为用户表达。
+
+至少观察：
+
+- 30秒价值理解；
+- 90秒入口选择；
+- 导航完成；
+- 推荐行动理解；
+- 工具完成；
+- 回访续接；
+- 不可信或冒犯性表达；
+- 误判与反例。
+
+未运行前保持NOT_RUN。
+
+## 13. 回写候选
+
+最小字段：
 
 ```yaml
-trigger:
-article_or_tool:
-user_action:
+campaign_id:
+article_or_tool_id:
+user_action_summary:
 observed_outcome:
 old_rule:
 proposed_changed_rule:
-evidence:
+evidence_pointer:
 limitations:
-human_decision:
 next_task_to_load:
 ```
 
+私密证据只保存脱敏指针。
+
 规则获批不等于Compounding。只有在第二次真实任务开始前被明确加载，并产生可观察的判断或行动变化，才允许标记为 `reused`。
+
+## 14. 禁止事项
+
+- 不把阅读量、点赞、点击或页面生成当Outcome；
+- 不把3分钟导航称为Validated诊断；
+- 不自动批准Canon或Changed Rule；
+- 不用单一成功故事证明方法；
+- 不隐藏冲突、反例和不知道什么；
+- 不把Content Engine经营状态复制进Web；
+- 不把Web公开投影反向覆盖Brain或Soul真源。
