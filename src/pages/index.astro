@@ -4,11 +4,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { themes } from '../data/themes';
 import { modules } from '../data/modules';
+import { regularColumns, flagshipColumns } from '../data/columns';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const articles = (await getCollection('articles', ({ data }) => data.status === 'published'))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 const featured = articles.filter((article) => article.data.featured).slice(0, 3);
+const statusClass = (status: string) => `status status-${status}`;
 ---
 <BaseLayout>
   <section class="hero">
@@ -19,6 +21,7 @@ const featured = articles.filter((article) => article.data.featured).slice(0, 3)
       <div class="actions">
         <a class="button primary" href={`${base}/articles/what-is-yuanli-strategy-trilogy/`}>从三部曲开始</a>
         <a class="button" href="#diagnosis">判断我卡在哪里</a>
+        <a class="button" href={`${base}/columns/`}>浏览全部栏目</a>
       </div>
     </div>
   </section>
@@ -36,16 +39,69 @@ const featured = articles.filter((article) => article.data.featured).slice(0, 3)
       <p class="eyebrow">从你的真实症状进入</p>
       <h2 class="section-title">你现在卡在哪里？</h2>
       <div class="grid cols-3 diagnosis">
-        <article class="card"><span class="tag">原力资产</span><h3>有经验，却说不清自己的独特性</h3><p>从能力清单回到持续生成差异的源头。</p></article>
-        <article class="card"><span class="tag">原力创业</span><h3>有人认可，却无法形成可放大的生意</h3><p>让时代放大原力，让市场认出价值，让三条链形成利润容器。</p></article>
-        <article class="card"><span class="tag">原力 OS</span><h3>项目很多，但每一次仍然从零开始</h3><p>把判断、案例、数据与行动写成会递归升级的事业系统。</p></article>
+        <a class="card" href={`${base}/columns/diagnosis/`}><span class="tag">原力资产</span><h3>有经验，却说不清自己的独特性</h3><p>从能力清单回到持续生成差异的源头。</p></a>
+        <a class="card" href={`${base}/columns/diagnosis/`}><span class="tag">原力创业</span><h3>有人认可，却无法形成可放大的生意</h3><p>让时代放大原力，让市场认出价值，让三条链形成利润容器。</p></a>
+        <a class="card" href={`${base}/columns/diagnosis/`}><span class="tag">原力 OS</span><h3>项目很多，但每一次仍然从零开始</h3><p>把判断、案例、数据与行动写成会递归升级的事业系统。</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section columns-section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">七个常设栏目</p>
+          <h2 class="section-title">持续观察、解释、诊断与行动</h2>
+        </div>
+        <a href={`${base}/columns/`}>查看栏目总览 →</a>
+      </div>
+      <div class="grid cols-3 column-grid">
+        {regularColumns.map((column) => (
+          <a class="card column-card" href={`${base}/columns/${column.id}/`}>
+            <div class="column-top">
+              <span class="meta">{column.eyebrow}</span>
+              <span class={statusClass(column.status)}>{column.statusLabel}</span>
+            </div>
+            <h3>{column.title}</h3>
+            <strong>{column.question}</strong>
+            <p>{column.promise}</p>
+            <span class="column-read">进入栏目 →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section flagship-section">
+    <div class="container">
+      <div class="section-head flagship-head">
+        <div>
+          <p class="eyebrow">旗舰系列</p>
+          <h2 class="section-title">时代、人物、企业与反例</h2>
+          <p class="lead">四个跨周期系列，共同回答世界如何换轨、人如何选择、企业如何成为新物种，以及正确方法为什么没有成立。</p>
+        </div>
+        <a href={`${base}/columns/#flagships`}>查看全部旗舰 →</a>
+      </div>
+      <div class="grid cols-2 flagship-grid">
+        {flagshipColumns.map((column) => (
+          <a class="flagship-card" href={`${base}/columns/${column.id}/`}>
+            <div class="column-top">
+              <span class="meta">{column.eyebrow}</span>
+              <span class={statusClass(column.status)}>{column.statusLabel}</span>
+            </div>
+            <h3>{column.title}</h3>
+            <strong>{column.subtitle}</strong>
+            <blockquote>{column.question}</blockquote>
+            <span class="column-read">进入系列 →</span>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
   <section class="section themes">
     <div class="container">
-      <p class="eyebrow">六大内容主题</p>
+      <p class="eyebrow">六大用户主题</p>
       <h2 class="section-title">从时代进入，从行动离开</h2>
       <div class="grid cols-3">
         {themes.map((theme) => (
@@ -77,7 +133,7 @@ const featured = articles.filter((article) => article.data.featured).slice(0, 3)
   <section class="section">
     <div class="container">
       <div class="section-head">
-        <div><p class="eyebrow">首发文章</p><h2 class="section-title">先建立三张总图</h2></div>
+        <div><p class="eyebrow">已发布内容</p><h2 class="section-title">先建立三张总图</h2></div>
         <a href={`${base}/articles/`}>查看全部文章 →</a>
       </div>
       <div class="grid cols-3">
@@ -93,15 +149,34 @@ const featured = articles.filter((article) => article.data.featured).slice(0, 3)
   .statement-grid { display: grid; grid-template-columns: .7fr 2fr 1fr; gap: 32px; align-items: center; }
   blockquote { margin: 0; font-family: Georgia, "Noto Serif SC", serif; font-size: clamp(1.7rem, 3.8vw, 3rem); line-height: 1.25; }
   .statement .lead { color: #c8beb2; font-size: 1rem; }
-  .diagnosis h3, .themes h3 { font-family: Georgia, "Noto Serif SC", serif; font-size: 1.35rem; line-height: 1.4; }
-  .diagnosis p, .themes p { color: var(--muted); }
+  .diagnosis h3, .themes h3, .column-card h3, .flagship-card h3 { font-family: Georgia, "Noto Serif SC", serif; font-size: 1.35rem; line-height: 1.4; }
+  .diagnosis p, .themes p, .column-card p { color: var(--muted); }
+  .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 28px; }
+  .columns-section { background: rgba(255,253,248,.52); }
+  .column-card { display: flex; min-height: 300px; flex-direction: column; }
+  .column-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .column-card strong { margin: 12px 0 0; font-size: .96rem; }
+  .column-read { margin-top: auto; padding-top: 20px; color: var(--accent); font-weight: 760; }
+  .status { display: inline-flex; padding: 4px 9px; border-radius: 999px; font-size: .72rem; font-weight: 760; }
+  .status-live { background: #dfead9; color: #36512f; }
+  .status-execution-ready { background: #efe1c4; color: #6f4c16; }
+  .status-planning-baseline { background: #ddd8d0; color: #58524b; }
+  .flagship-section { background: var(--ink); color: var(--surface); }
+  .flagship-head .lead, .flagship-section .meta { color: #c8beb2; }
+  .flagship-head > a { color: #f0c7aa; }
+  .flagship-card { display: flex; min-height: 360px; flex-direction: column; padding: 28px; border: 1px solid #4d463e; border-radius: 22px; background: rgba(255,255,255,.035); }
+  .flagship-card:hover { border-color: #897769; transform: translateY(-3px); }
+  .flagship-card strong { color: #d9c6b6; }
+  .flagship-card blockquote { margin: 28px 0 12px; font-size: 1.45rem; }
+  .flagship-card .column-read { color: #f0c7aa; }
+  .flagship-section .status-planning-baseline { background: #514a43; color: #f2e8de; }
   .themes { background: rgba(234,216,199,.32); }
   .module-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
   .module { min-height: 138px; padding: 18px; display: flex; flex-direction: column; gap: 10px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .module span { color: var(--muted); font-size: .9rem; }
-  .section-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 24px; }
   @media (max-width: 780px) {
     .statement-grid { grid-template-columns: 1fr; }
     .module-grid { grid-template-columns: repeat(2, 1fr); }
+    .section-head { align-items: start; flex-direction: column; }
   }
 </style>
