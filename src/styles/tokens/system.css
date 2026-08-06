@@ -1,0 +1,49 @@
+:root {
+  --sp-1: 4px;
+  --sp-2: 6px;
+  --sp-3: 9px;
+  --sp-4: 12px;
+  --sp-5: 16px;
+  --sp-6: 22px;
+  --sp-7: 32px;
+  --sp-8: 44px;
+  --sp-9: 64px;
+  --sp-10: 88px;
+
+  --fs-1: .72rem;
+  --fs-2: .82rem;
+  --fs-3: .94rem;
+  --fs-4: 1.08rem;
+  --fs-5: 1.35rem;
+  --fs-6: 1.8rem;
+  --fs-7: 2.6rem;
+  --fs-8: clamp(3rem, 7vw, 6rem);
+
+  --lh-tight: 1.22;
+  --lh-body: 1.7;
+  --lh-loose: 1.86;
+
+  --r-s: 8px;
+  --r-m: 10px;
+  --r-l: 14px;
+  --r-xl: 20px;
+  --r-pill: 999px;
+
+  --ease: cubic-bezier(.22, .95, .3, 1);
+  --ease-drawer: cubic-bezier(.2, .8, .2, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 420ms;
+  --lift: -1px;
+
+  --z-base: 1;
+  --z-sticky: 30;
+  --z-drawer: 80;
+  --z-nav: 100;
+  --z-progress: 140;
+
+  --max: 1180px;
+  --reading: 720px;
+  --rail: 220px;
+  --header-h: 68px;
+}

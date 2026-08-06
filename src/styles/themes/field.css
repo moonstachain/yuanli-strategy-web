@@ -1,0 +1,28 @@
+html[data-mode="field"] {
+  color-scheme: dark;
+  --bg: #091611;
+  --bg2: #0d2118;
+  --panel: rgba(20, 48, 31, .62);
+  --panel-soft: rgba(20, 48, 31, .4);
+  --panel-deep: rgba(12, 31, 23, .9);
+  --line: #304b39;
+  --line-strong: #56705f;
+  --ink: #f0e6d2;
+  --ink2: #cdbf9f;
+  --ink3: #87988c;
+  --accent: #c9a961;
+  --accent-deep: #8b6f2e;
+  --accent-light: #e0c887;
+  --accent-soft: rgba(201, 169, 97, .16);
+  --accent-fg: #10150f;
+  --ok: #77a983;
+  --warn: #d5ae5f;
+  --bad: #d98a8a;
+  --info: #83a4c4;
+  --shadow: 0 22px 60px rgba(0, 0, 0, .42), inset 0 0 0 1px rgba(228, 200, 135, .05);
+  --glow: 0 0 22px rgba(201, 169, 97, .18);
+  --bg-scene: radial-gradient(1100px 640px at 72% -8%, rgba(74, 124, 89, .26) 0%, transparent 58%), linear-gradient(168deg, #0d2018 0%, #091611 62%);
+  --serif: Georgia, "Songti SC", "Noto Serif SC", serif;
+  --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+  --mono: "SFMono-Regular", Menlo, Consolas, monospace;
+}

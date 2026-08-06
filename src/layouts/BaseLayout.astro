@@ -6,23 +6,28 @@ import '../styles/global.css';
 const {
   title = '原力战略',
   description = '把你的不可复制，变成会复利的事业系统。',
+  mode = 'paper',
+  showReadingProgress = false,
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-mode={mode}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <meta name="theme-color" content={mode === 'paper' ? '#f4efe5' : '#091611'} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
     <title>{title}</title>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    {showReadingProgress && <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>}
     <Header />
-    <main><slot /></main>
+    <main id="main-content"><slot /></main>
     <Footer />
   </body>
 </html>

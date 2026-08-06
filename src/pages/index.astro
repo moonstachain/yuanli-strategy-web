@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
+import StatusChip from '../components/StatusChip.astro';
 import { themes } from '../data/themes';
 import { modules } from '../data/modules';
 import { regularColumns, flagshipColumns } from '../data/columns';
@@ -10,173 +11,195 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const articles = (await getCollection('articles', ({ data }) => data.status === 'published'))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 const featured = articles.filter((article) => article.data.featured).slice(0, 3);
-const statusClass = (status: string) => `status status-${status}`;
 ---
-<BaseLayout>
+<BaseLayout mode="paper">
   <section class="hero">
-    <div class="container">
-      <p class="eyebrow">Yuanli Strategy · AI 时代事业进化系统</p>
-      <h1 class="display">把你的不可复制，<br />变成会复利的事业系统。</h1>
-      <p class="lead">找到原力母体，把它放进时代与市场，再用文脉、大脑、地图和链路，让每一次结果都成为下一次的输入。</p>
-      <div class="actions">
-        <a class="button primary" href={`${base}/articles/what-is-yuanli-strategy-trilogy/`}>从三部曲开始</a>
-        <a class="button" href="#diagnosis">判断我卡在哪里</a>
-        <a class="button" href={`${base}/columns/`}>浏览全部栏目</a>
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Yuanli Strategy · AI时代事业进化系统</p>
+        <h1 class="display">把你的不可复制，<br />变成会复利的事业系统。</h1>
+        <p class="lead">找到原力母体，把它放进时代与市场，再用文脉、大脑、地图和链路，让每一次结果都成为下一次的输入。</p>
+        <div class="actions">
+          <a class="button primary" href={`${base}/articles/what-is-yuanli-strategy-trilogy/`}>从三部曲开始</a>
+          <a class="button" href="#diagnosis">判断我卡在哪里</a>
+          <a class="button quiet" href={`${base}/columns/`}>查看完整栏目</a>
+        </div>
+      </div>
+      <div class="force-orbit" aria-hidden="true">
+        <div class="orbit orbit-a"><span>A1</span><span>A4</span></div>
+        <div class="orbit orbit-b"><span>B1</span><span>B4</span></div>
+        <div class="orbit orbit-c"><span>C1</span><span>C4</span></div>
+        <strong>母体</strong>
       </div>
     </div>
   </section>
 
-  <section class="section statement">
-    <div class="container statement-grid">
+  <section class="judgment-band">
+    <div class="container judgment-grid">
       <p class="eyebrow">今天最重要的判断</p>
-      <blockquote>AI 不会首先淘汰专家。它首先平权专家身上已经被标准化的部分。</blockquote>
-      <p class="lead">真正稀缺的，不是会不会使用更多工具，而是持续定义什么值得看见、判断、创造和承担。</p>
+      <blockquote>AI不会首先淘汰专家。它首先平权专家身上已经被标准化的部分。</blockquote>
+      <p>真正稀缺的，是持续定义什么值得看见、判断、创造和承担。</p>
     </div>
   </section>
 
   <section id="diagnosis" class="section">
     <div class="container">
-      <p class="eyebrow">从你的真实症状进入</p>
-      <h2 class="section-title">你现在卡在哪里？</h2>
-      <div class="grid cols-3 diagnosis">
-        <a class="card" href={`${base}/columns/diagnosis/`}><span class="tag">原力资产</span><h3>有经验，却说不清自己的独特性</h3><p>从能力清单回到持续生成差异的源头。</p></a>
-        <a class="card" href={`${base}/columns/diagnosis/`}><span class="tag">原力创业</span><h3>有人认可，却无法形成可放大的生意</h3><p>让时代放大原力，让市场认出价值，让三条链形成利润容器。</p></a>
-        <a class="card" href={`${base}/columns/diagnosis/`}><span class="tag">原力 OS</span><h3>项目很多，但每一次仍然从零开始</h3><p>把判断、案例、数据与行动写成会递归升级的事业系统。</p></a>
+      <div class="section-head">
+        <div><p class="eyebrow">从真实症状进入</p><h2 class="section-title">你现在卡在哪里？</h2></div>
+        <a href={`${base}/columns/diagnosis/`}>进入原力诊断室 →</a>
+      </div>
+      <div class="grid cols-3 diagnosis-grid">
+        <a class="yl-card diagnosis-card" href={`${base}/columns/diagnosis/`}>
+          <span class="chip">原力资产</span><b>01</b><h3>有经验，却说不清自己的独特性</h3><p>从能力清单回到持续生成差异的源头。</p>
+        </a>
+        <a class="yl-card diagnosis-card" href={`${base}/columns/diagnosis/`}>
+          <span class="chip">原力创业</span><b>02</b><h3>有人认可，却无法形成可放大的生意</h3><p>让时代放大原力，让市场认出价值，让三条链形成利润容器。</p>
+        </a>
+        <a class="yl-card diagnosis-card" href={`${base}/columns/diagnosis/`}>
+          <span class="chip">原力OS</span><b>03</b><h3>项目很多，但每一次仍然从零开始</h3><p>把判断、案例、数据与行动写成会递归升级的事业系统。</p>
+        </a>
       </div>
     </div>
   </section>
 
-  <section class="section columns-section">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">七个常设栏目</p>
-          <h2 class="section-title">持续观察、解释、诊断与行动</h2>
-        </div>
-        <a href={`${base}/columns/`}>查看栏目总览 →</a>
+  <section class="campaign-section">
+    <div class="container campaign-grid">
+      <div>
+        <p class="eyebrow">当前媒体战役</p>
+        <h2>AI正在蒸馏你</h2>
+        <blockquote>当你的经验被公司蒸馏成Skill，你还剩下什么？</blockquote>
+        <p>从可提取能力与生成性母体的冲突进入，连续完成时代观察、机制解释、证据与AI清算行动。</p>
       </div>
-      <div class="grid cols-3 column-grid">
-        {regularColumns.map((column) => (
-          <a class="card column-card" href={`${base}/columns/${column.id}/`}>
-            <div class="column-top">
-              <span class="meta">{column.eyebrow}</span>
-              <span class={statusClass(column.status)}>{column.statusLabel}</span>
-            </div>
-            <h3>{column.title}</h3>
-            <strong>{column.question}</strong>
-            <p>{column.promise}</p>
-            <span class="column-read">进入栏目 →</span>
-          </a>
-        ))}
+      <div class="campaign-steps">
+        <span><i>01</i>热点进入</span>
+        <span><i>02</i>原力裁决</span>
+        <span><i>03</i>案例反证</span>
+        <span><i>04</i>工具行动</span>
+        <a class="button primary" href={`${base}/tools/ai-clearance/`}>开始AI清算</a>
       </div>
     </div>
   </section>
 
   <section class="section flagship-section">
     <div class="container">
-      <div class="section-head flagship-head">
-        <div>
-          <p class="eyebrow">旗舰系列</p>
-          <h2 class="section-title">时代、人物、企业与反例</h2>
-          <p class="lead">四个跨周期系列，共同回答世界如何换轨、人如何选择、企业如何成为新物种，以及正确方法为什么没有成立。</p>
-        </div>
+      <div class="section-head">
+        <div><p class="eyebrow">四个旗舰观察场</p><h2 class="section-title">时代、人物、企业与反例</h2></div>
         <a href={`${base}/columns/#flagships`}>查看全部旗舰 →</a>
       </div>
-      <div class="grid cols-2 flagship-grid">
-        {flagshipColumns.map((column) => (
-          <a class="flagship-card" href={`${base}/columns/${column.id}/`}>
-            <div class="column-top">
-              <span class="meta">{column.eyebrow}</span>
-              <span class={statusClass(column.status)}>{column.statusLabel}</span>
-            </div>
+      <div class="flagship-grid">
+        {flagshipColumns.map((column, index) => (
+          <a class="flagship-portal" href={`${base}/columns/${column.id}/`} data-index={`0${index + 1}`}>
+            <div class="portal-top"><span>{column.eyebrow}</span><StatusChip status={column.status} label={column.statusLabel} /></div>
             <h3>{column.title}</h3>
             <strong>{column.subtitle}</strong>
             <blockquote>{column.question}</blockquote>
-            <span class="column-read">进入系列 →</span>
+            <span class="portal-link">进入观察场 →</span>
           </a>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section themes">
-    <div class="container">
-      <p class="eyebrow">六大用户主题</p>
-      <h2 class="section-title">从时代进入，从行动离开</h2>
-      <div class="grid cols-3">
-        {themes.map((theme) => (
-          <a class="card" href={`${base}/themes/${theme.id}/`}>
-            <span class="meta">{theme.question}</span>
-            <h3>{theme.title}</h3>
-            <p>{theme.description}</p>
-          </a>
-        ))}
+  <section class="section action-section">
+    <div class="container action-grid">
+      <div>
+        <p class="eyebrow">现在就完成一项战略工作</p>
+        <h2 class="section-title">不要只理解原力，先留下第一张证据卡。</h2>
+        <p class="lead">AI清算卡会帮助你区分即将被平权的表层能力、跨时间重复的差异线索，以及一个等待现实验证的母体候选。</p>
+        <a class="button primary" href={`${base}/tools/ai-clearance/`}>打开AI清算卡</a>
       </div>
+      <ol>
+        <li><span>A1</span>清算表层能力</li>
+        <li><span>A1</span>寻找重复差异</li>
+        <li><span>C4</span>写出反证条件</li>
+        <li><span>C4</span>进入现实验证</li>
+      </ol>
     </div>
   </section>
 
-  <section id="trilogy" class="section trilogy">
-    <div class="container">
-      <p class="eyebrow">三部十二模块</p>
-      <h2 class="section-title">自我 → 世界 → 时间</h2>
-      <div class="module-grid">
-        {modules.map((module) => (
-          <div class="module">
-            <strong>{module.id} · {module.title}</strong>
-            <span>{module.question}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
+  <section class="section canon-section">
     <div class="container">
       <div class="section-head">
-        <div><p class="eyebrow">已发布内容</p><h2 class="section-title">先建立三张总图</h2></div>
-        <a href={`${base}/articles/`}>查看全部文章 →</a>
+        <div><p class="eyebrow">正典地图</p><h2 class="section-title">自我 → 世界 → 时间</h2></div>
+        <a href={`${base}/columns/canon/`}>进入原力正典 →</a>
       </div>
-      <div class="grid cols-3">
-        {featured.map((article) => <ArticleCard article={article} />)}
+      <div class="module-grid">
+        {modules.map((module) => (
+          <div class="module"><strong>{module.id} · {module.title}</strong><span>{module.question}</span></div>
+        ))}
+      </div>
+      <div class="theme-ribbon" aria-label="六大用户主题">
+        {themes.map((theme) => <a href={`${base}/themes/${theme.id}/`}>{theme.title}</a>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section published-section">
+    <div class="container">
+      <div class="section-head"><div><p class="eyebrow">已发布内容</p><h2 class="section-title">先建立三张总图</h2></div><a href={`${base}/articles/`}>查看全部文章 →</a></div>
+      <div class="grid cols-3">{featured.map((article) => <ArticleCard article={article} />)}</div>
+      <div class="column-links">
+        {regularColumns.map((column) => <a href={`${base}/columns/${column.id}/`}>{column.title}<span>→</span></a>)}
       </div>
     </div>
   </section>
 </BaseLayout>
+
 <style>
-  .hero { padding: 108px 0 88px; background: radial-gradient(circle at 82% 24%, rgba(138,75,42,.16), transparent 34%); }
-  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-  .statement { background: var(--ink); color: var(--surface); }
-  .statement-grid { display: grid; grid-template-columns: .7fr 2fr 1fr; gap: 32px; align-items: center; }
-  blockquote { margin: 0; font-family: Georgia, "Noto Serif SC", serif; font-size: clamp(1.7rem, 3.8vw, 3rem); line-height: 1.25; }
-  .statement .lead { color: #c8beb2; font-size: 1rem; }
-  .diagnosis h3, .themes h3, .column-card h3, .flagship-card h3 { font-family: Georgia, "Noto Serif SC", serif; font-size: 1.35rem; line-height: 1.4; }
-  .diagnosis p, .themes p, .column-card p { color: var(--muted); }
-  .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 28px; }
-  .columns-section { background: rgba(255,253,248,.52); }
-  .column-card { display: flex; min-height: 300px; flex-direction: column; }
-  .column-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .column-card strong { margin: 12px 0 0; font-size: .96rem; }
-  .column-read { margin-top: auto; padding-top: 20px; color: var(--accent); font-weight: 760; }
-  .status { display: inline-flex; padding: 4px 9px; border-radius: 999px; font-size: .72rem; font-weight: 760; }
-  .status-live { background: #dfead9; color: #36512f; }
-  .status-execution-ready { background: #efe1c4; color: #6f4c16; }
-  .status-planning-baseline { background: #ddd8d0; color: #58524b; }
-  .flagship-section { background: var(--ink); color: var(--surface); }
-  .flagship-head .lead, .flagship-section .meta { color: #c8beb2; }
-  .flagship-head > a { color: #f0c7aa; }
-  .flagship-card { display: flex; min-height: 360px; flex-direction: column; padding: 28px; border: 1px solid #4d463e; border-radius: 22px; background: rgba(255,255,255,.035); }
-  .flagship-card:hover { border-color: #897769; transform: translateY(-3px); }
-  .flagship-card strong { color: #d9c6b6; }
-  .flagship-card blockquote { margin: 28px 0 12px; font-size: 1.45rem; }
-  .flagship-card .column-read { color: #f0c7aa; }
-  .flagship-section .status-planning-baseline { background: #514a43; color: #f2e8de; }
-  .themes { background: rgba(234,216,199,.32); }
-  .module-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-  .module { min-height: 138px; padding: 18px; display: flex; flex-direction: column; gap: 10px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .module span { color: var(--muted); font-size: .9rem; }
-  @media (max-width: 780px) {
-    .statement-grid { grid-template-columns: 1fr; }
-    .module-grid { grid-template-columns: repeat(2, 1fr); }
-    .section-head { align-items: start; flex-direction: column; }
+  .hero { padding: 112px 0 92px; }
+  .hero-grid { display: grid; grid-template-columns: 1.35fr .65fr; gap: var(--sp-9); align-items: center; }
+  .force-orbit { position: relative; aspect-ratio: 1; max-width: 420px; justify-self: end; display: grid; place-items: center; }
+  .force-orbit::before { content: ''; position: absolute; inset: 10%; border-radius: 50%; background: radial-gradient(circle, var(--accent-soft), transparent 62%); }
+  .force-orbit > strong { z-index: 2; display: grid; width: 104px; height: 104px; place-items: center; border: 1px solid var(--accent); border-radius: 50%; background: var(--panel-deep); color: var(--accent); font-family: var(--serif); font-size: 1.5rem; box-shadow: var(--shadow); }
+  .orbit { position: absolute; inset: 8%; border: 1px solid var(--line); border-radius: 50%; }
+  .orbit span { position: absolute; display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--panel-deep); color: var(--ink3); font-family: var(--mono); font-size: .72rem; }
+  .orbit span:first-child { top: -18px; left: calc(50% - 18px); } .orbit span:last-child { right: -18px; bottom: 28%; }
+  .orbit-b { inset: 21%; transform: rotate(48deg); } .orbit-c { inset: 34%; transform: rotate(96deg); }
+  .judgment-band { padding: var(--sp-8) 0; background: var(--ink); color: var(--bg); }
+  .judgment-grid { display: grid; grid-template-columns: .6fr 2fr .8fr; gap: var(--sp-7); align-items: center; }
+  .judgment-band .eyebrow { color: var(--accent-light); }
+  .judgment-band blockquote { margin: 0; font-family: var(--serif); font-size: clamp(1.7rem, 3.5vw, 2.9rem); line-height: 1.25; }
+  .judgment-band p:last-child { color: color-mix(in srgb, var(--bg) 72%, transparent); }
+  .diagnosis-card { min-height: 320px; display: flex; flex-direction: column; }
+  .diagnosis-card b { margin-top: var(--sp-8); color: var(--accent-light); font-family: var(--mono); font-size: 2.4rem; }
+  .diagnosis-card h3 { margin: var(--sp-4) 0; font-family: var(--serif); font-size: 1.45rem; line-height: 1.35; }
+  .diagnosis-card p { margin-top: auto; color: var(--ink2); }
+  .campaign-section { padding: var(--sp-10) 0; background: linear-gradient(155deg, #0d2018, #091611); color: #f0e6d2; }
+  .campaign-section .eyebrow { color: #c9a961; }
+  .campaign-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: var(--sp-9); align-items: center; }
+  .campaign-section h2 { margin: 0; font-family: var(--serif); font-size: clamp(2.8rem, 6vw, 5.2rem); }
+  .campaign-section blockquote { margin: var(--sp-6) 0; color: #e0c887; font-family: var(--serif); font-size: clamp(1.4rem, 3vw, 2rem); }
+  .campaign-section p { color: #cdbf9f; }
+  .campaign-steps { display: grid; gap: var(--sp-3); padding: var(--sp-7); border: 1px solid #304c39; border-radius: var(--r-l); background: rgba(20,48,31,.58); }
+  .campaign-steps span { display: flex; gap: var(--sp-4); padding: var(--sp-3) 0; border-bottom: 1px solid #304c39; }
+  .campaign-steps i { color: #c9a961; font-family: var(--mono); font-style: normal; }
+  .campaign-steps .button { margin-top: var(--sp-4); border-color: #c9a961; background: #c9a961; color: #10150f; }
+  .flagship-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-6); }
+  .flagship-portal { position: relative; min-height: 420px; padding: var(--sp-8); overflow: hidden; border: 1px solid #304c39; border-radius: var(--r-l); background: linear-gradient(145deg, rgba(20,48,31,.78), rgba(9,22,17,.98)); color: #f0e6d2; box-shadow: 0 20px 58px rgba(0,0,0,.25); }
+  .flagship-portal::before { content: attr(data-index); position: absolute; right: var(--sp-6); bottom: -22px; color: rgba(201,169,97,.11); font-family: var(--serif); font-size: 8rem; }
+  .flagship-portal:hover { transform: translateY(var(--lift)); border-color: #8b6f2e; color: #f0e6d2; }
+  .portal-top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); color: #cdbf9f; font-size: .8rem; }
+  .flagship-portal h3 { margin: var(--sp-8) 0 var(--sp-2); font-family: var(--serif); font-size: 2rem; }
+  .flagship-portal > strong { color: #c9a961; }
+  .flagship-portal blockquote { max-width: 520px; margin: var(--sp-8) 0; font-family: var(--serif); font-size: 1.45rem; line-height: 1.45; }
+  .portal-link { position: absolute; bottom: var(--sp-7); color: #e0c887; font-weight: 760; }
+  .action-section { background: var(--panel-deep); }
+  .action-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: var(--sp-9); align-items: center; }
+  .action-grid ol { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .action-grid li { display: flex; gap: var(--sp-5); padding: var(--sp-5) 0; border-bottom: 1px solid var(--line); }
+  .action-grid li span { color: var(--accent); font-family: var(--mono); }
+  .module-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .module { min-height: 140px; padding: var(--sp-5); display: flex; flex-direction: column; gap: var(--sp-3); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .module span { color: var(--ink3); font-size: .88rem; }
+  .theme-ribbon { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-7); }
+  .theme-ribbon a { padding: var(--sp-2) var(--sp-4); border: 1px solid var(--line); border-radius: var(--r-pill); color: var(--ink2); font-size: .84rem; }
+  .column-links { display: grid; grid-template-columns: repeat(7, 1fr); margin-top: var(--sp-8); border-top: 1px solid var(--line); }
+  .column-links a { display: flex; justify-content: space-between; gap: var(--sp-2); padding: var(--sp-4) var(--sp-2); border-bottom: 1px solid var(--line); color: var(--ink2); font-size: .84rem; }
+  @media (max-width: 900px) {
+    .hero-grid, .judgment-grid, .campaign-grid, .action-grid { grid-template-columns: 1fr; }
+    .force-orbit { display: none; }
+    .flagship-grid { grid-template-columns: 1fr; }
+    .module-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .column-links { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
