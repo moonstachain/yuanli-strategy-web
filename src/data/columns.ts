@@ -142,7 +142,7 @@ export const columns: PortalColumn[] = [
     cadence: '建议每周或双周',
     modules: ['cross', 'A1—C4'],
     firstBatch: ['达尔文与事业生命体', '荣格与原力母体', '信息论与原力OS'],
-    relatedArticleIds: [],
+    relatedArticleIds: ['yuanli-startup-time-name-system-power'],
     primaryAction: { label: '查看全部文章', href: '/articles/' },
   },
   {
@@ -159,7 +159,7 @@ export const columns: PortalColumn[] = [
     cadence: '第一季12周',
     modules: ['B1', 'A1', 'C1—C4'],
     firstBatch: ['1771纺织厂', '1844电报', '1882电网', '1971微处理器', '2022聊天框'],
-    relatedArticleIds: [],
+    relatedArticleIds: ['yuanli-startup-time-name-system-power'],
     primaryAction: { label: '先理解原力借势', href: '/articles/what-is-yuanli-strategy-trilogy/' },
   },
   {
@@ -193,7 +193,11 @@ export const columns: PortalColumn[] = [
     cadence: '建议第一季12个物种',
     modules: ['A1', 'B1—B4', 'C1—C4'],
     firstBatch: ['丰田：判断如何进入生产系统', '宜家：用户劳动如何重构模式', 'Costco：低毛利如何形成信任'],
-    relatedArticleIds: ['b2-category-is-choice-standard', 'c4-chain-turns-judgment-into-action'],
+    relatedArticleIds: [
+      'yuanli-startup-time-name-system-power',
+      'b2-category-is-choice-standard',
+      'c4-chain-turns-judgment-into-action',
+    ],
     primaryAction: { label: '先理解品类与链路', href: '/articles/b2-category-is-choice-standard/' },
   },
   {
