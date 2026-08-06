@@ -1,10 +1,12 @@
 ---
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const links = [
-  ['文章', `${base}/articles/`],
-  ['主题', `${base}/themes/`],
+  ['观察', `${base}/columns/observation/`],
+  ['正典', `${base}/columns/canon/`],
+  ['案例', `${base}/columns/cases/`],
   ['工具', `${base}/tools/`],
-  ['三部曲', `${base}/#trilogy`],
+  ['旗舰', `${base}/columns/#flagships`],
+  ['诊断', `${base}/columns/diagnosis/`],
   ['关于', `${base}/about/`],
 ];
 ---
@@ -17,9 +19,14 @@ const links = [
   </div>
 </header>
 <style>
-  .site-header { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(18px); background: rgba(246,241,232,.84); border-bottom: 1px solid rgba(217,208,195,.8); }
+  .site-header { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(18px); background: rgba(246,241,232,.88); border-bottom: 1px solid rgba(217,208,195,.8); }
   .nav { min-height: 66px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-  .brand { font-family: Georgia, "Noto Serif SC", serif; font-weight: 800; font-size: 1.15rem; }
-  nav { display: flex; gap: 18px; font-size: .92rem; }
-  @media (max-width: 620px) { nav a:nth-child(4), nav a:nth-child(5) { display: none; } }
+  .brand { flex: 0 0 auto; font-family: Georgia, "Noto Serif SC", serif; font-weight: 800; font-size: 1.15rem; }
+  nav { display: flex; gap: clamp(10px, 1.7vw, 20px); align-items: center; font-size: .9rem; white-space: nowrap; }
+  @media (max-width: 760px) {
+    nav a:nth-child(3), nav a:nth-child(5), nav a:nth-child(7) { display: none; }
+  }
+  @media (max-width: 470px) {
+    nav a:nth-child(2), nav a:nth-child(6) { display: none; }
+  }
 </style>
