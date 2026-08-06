@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { regularColumns, flagshipColumns } from '../../data/columns';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const statusClass = (status: string) => `status status-${status}`;
+---
+<BaseLayout title="栏目 · 原力战略" description="原力战略的常设栏目、旗舰系列与真实建设状态。">
+  <section class="columns-hero">
+    <div class="container">
+      <p class="eyebrow">Editorial System</p>
+      <h1 class="display small">不是堆更多内容，<br />而是建立会自我繁殖的栏目系统。</h1>
+      <p class="lead">常设栏目负责持续观察、解释、诊断与行动；旗舰系列负责形成跨周期思想资产。每个入口都公开显示真实建设状态。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">常设栏目</p>
+          <h2 class="section-title">持续运行的七个内容引擎</h2>
+        </div>
+      </div>
+      <div class="grid cols-3 column-grid">
+        {regularColumns.map((column) => (
+          <a class="card column-card" href={`${base}/columns/${column.id}/`}>
+            <div class="card-top">
+              <span class="meta">{column.eyebrow}</span>
+              <span class={statusClass(column.status)}>{column.statusLabel}</span>
+            </div>
+            <h3>{column.title}</h3>
+            <p class="question">{column.question}</p>
+            <p>{column.promise}</p>
+            <span class="read">查看栏目 →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="flagships" class="section flagships">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">旗舰系列</p>
+          <h2 class="section-title">时代、人物、企业与反例</h2>
+          <p class="lead">四个旗舰分别研究选择环境、命运临界点、商业物种和方法失效边界。</p>
+        </div>
+      </div>
+      <div class="grid cols-2 flagship-grid">
+        {flagshipColumns.map((column) => (
+          <a class="flagship-card" href={`${base}/columns/${column.id}/`}>
+            <div class="card-top">
+              <span class="meta">{column.eyebrow}</span>
+              <span class={statusClass(column.status)}>{column.statusLabel}</span>
+            </div>
+            <h3>{column.title}</h3>
+            <strong>{column.subtitle}</strong>
+            <blockquote>{column.question}</blockquote>
+            <p>{column.description}</p>
+            <span class="read">进入系列 →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section boundary">
+    <div class="container boundary-grid">
+      <div>
+        <p class="eyebrow">治理边界</p>
+        <h2 class="section-title">主题、栏目、战役和正典不是同一层</h2>
+      </div>
+      <div class="boundary-chain">
+        <p><strong>六大主题</strong>：用户从哪里进入。</p>
+        <p><strong>常设栏目</strong>：什么内容长期持续生产。</p>
+        <p><strong>媒体战役</strong>：某个阶段集中解释什么冲突。</p>
+        <p><strong>旗舰系列</strong>：沉淀什么跨周期思想资产。</p>
+        <p><strong>A1—C4</strong>：后台如何治理、检索与回写。</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .columns-hero { padding: 96px 0 62px; background: radial-gradient(circle at 78% 18%, rgba(138,75,42,.17), transparent 34%); }
+  .small { font-size: clamp(2.6rem, 6vw, 5rem); }
+  .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 28px; }
+  .column-grid { align-items: stretch; }
+  .column-card { display: flex; min-height: 320px; flex-direction: column; }
+  .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .column-card h3, .flagship-card h3 { margin: 24px 0 6px; font-family: Georgia, "Noto Serif SC", serif; font-size: 1.75rem; line-height: 1.25; }
+  .column-card p { color: var(--muted); }
+  .column-card .question { color: var(--ink); font-weight: 720; }
+  .read { margin-top: auto; padding-top: 22px; color: var(--accent); font-weight: 760; }
+  .flagships { background: var(--ink); color: var(--surface); }
+  .flagships .lead, .flagships .meta { color: #c8beb2; }
+  .flagship-card { display: flex; min-height: 410px; flex-direction: column; padding: 30px; border: 1px solid #4d463e; border-radius: 24px; background: rgba(255,255,255,.035); }
+  .flagship-card:hover { border-color: #8a7464; transform: translateY(-3px); }
+  .flagship-card strong { color: #d9c6b6; }
+  .flagship-card blockquote { margin: 28px 0 18px; font-family: Georgia, "Noto Serif SC", serif; font-size: 1.55rem; line-height: 1.4; }
+  .flagship-card p { color: #c8beb2; }
+  .flagship-card .read { color: #f0c7aa; }
+  .status { display: inline-flex; padding: 4px 9px; border-radius: 999px; font-size: .74rem; font-weight: 760; }
+  .status-live { background: #dfead9; color: #36512f; }
+  .status-execution-ready { background: #efe1c4; color: #6f4c16; }
+  .status-planning-baseline { background: #ddd8d0; color: #58524b; }
+  .flagships .status-planning-baseline { background: #514a43; color: #f2e8de; }
+  .boundary-grid { display: grid; grid-template-columns: .9fr 1.4fr; gap: 60px; }
+  .boundary-chain { border-left: 1px solid var(--line); padding-left: 28px; }
+  .boundary-chain p { margin: 0 0 18px; color: var(--muted); }
+  @media (max-width: 760px) {
+    .section-head, .boundary-grid { display: block; }
+    .boundary-chain { margin-top: 24px; }
+  }
+</style>
