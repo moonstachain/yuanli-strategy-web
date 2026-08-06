@@ -34,6 +34,10 @@ const articles = defineCollection({
     canonStatus: z.enum(['public_projection', 'canon_aligned', 'canon_candidate']),
     featured: z.boolean().default(false),
     readingMinutes: z.number().int().positive(),
+    campaign: z.string().min(1).optional(),
+    contentRole: z.enum(['hook', 'evidence', 'mechanism', 'action', 'reflection']).optional(),
+    sourceStatus: z.enum(['not_required', 'source_pack_ready', 'needs_sources', 'verified_sources']).optional(),
+    outcomeQuestion: z.string().min(10).optional(),
     nextAction: z.object({
       label: z.string().min(1),
       href: z.string().min(1),
