@@ -2,6 +2,9 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { moduleNames } from '../../data/modules';
+import EvidenceBadge from '../../components/EvidenceBadge.astro';
+import ModuleCoordinate from '../../components/ModuleCoordinate.astro';
+import ActionPanel from '../../components/ActionPanel.astro';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) => data.status === 'published');
@@ -12,33 +15,116 @@ const { article } = Astro.props;
 const { Content } = await render(article);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const moduleName = article.data.module === 'ROOT' ? '总纲' : moduleNames[article.data.module];
+const actionHref = article.data.nextAction?.href ? `${base}${article.data.nextAction.href}` : `${base}/articles/`;
 ---
-<BaseLayout title={`${article.data.title} · 原力战略`} description={article.data.description}>
+<BaseLayout title={`${article.data.title} · 原力战略`} description={article.data.description} mode="paper" showReadingProgress={true}>
   <article>
     <header class="article-hero">
-      <div class="prose">
-        <div class="article-meta">
-          <span class="tag">{article.data.module} · {moduleName}</span>
-          <span class="meta">{article.data.readingMinutes} 分钟 · {article.data.evidenceLevel}</span>
+      <div class="container hero-grid">
+        <div>
+          <div class="article-meta">
+            <ModuleCoordinate module={article.data.module} name={moduleName} compact={true} />
+            <EvidenceBadge level={article.data.evidenceLevel} />
+            <span class="meta">{article.data.readingMinutes} 分钟</span>
+          </div>
+          <h1>{article.data.title}</h1>
+          <p class="lead">{article.data.description}</p>
         </div>
-        <h1>{article.data.title}</h1>
-        <p class="lead">{article.data.description}</p>
+        <aside class="hero-note yl-card yl-card--compact yl-card--static">
+          <p class="eyebrow">阅读协议</p>
+          <strong>区分事实、推论与行动。</strong>
+          <p>本文的验收不是读完，而是能否形成一个更清晰的判断，并进入现实验证。</p>
+        </aside>
       </div>
     </header>
-    <div class="prose article-body"><Content /></div>
-    <footer class="prose next-step">
-      <p class="eyebrow">下一步不是继续阅读</p>
-      <h2>{article.data.nextAction?.label ?? '把今天的判断写成一张行动卡'}</h2>
-      <p>原力文章的验收，不是“读完”，而是是否发生了新的判断、行动、证据与回写。</p>
-      <a class="button primary" href={article.data.nextAction?.href ? `${base}${article.data.nextAction.href}` : `${base}/articles/`}>进入下一步</a>
-    </footer>
+
+    <div class="container article-shell">
+      <aside class="article-rail" aria-label="文章导航与坐标">
+        <div class="rail-sticky">
+          <p class="eyebrow">本文目录</p>
+          <nav id="article-toc" class="toc"><span class="meta">目录正在生成</span></nav>
+          <div class="rail-divider"></div>
+          <p class="eyebrow">证据纪律</p>
+          <p class="rail-note">当前标记：<strong>{article.data.evidenceLevel}</strong>。反例、边界和未验证部分不应被包装成正典。</p>
+        </div>
+      </aside>
+
+      <div>
+        <div class="prose article-body" id="article-content"><Content /></div>
+        <div class="prose">
+          <ActionPanel
+            title={article.data.nextAction?.label ?? '把今天的判断写成一张行动卡'}
+            description="原力文章的更高验收，是发生新的判断、行动、证据与回写候选。"
+            href={actionHref}
+            label="进入下一步"
+          />
+        </div>
+      </div>
+    </div>
   </article>
+
+  <script is:inline>
+    (() => {
+      const article = document.getElementById('article-content');
+      const toc = document.getElementById('article-toc');
+      const progress = document.getElementById('reading-progress-bar');
+      if (!article) return;
+
+      const headings = [...article.querySelectorAll('h2, h3')];
+      if (toc) {
+        toc.innerHTML = '';
+        if (!headings.length) {
+          toc.innerHTML = '<span class="meta">本文暂无分节目录</span>';
+        } else {
+          headings.forEach((heading, index) => {
+            if (!heading.id) heading.id = `section-${index + 1}`;
+            const link = document.createElement('a');
+            link.href = `#${heading.id}`;
+            link.textContent = heading.textContent || `第${index + 1}节`;
+            link.dataset.level = heading.tagName.toLowerCase();
+            toc.appendChild(link);
+          });
+        }
+      }
+
+      const updateProgress = () => {
+        if (!progress) return;
+        const rect = article.getBoundingClientRect();
+        const total = Math.max(article.offsetHeight - window.innerHeight * .55, 1);
+        const read = Math.min(Math.max(-rect.top + window.innerHeight * .2, 0), total);
+        progress.style.width = `${Math.round(read / total * 100)}%`;
+      };
+      updateProgress();
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      window.addEventListener('resize', updateProgress);
+    })();
+  </script>
 </BaseLayout>
+
 <style>
-  .article-hero { padding: 88px 0 52px; border-bottom: 1px solid var(--line); }
-  .article-hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); margin: 22px 0 16px; }
-  .article-meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .article-body { padding-top: 52px; }
-  .next-step { margin-top: 72px; padding: 36px; border: 1px solid var(--line); border-radius: 22px; background: var(--surface); }
-  .next-step h2 { margin-top: 8px; }
+  .article-hero { padding: var(--sp-10) 0 var(--sp-9); border-bottom: 1px solid var(--line); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: var(--sp-9); align-items: end; }
+  .article-hero h1 { max-width: 920px; margin: var(--sp-7) 0 var(--sp-5); font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: 1.08; letter-spacing: -.04em; text-wrap: balance; }
+  .article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); }
+  .hero-note strong { font-family: var(--serif); font-size: 1.2rem; }
+  .hero-note p:last-child { margin-bottom: 0; color: var(--ink2); font-size: .9rem; }
+  .article-shell { display: grid; grid-template-columns: var(--rail) minmax(0, var(--reading)); gap: var(--sp-9); justify-content: center; padding-top: var(--sp-9); padding-bottom: var(--sp-10); }
+  .article-rail { min-width: 0; }
+  .rail-sticky { position: sticky; top: calc(var(--header-h) + var(--sp-6)); }
+  .toc { display: grid; gap: var(--sp-2); }
+  .toc :global(a) { padding: var(--sp-2) 0; border-bottom: 1px solid var(--line); color: var(--ink2); font-size: .86rem; line-height: 1.45; }
+  .toc :global(a[data-level='h3']) { padding-left: var(--sp-4); color: var(--ink3); }
+  .toc :global(a:hover) { color: var(--accent); }
+  .rail-divider { height: 1px; margin: var(--sp-7) 0; background: var(--line); }
+  .rail-note { color: var(--ink3); font-size: .84rem; }
+  .article-body { width: 100%; }
+  @media (max-width: 900px) {
+    .hero-grid, .article-shell { grid-template-columns: 1fr; }
+    .hero-note { display: none; }
+    .article-rail { order: -1; }
+    .rail-sticky { position: static; padding: var(--sp-5); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--panel-soft); }
+    .toc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .rail-divider, .rail-note, .article-rail > .rail-sticky > .eyebrow:nth-of-type(2) { display: none; }
+  }
+  @media (max-width: 560px) { .toc { grid-template-columns: 1fr; } }
 </style>
