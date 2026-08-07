@@ -2,6 +2,7 @@
 title: 当你的经验被公司蒸馏成 Skill，你还剩下什么？
 description: 当个人经验被写成流程、知识库、Agent和Skill，真正需要重新定价的不是经验本身，而是持续生成新判断的源头。
 publishedAt: 2026-08-06
+updatedAt: 2026-08-07
 status: published
 trilogy: cross
 module: A1
@@ -18,7 +19,7 @@ featured: true
 readingMinutes: 9
 campaign: AI 正在蒸馏你
 contentRole: hook
-sourceStatus: needs_sources
+sourceStatus: source_pack_ready
 outcomeQuestion: 读者是否能识别至少一项正在被标准化的能力，以及一条仍会持续生成新判断的母体线索？
 nextAction:
   label: 完成AI清算卡
@@ -169,11 +170,11 @@ vs
 
 ## 当前边界
 
-本文提出的是一个结构性假设，不是已经完成外部事实核验的行业报告。
+本战役已经形成最小外部 Evidence Pack：多个知识密集型组织的一手材料显示，内部知识、智力资本、会议信息和部分标准工作流程正在进入生成式 AI 的调用层；同时，原始实验也提示 AI 在能力边界外可能降低正确率。
 
-“组织正在蒸馏个人经验”需要后续事实包支持，包括真实产品、组织实践、失败案例与反例。当前证据等级保持 `hypothesis`，不得把这一判断直接写成所有行业、所有岗位都已发生的确定事实。
+但这仍然**不能证明“专家已经被替代”或“完整生成机制已经被提取”**。当前关于“真正更难复制的是生成性母体、边界判断与责任机制”的核心判断仍保持 `hypothesis`；独立 Human Evidence Review、10名真实用户行动与7日 Outcome 也尚未完成。
 
-但你不需要等到宏观结论完全确定，才开始盘点自己的事业。
+因此，你不需要等到宏观结论完全确定才开始盘点自己的事业，但也不应该把一个有解释力的假设写成已经验证的行业定律。
 
 最小动作是：
 

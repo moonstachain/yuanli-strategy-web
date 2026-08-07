@@ -15,6 +15,24 @@ export interface ContentCampaign {
 
 export const campaigns: ContentCampaign[] = [
   {
+    id: 'ai-distillation',
+    eyebrow: 'Golden Loop 001 · A1',
+    title: 'AI正在蒸馏你',
+    subtitle: '当专业知识越来越容易被AI调用，真正需要重新定价的是持续生成判断的源头。',
+    promise: '从一个时代冲突开始，区分已经可以被提取的能力、仍待验证的原力母体，并完成一次真实AI清算行动。',
+    question: '当过去的答案被提取之后，你还剩下什么？',
+    description: '当前外部最小Evidence Pack已经形成，但Human Evidence Review、10名真实用户行动、7日Outcome和Changed Rule仍未完成。本战役把Hook、机制解释和AI清算卡连成一条可验证链，不把页面上线写成成功案例。',
+    articleIds: [
+      'when-experience-becomes-skill',
+      'extractable-ability-vs-generative-source',
+      'ai-clearance-action-guide',
+    ],
+    action: {
+      label: '完成AI清算卡',
+      href: '/tools/ai-clearance/',
+    },
+  },
+  {
     id: 'yuanli-four-wealth',
     eyebrow: 'Yuanli Campaign',
     title: '原力创业·四种财富',
