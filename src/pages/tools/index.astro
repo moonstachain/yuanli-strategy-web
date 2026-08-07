@@ -2,58 +2,18 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const tools = [
-  {
-    module: 'A1',
-    title: '10分钟看清：你的哪些能力会被AI平权？',
-    name: 'AI清算卡',
-    forWhom: '觉得自己正在被AI替代、但说不清独特性的专家',
-    input: '3段真实经历，约10分钟',
-    output: '一张表层能力清单和一个母体候选',
-    next: '用一个真实任务验证候选',
-    href: `${base}/tools/ai-clearance/`,
-    action: '开始10分钟清算',
-  },
-  {
-    module: 'B2',
-    title: '把“我很专业”变成用户愿意选择的问题',
-    name: '贵任务与价值账户卡',
-    forWhom: '内容有人认可、业务却没有稳定选择入口的人',
-    input: '一个目标用户和一个真实购买场景',
-    output: '贵任务、价值账户和两个竞争性品类假设',
-    next: '找3位用户验证表达',
-    href: `${base}/tools/category-hypothesis/`,
-    action: '形成我的品类假设',
-  },
-  {
-    module: 'B1—B4',
-    title: '看清你的事业，真正缺哪一种财富',
-    name: '四种财富诊断卡',
-    forWhom: '赶上趋势、品牌有影响或业务在增长，却说不清为什么没有形成长期复利的人',
-    input: '母体候选、当前事业和四类真实证据',
-    output: '唯一财富断点、30天验证动作、停止规则与回写位置',
-    next: '完成一个真实动作并保留支持证据与反证',
-    href: `${base}/tools/four-wealth-audit/`,
-    action: '诊断我的四种财富',
-  },
-  {
-    module: 'C4',
-    title: '让这次项目成为下一次的起点',
-    name: '项目回写卡',
-    forWhom: '项目很多、但每次仍然从零开始的人',
-    input: '一次真实项目的行动、证据与结果',
-    output: 'Changed Rule候选和下一次加载点',
-    next: '在第二次任务开始前读取它',
-    href: `${base}/tools/project-backwrite/`,
-    action: '完成一次项目回写',
-  },
+  { module: 'A1', title: '10分钟看清：你的哪些能力会被AI平权？', name: 'AI清算卡', level: '基础行动', forWhom: '觉得自己正在被AI替代、但说不清独特性的专家', input: '3段真实经历，约10分钟', output: '一张表层能力清单和一个母体候选', next: '用一个真实任务验证候选', href: `${base}/tools/ai-clearance/`, action: '开始10分钟清算' },
+  { module: 'B2', title: '把“我很专业”变成用户愿意选择的问题', name: '贵任务与价值账户卡', level: '基础行动', forWhom: '内容有人认可、业务却没有稳定选择入口的人', input: '一个目标用户和一个真实购买场景', output: '贵任务、价值账户和两个竞争性品类假设', next: '找3位用户验证表达', href: `${base}/tools/category-hypothesis/`, action: '形成我的品类假设' },
+  { module: 'B1—B4', title: '看清你的事业，真正缺哪一种财富', name: '四种财富诊断卡', level: '综合诊断｜建议完成基础导航后使用', forWhom: '已有母体候选与真实事业对象，想判断长期复利断点的人', input: '母体候选、当前事业和四类真实证据', output: '唯一财富断点、30天验证动作、停止规则与回写位置', next: '完成一个真实动作并保留支持证据与反证', href: `${base}/tools/four-wealth-audit/`, action: '进入综合诊断' },
+  { module: 'C4', title: '让这次项目成为下一次的起点', name: '项目回写卡', level: '基础行动', forWhom: '项目很多、但每次仍然从零开始的人', input: '一次真实项目的行动、证据与结果', output: 'Changed Rule候选和下一次加载点', next: '在第二次任务开始前读取它', href: `${base}/tools/project-backwrite/`, action: '完成一次项目回写' },
 ];
 ---
-<BaseLayout title="原力战略工具" description="从真实症状出发，完成一个判断、留下一个资产，并进入现实验证。">
+<BaseLayout title="原力战略工具" description="从真实症状出发，完成一个判断、留下一个资产，并进入现实验证。" mode="cockpit">
   <section class="section">
     <div class="container">
       <p class="eyebrow">ACTION TOOLS · 从结果开始</p>
       <h1 class="display">不要先学会工具名。<br />先看你会得到什么。</h1>
-      <p class="lead">每张工具卡都明确适合谁、需要什么、得到什么和接下来做什么。结果只保存在当前浏览器；是否有效，仍由真实行动与后续证据判断。</p>
+      <p class="lead">基础行动适合首次使用；综合诊断需要已有真实事业对象与前置证据。所有输入与生成资产默认只保存在当前浏览器。</p>
       <div class="actions"><a class="button" href={`${base}/start/`}>不知道从哪开始？先做3分钟原力导航</a></div>
     </div>
   </section>
@@ -62,6 +22,7 @@ const tools = [
       {tools.map((tool) => (
         <a class="tool-result-card" href={tool.href}>
           <div class="tool-result-head"><span>{tool.module}</span><small>{tool.name}</small></div>
+          <span class:list={['tool-level', tool.level.startsWith('综合') && 'advanced']}>{tool.level}</span>
           <h2>{tool.title}</h2>
           <dl>
             <div><dt>适合谁</dt><dd>{tool.forWhom}</dd></div>
@@ -77,11 +38,13 @@ const tools = [
 </BaseLayout>
 <style>
   .tool-result-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-5); }
-  .tool-result-card { min-height: 520px; display: flex; flex-direction: column; padding: var(--sp-7); border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--panel); transition: transform var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease); }
+  .tool-result-card { min-height: 540px; display: flex; flex-direction: column; padding: var(--sp-7); border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--panel); transition: transform var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease); }
   .tool-result-card:hover { transform: translateY(var(--lift)); border-color: var(--accent); box-shadow: var(--shadow); color: var(--ink); }
   .tool-result-head { display: flex; justify-content: space-between; gap: var(--sp-4); color: var(--ink3); font-size: .78rem; }
   .tool-result-head span { color: var(--accent); font-weight: 800; }
-  .tool-result-card h2 { margin: var(--sp-7) 0 var(--sp-5); font-family: var(--serif); font-size: clamp(1.7rem, 3vw, 2.45rem); line-height: 1.18; }
+  .tool-level { width: fit-content; margin-top: var(--sp-4); padding: 4px 9px; border: 1px solid var(--line); border-radius: var(--r-pill); color: var(--ink3); font-size: .72rem; font-weight: 760; }
+  .tool-level.advanced { border-color: var(--warn); color: var(--warn); }
+  .tool-result-card h2 { margin: var(--sp-5) 0; font-family: var(--serif); font-size: clamp(1.7rem, 3vw, 2.45rem); line-height: 1.18; }
   .tool-result-card dl { display: grid; gap: var(--sp-3); margin: 0; }
   .tool-result-card dl div { display: grid; grid-template-columns: 76px 1fr; gap: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--line); }
   .tool-result-card dt { color: var(--ink3); font-size: .8rem; font-weight: 760; }
