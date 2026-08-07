@@ -1,0 +1,12 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import { studioSnapshot as s } from '../../data/studio';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<StudioLayout title="生产 · 原力 Studio" eyebrow="PRODUCTION WORKBENCH">
+  <Fragment slot="heading"><h1>每个作品都必须同时看得见：<br/>为什么写、写给谁、证据是什么、希望用户做什么。</h1></Fragment>
+  <section class="studio-section"><div class="container studio-grid two">
+    <article class="studio-card"><p class="eyebrow">Current Campaign</p><h2>{s.campaign.title}</h2><p><strong>User：</strong>{s.campaign.user}</p><p><strong>Core Claim：</strong>{s.campaign.coreClaim}</p><p><strong>Outcome Question：</strong>用户完成AI清算后，是否改变了一个真实的事业选择？</p><a class="studio-link" href={`${base}/studio/campaigns/${s.campaign.slug}/`}>打开完整Work Package →</a></article>
+    <article class="studio-card"><p class="eyebrow">Works</p>{s.works.map(w=><div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="meta-line"><span class="studio-chip">{w.type}</span><span class="studio-chip">{w.state}</span></div><strong>{w.title}</strong><br/><a class="studio-link" href={`${base}${w.href}`}>查看公开产物 →</a></div>)}</article>
+  </div></section>
+</StudioLayout>

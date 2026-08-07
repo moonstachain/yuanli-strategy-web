@@ -1,0 +1,11 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import { studioSnapshot as s } from '../../data/studio';
+---
+<StudioLayout title="雷达 · 原力 Studio" eyebrow="SIGNAL RADAR">
+  <Fragment slot="heading"><h1>先判断什么值得介入，<br/>再决定生产什么。</h1></Fragment>
+  <section class="studio-section"><div class="container studio-grid two">
+    <article class="studio-card"><div class="meta-line"><span class="studio-chip warn">ACTIVE SIGNAL</span><span class="studio-chip">{s.campaign.module}</span></div><h2>{s.campaign.title}</h2><p><strong>用户症状：</strong>{s.campaign.symptom}</p><p><strong>为什么现在：</strong>AI正在降低知识生产与表达的边际成本；该判断需要Brain证据包进一步约束。</p><p><strong>下一动作：</strong>进入Evidence Request，而不是继续扩写观点。</p></article>
+    <article class="studio-card"><p class="eyebrow">Signal Gate</p><h2>信号进入生产前必须回答四件事</h2><table class="studio-table"><tbody><tr><td>Why now</td><td>为什么偏偏是现在</td></tr><tr><td>User symptom</td><td>目标用户会感受到什么</td></tr><tr><td>Force</td><td>背后的结构性力量</td></tr><tr><td>Next</td><td>忽略 / 观察 / 取证</td></tr></tbody></table></article>
+  </div></section>
+</StudioLayout>

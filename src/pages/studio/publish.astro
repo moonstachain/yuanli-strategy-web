@@ -1,0 +1,12 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import { studioSnapshot as s } from '../../data/studio';
+---
+<StudioLayout title="发布 · 原力 Studio" eyebrow="PUBLICATION GATE">
+  <Fragment slot="heading"><h1>发布只是进入世界，<br/>不是生产完成。</h1></Fragment>
+  <section class="studio-section"><div class="container studio-grid three">
+    <article class="studio-card"><p class="eyebrow">Ready</p><h2>证据与编辑门</h2><p>当前Campaign的Evidence Pack仍未就绪，因此事实性升级不应通过。</p><span class="studio-chip warn">BLOCKED BY EVIDENCE</span></article>
+    <article class="studio-card"><p class="eyebrow">Published</p><h2>公开产物</h2><p>Hook / Mechanism / Action已有Output，但“存在”不等于用户已经Used。</p><span class="studio-chip">MATURITY · {s.campaign.maturity}</span></article>
+    <article class="studio-card"><p class="eyebrow">Distribution</p><h2>渠道不是Outcome</h2><p>网站、公众号、小红书、B站等分发信号只回答“看见了多少”，不能替代行动与结果。</p><span class="studio-chip warn">REAL DISTRIBUTION NOT_RUN</span></article>
+  </div></section>
+</StudioLayout>

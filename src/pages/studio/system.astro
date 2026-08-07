@@ -1,0 +1,8 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import { studioSnapshot as s } from '../../data/studio';
+---
+<StudioLayout title="系统 · 原力 Studio" eyebrow="GOVERNED CONTROL PLANE">
+  <Fragment slot="heading"><h1>Studio负责看见和推进，<br/>不负责另存一份真相。</h1></Fragment>
+  <section class="studio-section"><div class="container studio-card"><h2>六仓职责与当前指针</h2><table class="studio-table"><thead><tr><th>系统</th><th>职责</th><th>快照状态</th><th>真源</th></tr></thead><tbody>{s.sources.map(x=><tr><td><strong>{x.name}</strong></td><td>{x.role}</td><td><span class="studio-chip">{x.state}</span></td><td><a class="studio-link" href={x.href}>打开 →</a></td></tr>)}</tbody></table><p>状态为2026-08-07公开仓快照；Studio不自动覆盖这些真源。</p></div></section>
+</StudioLayout>

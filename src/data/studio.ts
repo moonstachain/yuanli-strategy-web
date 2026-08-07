@@ -1,0 +1,56 @@
+export const studioSnapshot = {
+  observedAt: '2026-08-07',
+  northStar: '每月形成一条“认知 → 行动 → Outcome → Changed Rule → 第二任务复用”的公开安全证据链。',
+  campaign: {
+    id: 'MG-D2-ai-distillation-v1',
+    slug: 'ai-distillation',
+    title: 'AI正在蒸馏你',
+    module: 'A1',
+    question: '当专业知识被AI迅速平权，专家真正不可复制的部分是什么？',
+    user: '10年以上专业经验的专家型创业者',
+    symptom: '过去最值钱的知识与表达能力越来越容易被复制。',
+    coreClaim: '价值正在从“拥有稳定答案”迁移到“拥有持续生成答案的母体与现实验证能力”。',
+    productionState: 'OPEN · Evidence pending',
+    maturity: 'Output',
+    nextGate: 'Evidence Pack Ready',
+    action: '完成AI清算卡',
+    actionTarget: '10名真实目标用户',
+    actionStatus: 'NOT_RUN',
+    outcomeStatus: 'NOT_RUN',
+    changedRuleStatus: 'NOT_READY',
+  },
+  claims: [
+    { id: 'C01', text: '企业正在将专家经验转化为AI可调用资产。', state: 'needs evidence' },
+    { id: 'C02', text: '经验提取改变专家、组织与知识资产关系。', state: 'needs evidence' },
+    { id: 'C03', text: '被提取的主要是稳定答案，而非完整生成机制。', state: 'hypothesis' },
+    { id: 'C04', text: '经验资产化既可能降低创始人依赖，也可能放大陈旧规则。', state: 'hypothesis' },
+  ],
+  sources: [
+    { key: 'soul', name: 'Soul', role: '法权、CTX、Human Gate、Changed Rule', state: 'OPEN', href: 'https://github.com/moonstachain/yuanli-strategy-soul/issues/457' },
+    { key: 'brain', name: 'Brain', role: '来源、证据、冲突、事实包', state: 'OPEN', href: 'https://github.com/moonstachain/yuanli-brain/issues/2' },
+    { key: 'content', name: 'Content Engine', role: 'Signal、Campaign、DEC/WPK、分发与回流', state: 'OPEN', href: 'https://github.com/moonstachain/yuanli-content-engine-os/issues/35' },
+    { key: 'web', name: 'Web', role: 'C端公开体验、工具与行动入口', state: 'DONE / validation gate open', href: 'https://github.com/moonstachain/yuanli-strategy-web/issues/29' },
+    { key: 'taste', name: 'Taste', role: '视觉SSOT与发布前质检', state: 'OPEN', href: 'https://github.com/moonstachain/yuanli-taste/issues/1' },
+    { key: 'pmo', name: 'PMO', role: 'Owner、WIP、依赖、下一道门', state: 'OPEN', href: 'https://github.com/os-yuanli/yuanli-pmo/issues/23' },
+  ],
+  today: [
+    { lane: '等待裁决', title: '为首个Campaign冻结唯一Owner与WIP', source: 'PMO #23', href: 'https://github.com/os-yuanli/yuanli-pmo/issues/23' },
+    { lane: '正在推进', title: '完成“AI正在蒸馏你”最小Evidence Pack', source: 'Brain #2', href: 'https://github.com/moonstachain/yuanli-brain/issues/2' },
+    { lane: '等待现实', title: '运行5—8位首次成功测试与10次真实行动', source: 'Web #29 / Content #35', href: 'https://github.com/moonstachain/yuanli-strategy-web/issues/29' },
+  ],
+  works: [
+    { type: 'Hook', title: '封面/冲突内容', state: 'Output exists', href: '/campaigns/ai-distillation/' },
+    { type: 'Mechanism', title: '机制解释', state: 'Output exists', href: '/campaigns/ai-distillation/' },
+    { type: 'Action', title: 'AI清算卡', state: 'Done · use NOT_RUN', href: '/tools/ai-clearance/' },
+  ],
+};
+
+export const producerNav = [
+  { label: '今日', href: '/studio/' },
+  { label: '雷达', href: '/studio/radar/' },
+  { label: '研究', href: '/studio/research/' },
+  { label: '生产', href: '/studio/production/' },
+  { label: '发布', href: '/studio/publish/' },
+  { label: '学习', href: '/studio/outcomes/' },
+  { label: '系统', href: '/studio/system/' },
+];

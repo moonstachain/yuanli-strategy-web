@@ -1,0 +1,13 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import { studioSnapshot as s } from '../../data/studio';
+---
+<StudioLayout title="学习 · 原力 Studio" eyebrow="OUTCOME & LEARNING">
+  <Fragment slot="heading"><h1>真正的生产闭环，<br/>从用户行动之后才开始。</h1></Fragment>
+  <section class="studio-section"><div class="container studio-grid three">
+    <article class="studio-card"><p class="eyebrow">Action</p><div class="studio-kpi"><strong>{s.campaign.actionStatus}</strong><span>{s.campaign.actionTarget}</span></div><p>目标动作：{s.campaign.action}。</p></article>
+    <article class="studio-card"><p class="eyebrow">Outcome</p><div class="studio-kpi"><strong>{s.campaign.outcomeStatus}</strong><span>7d / 30d</span></div><p>没有真实回访，不写成Validated案例。</p></article>
+    <article class="studio-card"><p class="eyebrow">Changed Rule</p><div class="studio-kpi"><strong>{s.campaign.changedRuleStatus}</strong><span>Human Gate required</span></div><p>规则文件存在不等于复用；必须在Task2开始前显式加载。</p></article>
+  </div></section>
+  <section class="studio-section"><div class="container studio-card"><h2>学习梯度</h2><p>Published → Used → Validated → Compounding。当前首个战役仍处于Output层，不能提前晋级。</p><a class="studio-link" href="https://github.com/moonstachain/yuanli-strategy-soul/issues/457">去 Soul #457 建立Human Gate与Evolution Note接口 →</a></div></section>
+</StudioLayout>
