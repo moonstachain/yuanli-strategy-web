@@ -34,11 +34,16 @@ const modeMeta = {
     {showReadingProgress && <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>}
     <Header />
     <div class="mode-strip" aria-label={`当前为${modeMeta.label}`}>
-      <div class="container mode-strip-inner">
-        <span>{modeMeta.label}</span>
-        <strong>{modeMeta.action}</strong>
-      </div>
+      <div class="container mode-strip-inner"><span>{modeMeta.label}</span><strong>{modeMeta.action}</strong></div>
     </div>
+    <script is:inline>
+      (() => {
+        try {
+          const current = localStorage.getItem('yuanli-navigation:v0.2');
+          if (current) localStorage.setItem('yuanli-navigation:v0.1', current);
+        } catch {}
+      })();
+    </script>
     <main id="main-content"><slot /></main>
     <Footer />
   </body>
