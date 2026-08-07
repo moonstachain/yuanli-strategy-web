@@ -44,7 +44,7 @@ const checks = [
   ['src/data/campaigns.ts', ["id: 'ai-distillation'", "'when-experience-becomes-skill'", "'extractable-ability-vs-generative-source'", "'ai-clearance-action-guide'", "href: '/tools/ai-clearance/'"]],
   ['src/content/articles/when-experience-becomes-skill.md', ['evidenceLevel: hypothesis', 'sourceStatus: source_pack_ready', 'Human Evidence Review', '7日 Outcome']],
   ['src/pages/studio/index.astro', ['本周唯一问题', '下一道门', '等待现实', 'North Star']],
-  ['src/pages/studio/research.astro', ['Claim Board', 'Brain #3 MERGED', 'Human Evidence Review OPEN', 'Brain #2']],
+  ['src/pages/studio/research.astro', ['Claim Board', 'Brain #3 MERGED', 'Human Evidence Review OPEN']],
   ['src/pages/studio/campaigns/[id].astro', ['Minimum Pack MERGED', '0/10', '7日Outcome仍NOT_RUN']],
   ['src/pages/studio/outcomes.astro', ['Published → Used → Validated → Compounding', 'Human Gate required']],
   ['src/pages/studio/system.astro', ['六仓职责与当前指针', 'Studio不自动覆盖这些真源']],
