@@ -11,6 +11,11 @@ const {
   showReadingProgress = false,
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const modeMeta = {
+  paper: { label: '阅读模式', action: '理解机制与证据' },
+  field: { label: '观察模式', action: '看时代与结构' },
+  cockpit: { label: '工作模式', action: '完成判断与行动' },
+}[mode] ?? { label: '阅读模式', action: '理解机制与证据' };
 ---
 <!doctype html>
 <html lang="zh-CN" data-mode={mode}>
@@ -28,7 +33,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <a class="skip-link" href="#main-content">跳到主要内容</a>
     {showReadingProgress && <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>}
     <Header />
+    <div class="mode-strip" aria-label={`当前为${modeMeta.label}`}>
+      <div class="container mode-strip-inner">
+        <span>{modeMeta.label}</span>
+        <strong>{modeMeta.action}</strong>
+      </div>
+    </div>
     <main id="main-content"><slot /></main>
     <Footer />
   </body>
 </html>
+
+<style>
+  .mode-strip { border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent); background: color-mix(in srgb, var(--panel-soft) 72%, transparent); }
+  .mode-strip-inner { min-height: 30px; display: flex; align-items: center; gap: var(--sp-3); color: var(--ink3); font-size: .72rem; letter-spacing: .04em; }
+  .mode-strip-inner span { color: var(--accent); font-weight: 800; }
+  .mode-strip-inner strong { color: var(--ink2); font-weight: 650; }
+  @media (max-width: 640px) { .mode-strip-inner { justify-content: space-between; } }
+</style>
