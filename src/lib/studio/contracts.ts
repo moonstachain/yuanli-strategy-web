@@ -24,6 +24,66 @@ export interface StudioConflict {
   sources: Array<{ key: StudioSourceKey; value: string; href: string }>;
 }
 
+export interface StudioSnapshotReceiptView {
+  status: 'PASS' | 'BLOCKED';
+  producer: string;
+  inputObservedAt: string | null;
+  inputSha256: string;
+  sourceCount: number;
+  localWebRouteVerified: boolean;
+  directCrossRepoCredentialUsed: boolean;
+  intakeMode: string;
+}
+
+export interface StudioDeepLink {
+  key: string;
+  label: string;
+  targetKind: string;
+  ownerSystem: StudioSourceKey;
+  href: string;
+  verifiedRoute: true;
+  note: string;
+}
+
+export interface StudioCampaignRoom {
+  contract: {
+    owner: string;
+    wip: string;
+    module: string;
+    question: string;
+    user: string;
+    sourceRef: string;
+  };
+  evidence: {
+    status: string;
+    humanReview: string;
+    sourceRef: string;
+    reviewRef: string;
+  };
+  works: Array<{ type: string; title: string; state: string; href: string }>;
+  distribution: {
+    runtimeState: string;
+    publicPageStatus: string;
+    conflictState: string;
+    runtimeRef: string;
+    workbenchRef: string;
+    publicPath: string;
+  };
+  reality: {
+    producerValidation: string;
+    actionStatus: string;
+    outcomeStatus: string;
+    producerTestRef: string;
+    actionRef: string;
+  };
+  learning: {
+    changedRuleStatus: string;
+    task2Status: string;
+    humanGate: string;
+    humanGateRef: string;
+  };
+}
+
 export interface StudioView {
   schemaVersion: 'studio-view/v1';
   derivedProjection: true;
@@ -35,6 +95,7 @@ export interface StudioView {
   sourceCount: number;
   conflictCount: number;
   northStar: string;
+  snapshotReceipt?: StudioSnapshotReceiptView;
   campaign: {
     id: string;
     slug: string;
@@ -59,6 +120,8 @@ export interface StudioView {
     task2Status: string;
     publicPageStatus: string;
   };
+  campaignRoom?: StudioCampaignRoom;
+  deepLinks?: StudioDeepLink[];
   claims: Array<{ id: string; text: string; state: string; nature: string }>;
   sources: StudioSourceView[];
   today: Array<{ lane: string; title: string; source: string; href: string }>;

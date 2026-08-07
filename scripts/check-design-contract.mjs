@@ -11,12 +11,16 @@ const requiredFiles = [
   'src/pages/status.astro',
   'src/layouts/StudioLayout.astro',
   'src/data/studio.ts',
+  'src/data/studio/source-manifest.json',
   'src/data/studio/source-snapshots.current.json',
   'src/data/studio/studio-view.lkg.json',
   'src/lib/studio/contracts.ts',
   'src/lib/studio/source-registry.ts',
+  'scripts/produce-studio-snapshot.mjs',
+  'scripts/check-studio-source-age.mjs',
   'scripts/build-studio-projection.mjs',
   'scripts/check-studio-contract.mjs',
+  '.github/workflows/studio-source-health.yml',
   'src/pages/studio/index.astro',
   'src/pages/studio/radar.astro',
   'src/pages/studio/research.astro',
@@ -33,6 +37,8 @@ const requiredFiles = [
   'docs/STUDIO-DATA-CONTRACT-v1.md',
   'docs/STUDIO-DEEPLINK-CONTRACT-v1.md',
   'docs/STUDIO-REALITY-CONTRACT-v1.md',
+  'docs/STUDIO-SNAPSHOT-PRODUCER-v1.md',
+  'docs/STUDIO-PRODUCER-TEST-PACKET-v2.md',
 ];
 
 const failures = [];
@@ -51,15 +57,21 @@ const checks = [
   ['src/pages/about.astro', ['建设者信息结构', "title: '主题'", "title: '栏目'", "title: '战役'", "title: '旗舰'", "title: '发布状态'", "title: '回写协议'"]],
   ['src/layouts/StudioLayout.astro', ['原力 Studio', 'Mission Control', 'Derived Projection', 'Studio不是第七个真源', 'studioView']],
   ['src/data/studio.ts', ['studioView', 'producerNav', "label: '今日'", "label: '雷达'", "label: '研究'", "label: '生产'", "label: '发布'", "label: '学习'", "label: '系统'"]],
-  ['src/data/studio/source-snapshots.current.json', ['MG-D2-ai-distillation-v1', 'UNASSIGNED_HUMAN / NOT_RUN', '0/10 · NOT_RUN', 'Day7 · NOT_RUN', 'MISSING_ROUTE', 'ROUTE_PRESENT']],
+  ['src/data/studio/source-manifest.json', ['studio-source-manifest/v1', '"webCiCrossRepoCredential": "NONE"', '"directCrossRepoFetchFromWebCi": false', '"maxAgeHours": 24', '"healthCheckHours": 6']],
+  ['src/data/studio/source-snapshots.current.json', ['MG-D2-ai-distillation-v1', 'governed_connector', 'UNASSIGNED_HUMAN / NOT_RUN', '0/10 · NOT_RUN', 'Day7 · NOT_RUN', 'MISSING_ROUTE', 'ROUTE_PRESENT']],
+  ['scripts/produce-studio-snapshot.mjs', ['studio-snapshot-receipt/v1', 'inputSha256', 'localWebRouteVerified', 'directCrossRepoCredentialUsed', 'forbiddenKey']],
+  ['scripts/check-studio-source-age.mjs', ['--max-hours', 'Studio source snapshot STALE', 'governed connector intake']],
+  ['.github/workflows/studio-source-health.yml', ["cron: '17 */6 * * *'", 'contents: read', 'check-studio-source-age.mjs --max-hours 24', 'no cross-repo PAT']],
   ['src/lib/studio/source-registry.ts', ['studioFieldAuthority', 'signal.candidate', 'deployment.receipt', 'bao.html', 'content-engine-workbench/index.html#orchestration/overview']],
+  ['src/lib/studio/contracts.ts', ['StudioSnapshotReceiptView', 'StudioCampaignRoom', 'StudioDeepLink', 'campaignRoom?', 'deepLinks?']],
   ['src/data/campaigns.ts', ["id: 'ai-distillation'", "'when-experience-becomes-skill'", "'extractable-ability-vs-generative-source'", "'ai-clearance-action-guide'", "href: '/tools/ai-clearance/'"]],
   ['src/content/articles/when-experience-becomes-skill.md', ['evidenceLevel: hypothesis', 'sourceStatus: source_pack_ready', 'Human Evidence Review', '7日 Outcome']],
   ['src/pages/studio/index.astro', ['Current Gate', 'Waiting Reality', '系统阻塞', 'SOURCE CONFLICT', 'North Star']],
-  ['src/pages/studio/research.astro', ['Claim Board', 'Brain #3 MERGED', 'Human Evidence Review OPEN']],
-  ['src/pages/studio/campaigns/[id].astro', ['Minimum Pack MERGED', '0/10', '7日Outcome仍NOT_RUN']],
-  ['src/pages/studio/outcomes.astro', ['Published → Used → Validated → Compounding', 'Human Gate required']],
-  ['src/pages/studio/system.astro', ['Source Health', '字段法权', 'Bao · Signal Workbench', 'Content Workbench · Expert Console']],
+  ['src/pages/studio/research.astro', ['Claim Board', 'MINIMUM PACK READY', 'Human Evidence Review', 'Hypothesis']],
+  ['src/pages/studio/campaigns/[id].astro', ['Contract', 'Evidence', 'Works', 'Distribution', 'Reality', 'Learning', 'Verified Deep Links', 'SOURCE CONFLICT', 'P01–P03']],
+  ['src/pages/studio/publish.astro', ['最小包已就绪，人审未完成', 'C03 · HYPOTHESIS', 'Workbench verified overview']],
+  ['src/pages/studio/outcomes.astro', ['Published → Used → Validated → Compounding', 'Human Gate required', 'WAITING_CHANGED_RULE']],
+  ['src/pages/studio/system.astro', ['Snapshot Producer', 'Cross-repo credential', '24h', '每6h', 'Source Health', '字段法权', 'Bao · Signal Workbench', 'Content Workbench · Expert Console']],
   ['src/styles/first-success.css', ['.symptom-entry-grid', '.resume-card', '.tool-outcome-grid', '.story-track-grid']],
   ['src/styles/global.css', ["@import './tokens/system.css'", "@import './themes/paper.css'", 'prefers-reduced-motion', ':focus-visible']],
   ['docs/PORTAL-DESIGN-SYSTEM-v1.md', ['旧版“首页高密度总控台”合同正式废止', '看时代', '案例', '回写协议']],
@@ -68,6 +80,8 @@ const checks = [
   ['docs/STUDIO-DATA-CONTRACT-v1.md', ['字段法权', 'Last Known Good', 'derived_projection: true', '不做静默平均']],
   ['docs/STUDIO-DEEPLINK-CONTRACT-v1.md', ['Read + Route', 'Bao', 'Content Workbench', '直接改 Canon']],
   ['docs/STUDIO-REALITY-CONTRACT-v1.md', ['Published ≠ Used', 'Waiting Reality', '三复利轮', 'WAITING_CHANGED_RULE']],
+  ['docs/STUDIO-SNAPSHOT-PRODUCER-v1.md', ['cross_repo_credential = NONE', 'Governed Connector Intake', 'SHA256 receipt', '24h', '每 6 小时']],
+  ['docs/STUDIO-PRODUCER-TEST-PACKET-v2.md', ['P01', 'P02', 'P03', 'EMPTY · NOT_RUN', 'C03 仍为 `Hypothesis`', 'Control Plane']],
 ];
 
 for (const [file, needles] of checks) {
@@ -89,4 +103,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('Design contract passed: C-side IA remains stable while Studio v2 adds governed derived projection, source authority, LKG, conflict visibility and reality discipline.');
+console.log('Design contract passed: C-side IA remains stable while Studio v2 Phase 1.5/2 adds governed snapshot production, Campaign Room, verified deep links and producer-test readiness without weakening reality gates.');

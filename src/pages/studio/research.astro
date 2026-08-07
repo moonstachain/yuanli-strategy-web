@@ -1,8 +1,15 @@
 ---
 import StudioLayout from '../../layouts/StudioLayout.astro';
-import { studioSnapshot as s } from '../../data/studio';
+import { studioView as s } from '../../data/studio';
+const evidence = s.campaignRoom?.evidence;
 ---
 <StudioLayout title="研究 · 原力 Studio" eyebrow="CLAIM & EVIDENCE">
   <Fragment slot="heading"><h1>不是“我们相信什么”，<br/>而是“证据允许我们说什么”。</h1></Fragment>
-  <section class="studio-section"><div class="container studio-card"><div class="meta-line"><span class="studio-chip">Brain #3 MERGED</span><span class="studio-chip warn">Human Evidence Review OPEN</span></div><h2>{s.campaign.title}｜Claim Board</h2><table class="studio-table"><thead><tr><th>Claim</th><th>主张</th><th>状态</th></tr></thead><tbody>{s.claims.map(c=><tr><td>{c.id}</td><td>{c.text}</td><td><span class="studio-chip warn">{c.state}</span></td></tr>)}</tbody></table><p>最小包已满足“多个组织一手来源 + 反例 + 冲突显式”的工程条件，但独立 Human Evidence Reviewer 仍未指定；因此 C03 继续保持 hypothesis，整个战役也不得标为 Validated。</p><a class="studio-link" href="https://github.com/moonstachain/yuanli-brain/issues/2">去 Brain 查看证据边界与Human Review门 →</a></div></section>
+  <section class="studio-section"><div class="container studio-card">
+    <div class="meta-line"><span class="studio-chip">MINIMUM PACK READY</span><span class="studio-chip warn">{evidence?.humanReview ?? 'Human Review NOT_RUN'}</span></div>
+    <h2>{s.campaign.title}｜Claim Board</h2>
+    <table class="studio-table"><thead><tr><th>Claim</th><th>Nature</th><th>主张</th><th>状态</th></tr></thead><tbody>{s.claims.map(c=><tr><td>{c.id}</td><td>{c.nature}</td><td>{c.text}</td><td><span class={`studio-chip ${c.state.includes('Hypothesis') ? 'warn' : ''}`}>{c.state}</span></td></tr>)}</tbody></table>
+    <p>最小 Evidence Pack 已形成，但独立 Human Evidence Reviewer 仍未指定；因此 C03 继续保持 Hypothesis，整个战役不得标为 Validated。</p>
+    <p><a class="studio-link" href={evidence?.sourceRef ?? s.sources.find(x=>x.key==='brain')?.sourceRef}>查看 public-safe Evidence Pack →</a> · <a class="studio-link" href={evidence?.reviewRef ?? s.campaign.nextGateRef}>进入 Brain #4 Human Evidence Review →</a></p>
+  </div></section>
 </StudioLayout>

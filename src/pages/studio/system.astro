@@ -2,6 +2,7 @@
 import StudioLayout from '../../layouts/StudioLayout.astro';
 import { studioView as s } from '../../data/studio';
 import { studioFieldAuthority, studioSourceRegistry } from '../../lib/studio/source-registry';
+const receipt = s.snapshotReceipt;
 ---
 <StudioLayout title="系统 · 原力 Studio" eyebrow="TRUTH & HEALTH">
   <Fragment slot="heading"><h1>Studio负责看见和推进，<br/>不负责另存一份真相。</h1></Fragment>
@@ -12,11 +13,21 @@ import { studioFieldAuthority, studioSourceRegistry } from '../../lib/studio/sou
     <article class="studio-card"><p class="eyebrow">Boundary</p><h2>Derived Projection</h2><p>authoritative=false · public-safe · Studio不是第七个真源。</p></article>
   </div></section>
 
+  <section class="studio-section"><div class="container studio-card">
+    <p class="eyebrow">Snapshot Producer</p><h2>跨仓真相通过受治理 Intake 进入，Web CI 不持有超级凭证。</h2>
+    <div class="studio-grid three">
+      <div><h3>Producer Receipt</h3><div class="meta-line"><span class={`studio-chip ${receipt?.status === 'PASS' ? 'ok' : 'warn'}`}>{receipt?.status ?? 'LKG'}</span><span class="studio-chip">{receipt?.intakeMode ?? 'legacy_lkg'}</span></div><p>Input SHA256：<code>{receipt?.inputSha256?.slice(0,16) ?? 'not available in legacy LKG'}</code></p></div>
+      <div><h3>Least Privilege</h3><p>Cross-repo credential：<strong>{receipt?.directCrossRepoCredentialUsed ? 'USED' : 'NONE'}</strong></p><p>私有 Owner System 不由 Web Actions 直接读取；刷新通过 governed connector intake。</p></div>
+      <div><h3>Freshness Policy</h3><p>最大快照年龄：<strong>24h</strong></p><p>只读健康检查：<strong>每6h</strong>；过期时告警，不自动伪造新 observed_at。</p></div>
+    </div>
+    <p>本地 Web route 校验：<strong>{receipt?.localWebRouteVerified ? 'PASS' : 'LKG / NOT CURRENT'}</strong>。Producer 若发现结构、隐私或路由问题，会拒绝生成 normalized input；Projection 随后回退 Last Known Good。</p>
+  </div></section>
+
   <section class="studio-section"><div class="container studio-card"><h2>Source Health 与当前指针</h2><table class="studio-table"><thead><tr><th>系统</th><th>职责</th><th>业务状态</th><th>Freshness</th><th>Revision</th><th>真源</th></tr></thead><tbody>{s.sources.map((source)=><tr><td><strong>{source.name}</strong></td><td>{source.role}</td><td><span class="studio-chip">{source.state}</span></td><td><span class={`studio-chip ${source.freshness === 'LIVE' ? 'ok' : 'warn'}`}>{source.freshness}</span></td><td><code>{source.sourceRevision.slice(0,12)}</code></td><td><a class="studio-link" href={source.href}>打开 →</a></td></tr>)}</tbody></table></div></section>
 
   {s.conflicts.length > 0 && <section class="studio-section"><div class="container studio-card"><h2>Source Conflicts</h2>{s.conflicts.map((conflict)=><div><div class="meta-line"><span class="studio-chip warn">{conflict.state}</span><span class="studio-chip">Authority: {conflict.authority}</span><span class="studio-chip">{conflict.severity}</span></div><h3>{conflict.field}</h3><p>{conflict.summary}</p><table class="studio-table"><tbody>{conflict.sources.map((source)=><tr><td>{source.key}</td><td><code>{source.value}</code></td><td><a class="studio-link" href={source.href}>source →</a></td></tr>)}</tbody></table><p><strong>Resolution：</strong>{conflict.resolution}</p></div>)}</div></section>}
 
   <section class="studio-section"><div class="container studio-card"><h2>字段法权</h2><table class="studio-table"><thead><tr><th>字段</th><th>最终法权</th><th>系统职责</th></tr></thead><tbody>{Object.entries(studioFieldAuthority).map(([field, owner])=><tr><td><code>{field}</code></td><td><strong>{studioSourceRegistry[owner].name}</strong></td><td>{studioSourceRegistry[owner].role}</td></tr>)}</tbody></table></div></section>
 
-  <section class="studio-section"><div class="container studio-card"><h2>专业作业入口</h2><div class="studio-grid two"><div><h3>Bao · Signal Workbench</h3><p>{studioSourceRegistry.bao.role}</p><a class="studio-link" href={studioSourceRegistry.bao.operatorEntry}>进入 Bao →</a></div><div><h3>Content Workbench · Expert Console</h3><p>{studioSourceRegistry.content.role}；Phase 1 只使用已验证 overview，不猜测未验证的 Campaign 深链。</p><a class="studio-link" href={studioSourceRegistry.content.operatorEntry}>查看工程真相 →</a></div></div></div></section>
+  <section class="studio-section"><div class="container studio-card"><h2>专业作业入口</h2><div class="studio-grid two"><div><h3>Bao · Signal Workbench</h3><p>{studioSourceRegistry.bao.role}</p><a class="studio-link" href={studioSourceRegistry.bao.operatorEntry}>进入 Bao →</a></div><div><h3>Content Workbench · Expert Console</h3><p>{studioSourceRegistry.content.role}；只使用已验证 overview，不猜测未验证的 Campaign 深链。</p><a class="studio-link" href={studioSourceRegistry.content.operatorEntry}>查看工程真相 →</a></div></div></div></section>
 </StudioLayout>

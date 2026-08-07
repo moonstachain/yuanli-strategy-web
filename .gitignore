@@ -6,3 +6,5 @@ dist/
 .env.*
 !.env.example
 src/data/studio/studio-view.generated.json
+src/data/studio/source-snapshot.normalized.generated.json
+src/data/studio/source-snapshot-receipt.generated.json

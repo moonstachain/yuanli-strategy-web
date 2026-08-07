@@ -1,0 +1,27 @@
+name: Studio Source Health
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Validate governed snapshot intake
+        run: node scripts/produce-studio-snapshot.mjs
+      - name: Enforce 24h source age
+        run: node scripts/check-studio-source-age.mjs --max-hours 24
+
+# Security boundary: this workflow does not fetch private owner systems and uses no cross-repo PAT.
+# Source refresh happens through governed connector intake; this workflow only validates the committed public-safe envelope.

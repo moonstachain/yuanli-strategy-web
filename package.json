@@ -4,11 +4,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "produce:studio": "node scripts/produce-studio-snapshot.mjs",
     "build:studio": "node scripts/build-studio-projection.mjs",
-    "dev": "npm run build:studio && astro dev",
+    "dev": "npm run produce:studio && npm run build:studio && astro dev",
     "check:studio": "node scripts/check-studio-contract.mjs",
+    "check:studio-age": "node scripts/check-studio-source-age.mjs --max-hours 24",
     "check:design": "node scripts/check-design-contract.mjs",
-    "build": "npm run build:studio && npm run check:studio && npm run check:design && astro build",
+    "build": "npm run produce:studio && npm run build:studio && npm run check:studio && npm run check:design && astro build",
     "preview": "astro preview"
   },
   "dependencies": {
