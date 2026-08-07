@@ -1,0 +1,193 @@
+{
+  "schemaVersion": "studio-view/v1",
+  "derivedProjection": true,
+  "authoritative": false,
+  "classification": "public-safe",
+  "observedAt": "2026-08-07T14:57:00+08:00",
+  "deliveryStatus": "CONFLICT",
+  "fallbackReason": null,
+  "sourceCount": 6,
+  "conflictCount": 1,
+  "northStar": "每月形成一条“认知 → 行动 → Outcome → Changed Rule → 第二任务复用”的公开安全证据链。",
+  "campaign": {
+    "id": "MG-D2-ai-distillation-v1",
+    "slug": "ai-distillation",
+    "title": "AI正在蒸馏你",
+    "module": "A1",
+    "question": "当专业知识被AI迅速平权，专家真正不可复制的部分是什么？",
+    "user": "10年以上专业经验的专家型创业者",
+    "symptom": "过去最值钱的知识与表达能力越来越容易被复制。",
+    "coreClaim": "多个知识密集型组织已把知识与部分工作流程接入AI调用层；真正更难复制的价值是否位于生成性母体、边界判断与责任机制，仍需真实行动验证。",
+    "owner": "moonstachain",
+    "productionState": "evidence_ready_pending_human_review",
+    "maturity": "Output",
+    "nextGate": "Human Evidence Review",
+    "nextGateRef": "https://github.com/moonstachain/yuanli-brain/issues/4",
+    "systemBlocker": "Content #37 · deterministic projection baseline drift",
+    "systemBlockerRef": "https://github.com/moonstachain/yuanli-content-engine-os/issues/37",
+    "action": "完成AI清算卡",
+    "actionTarget": "10名真实目标用户",
+    "actionStatus": "0/10 · NOT_RUN",
+    "outcomeStatus": "Day7 · NOT_RUN",
+    "changedRuleStatus": "NOT_READY",
+    "task2Status": "WAITING_CHANGED_RULE",
+    "publicPageStatus": "ROUTE_PRESENT"
+  },
+  "claims": [
+    {
+      "id": "C01",
+      "nature": "Source Fact",
+      "state": "Verified · scoped",
+      "text": "多个知识密集型组织已经把内部知识、智力资本、会议信息或标准工作流程接入生成式AI，供员工调用。"
+    },
+    {
+      "id": "C02",
+      "nature": "Interpretation",
+      "state": "Derived",
+      "text": "组织知识正在部分从人找人、人找文档，迁移为人通过AI调用知识并由人负责校验与决策。"
+    },
+    {
+      "id": "C03",
+      "nature": "Hypothesis",
+      "state": "Hypothesis",
+      "text": "真正更难复制的价值可能不是稳定答案，而是生成答案的母体、边界判断与责任机制。"
+    },
+    {
+      "id": "C04",
+      "nature": "Interpretation",
+      "state": "Derived · Risk",
+      "text": "AI可提高部分知识任务表现，但在能力边界外也可能降低正确率，因此AI调用必须保留边界识别与人工校验。"
+    }
+  ],
+  "sources": [
+    {
+      "key": "pmo",
+      "name": "PMO",
+      "role": "Portfolio、Owner、WIP、Gate sequence",
+      "state": "G0 DONE · Golden Loop frozen",
+      "freshness": "LIVE",
+      "href": "https://github.com/os-yuanli/yuanli-pmo/issues/23#issuecomment-5212516089",
+      "sourceRef": "https://github.com/os-yuanli/yuanli-pmo/issues/23#issuecomment-5212516089",
+      "sourceRevision": "9b22cd4d1796d3aed80de2bca5b6cdab9fcbc390"
+    },
+    {
+      "key": "brain",
+      "name": "Brain",
+      "role": "Claim、Evidence、Conflict、Gap、Human Evidence Review",
+      "state": "MINIMUM PACK READY · Human Review NOT_RUN",
+      "freshness": "LIVE",
+      "href": "https://github.com/moonstachain/yuanli-brain/issues/4",
+      "sourceRef": "https://github.com/moonstachain/yuanli-brain/blob/feat/three-seams-p2-convergence/docs/evidence/public-safe/AI-DISTILLATION-EVD-v1.json",
+      "sourceRevision": "7bafa2686d434bdc9b667e4038885b809b082bb2"
+    },
+    {
+      "key": "content",
+      "name": "Content Engine",
+      "role": "Campaign runtime、Work、Distribution、Action contract",
+      "state": "IMPLEMENTED · BLOCKED BY #37",
+      "freshness": "LIVE",
+      "href": "https://github.com/moonstachain/yuanli-content-engine-os/pull/36",
+      "sourceRef": "https://github.com/moonstachain/yuanli-content-engine-os/blob/feat/ai-distillation-campaign-run/dify/campaigns/MG-D2-ai-distillation-v1/run-state.json",
+      "sourceRevision": "882e9b5ce45b83ce7a157d08ae7338f308718b7b"
+    },
+    {
+      "key": "soul",
+      "name": "Soul",
+      "role": "Human Gate、Canon、Changed Rule、Task2 approval",
+      "state": "HUMAN GATE WIRED · no approval",
+      "freshness": "LIVE",
+      "href": "https://github.com/moonstachain/yuanli-strategy-soul/pull/462",
+      "sourceRef": "https://github.com/moonstachain/yuanli-strategy-soul/pull/462",
+      "sourceRevision": "7288de28f8a6f7c367420696ae6db9182d7b7d93"
+    },
+    {
+      "key": "web",
+      "name": "Web",
+      "role": "C端公开路由、工具、生产者首次成功验证",
+      "state": "LIVE · producer validation NOT_RUN",
+      "freshness": "LIVE",
+      "href": "https://github.com/moonstachain/yuanli-strategy-web/issues/31",
+      "sourceRef": "https://github.com/moonstachain/yuanli-strategy-web/issues/31",
+      "sourceRevision": "c30893bb2e0335355488b942e1785591227d3959"
+    },
+    {
+      "key": "taste",
+      "name": "Taste",
+      "role": "Visual SSOT 与发布前设计质检",
+      "state": "OPEN · design validation pending",
+      "freshness": "LIVE",
+      "href": "https://github.com/moonstachain/yuanli-taste/issues/1",
+      "sourceRef": "https://github.com/moonstachain/yuanli-taste/issues/1",
+      "sourceRevision": "issue#1@2026-08-06T07:19:31Z"
+    }
+  ],
+  "today": [
+    {
+      "lane": "等待裁决",
+      "title": "指定独立 Human Evidence Reviewer 并完成 Brain #4",
+      "source": "Brain #4",
+      "href": "https://github.com/moonstachain/yuanli-brain/issues/4"
+    },
+    {
+      "lane": "当前阻塞",
+      "title": "刷新 content-cbm-max 的 metrics_72h 确定性投影",
+      "source": "Content #37",
+      "href": "https://github.com/moonstachain/yuanli-content-engine-os/issues/37"
+    },
+    {
+      "lane": "等待现实",
+      "title": "运行3—5位生产者首次成功测试",
+      "source": "Web #31",
+      "href": "https://github.com/moonstachain/yuanli-strategy-web/issues/31"
+    },
+    {
+      "lane": "等待现实",
+      "title": "10位真实用户完成AI清算并留下匿名回执",
+      "source": "Content #35 / #36",
+      "href": "https://github.com/moonstachain/yuanli-content-engine-os/issues/35"
+    }
+  ],
+  "works": [
+    {
+      "type": "Hook",
+      "title": "当你的经验被公司蒸馏成 Skill，你还剩下什么？",
+      "state": "Output · Evidence pack ready",
+      "href": "/articles/when-experience-becomes-skill/"
+    },
+    {
+      "type": "Mechanism",
+      "title": "可提取能力，不等于生成性母体",
+      "state": "Canon-aligned mechanism",
+      "href": "/articles/extractable-ability-vs-generative-source/"
+    },
+    {
+      "type": "Action",
+      "title": "AI清算卡",
+      "state": "Output · use 0/10",
+      "href": "/tools/ai-clearance/"
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "K-STUDIO-001",
+      "field": "campaign.publicPageStatus",
+      "authority": "web",
+      "state": "OPEN",
+      "severity": "projection_drift",
+      "summary": "Content run-state 仍报告 MISSING_ROUTE，但 Web main 已存在公共战役页。",
+      "resolution": "按字段法权使用 Web 的 ROUTE_PRESENT 作为展示值，同时保留冲突，直到 Content projection 更新；Studio 不自动回写 Content。",
+      "sources": [
+        {
+          "key": "content",
+          "value": "MISSING_ROUTE",
+          "href": "https://github.com/moonstachain/yuanli-content-engine-os/pull/36"
+        },
+        {
+          "key": "web",
+          "value": "ROUTE_PRESENT",
+          "href": "https://github.com/moonstachain/yuanli-strategy-web/commit/c30893bb2e0335355488b942e1785591227d3959"
+        }
+      ]
+    }
+  ]
+}

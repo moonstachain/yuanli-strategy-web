@@ -4,9 +4,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
+    "build:studio": "node scripts/build-studio-projection.mjs",
+    "dev": "npm run build:studio && astro dev",
+    "check:studio": "node scripts/check-studio-contract.mjs",
     "check:design": "node scripts/check-design-contract.mjs",
-    "build": "npm run check:design && astro build",
+    "build": "npm run build:studio && npm run check:studio && npm run check:design && astro build",
     "preview": "astro preview"
   },
   "dependencies": {
