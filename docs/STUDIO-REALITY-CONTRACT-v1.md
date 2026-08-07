@@ -11,6 +11,12 @@
 Draft → Output → Used → Validated → Compounding
 ```
 
+核心纪律：
+
+```text
+Published ≠ Used ≠ Validated ≠ Compounding
+```
+
 禁止映射：
 
 - 页面存在 ≠ Used
