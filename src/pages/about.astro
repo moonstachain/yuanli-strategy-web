@@ -2,14 +2,22 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const fourWealthHref = `${base}/articles/yuanli-startup-four-wealth/`;
+const workSystem = [
+  { title: '主题', copy: '用户问题与长期研究的进入方向；不作为一级用户导航。', href: `${base}/themes/`, action: '查看主题地图' },
+  { title: '栏目', copy: '长期生产什么内容、按什么节奏持续运行。', href: `${base}/columns/`, action: '查看编辑栏目' },
+  { title: '战役', copy: '围绕一个阶段性冲突集中组织Hook、Evidence、Mechanism与Action。', href: `${base}/articles/`, action: '查看当前战役内容' },
+  { title: '旗舰', copy: '跨周期沉淀时代、人物、企业与反例的思想资产。', href: `${base}/columns/#flagships`, action: '查看旗舰系列' },
+  { title: '发布状态', copy: '区分Done、Validated与Compounding，不用页面上线冒充真实结果。', href: `${base}/status/`, action: '查看透明建设账' },
+  { title: '回写协议', copy: '行动、Outcome与Changed Rule如何进入下一次任务，而不是停留在复盘文件。', href: `${base}/columns/os-lab/`, action: '查看OS实验室' },
+];
 ---
-<BaseLayout title="关于 · 原力战略" description="原力战略文章网站的使命、母问题、正典边界与公开投影。" mode="paper">
+<BaseLayout title="关于我们如何工作 · 原力战略" description="原力战略的使命、用户体验边界，以及主题、栏目、战役、旗舰、发布状态和回写协议。" mode="paper">
   <section class="about-hero">
     <div class="container about-grid">
       <div>
-        <p class="eyebrow">About Yuanli Strategy</p>
-        <h1>这不是一个普通博客。</h1>
-        <p class="lead">原力战略 Web 是正典的公开安全投影，也是从时代变化与真实症状进入判断、工具、案例和行动的入口。</p>
+        <p class="eyebrow">ABOUT · 关于我们如何工作</p>
+        <h1>用户看到问题与行动，<br />后台保留结构与纪律。</h1>
+        <p class="lead">原力战略 Web 是正典的公开安全投影，也是从时代变化与真实症状进入判断、案例、工具和行动的入口。</p>
       </div>
       <aside class="yl-card yl-card--static">
         <p class="eyebrow">母问题</p>
@@ -20,9 +28,33 @@ const fourWealthHref = `${base}/articles/yuanli-startup-four-wealth/`;
 
   <section class="section">
     <div class="container prose-wide">
+      <p class="eyebrow">用户可见的信息结构</p>
+      <h2>先回答“我来这里做什么”。</h2>
+      <p class="lead">一级入口只保留：看时代、找原力、做生意、建系统、文章、案例、工具、正典。用户不需要先理解我们的内容生产系统。</p>
+      <div class="user-ia">
+        {['看时代','找原力','做生意','建系统','文章','案例','工具','正典'].map((item, index) => <span><small>0{index + 1}</small>{item}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section work-system">
+    <div class="container">
+      <div class="section-head"><div><p class="eyebrow">建设者信息结构</p><h2 class="section-title">主题、栏目、战役与旗舰，只在这里解释。</h2><p class="lead">这些结构服务持续生产、证据纪律和递归回写，不再与用户任务争夺一级导航。</p></div></div>
+      <div class="work-grid">
+        {workSystem.map((item) => (
+          <a class="yl-card work-card" href={item.href}>
+            <h3>{item.title}</h3><p>{item.copy}</p><strong>{item.action} →</strong>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose-wide">
       <p class="eyebrow">The Core Thesis</p>
       <h2>找到原力，进入世界，形成复利。</h2>
-      <p class="lead">原力战略三部曲不是三组并列工具，而是一条递进生命链：找到原力母体，把它放进时代与市场，再用OS让它自我繁殖。</p>
+      <p class="lead">原力战略三部曲是一条递进生命链：找到原力母体，把它放进时代与市场，再用OS让它自我繁殖。</p>
       <div class="trilogy-grid">
         <article class="yl-card yl-card--static"><span>A</span><h3>原力资产</h3><p>找到持续生成差异的源头，并把它训练、外化和显化为真实世界可验证的原力。</p></article>
         <article class="yl-card yl-card--static"><span>B</span><h3>原力创业</h3><p>让原力进入时代势能、用户心智、商业模式与四种控制权，形成会复利、守得住的生意。</p></article>
@@ -33,10 +65,7 @@ const fourWealthHref = `${base}/articles/yuanli-startup-four-wealth/`;
 
   <section class="section wealth-section">
     <div class="container">
-      <div class="section-head">
-        <div><p class="eyebrow">Four Wealths</p><h2>原力进入世界的四次财富跃迁</h2></div>
-        <a href={fourWealthHref}>阅读完整总纲 →</a>
-      </div>
+      <div class="section-head"><div><p class="eyebrow">Four Wealths</p><h2>原力进入世界的四次财富跃迁</h2></div><a href={fourWealthHref}>阅读完整总纲 →</a></div>
       <div class="wealth-grid">
         <a class="wealth-card" href={fourWealthHref}><strong>时</strong><span>时代的财富</span><p>借到历史的放大器：为什么偏偏是现在？</p></a>
         <a class="wealth-card" href={fourWealthHref}><strong>名</strong><span>心智的财富</span><p>获得理解与定价：用户把你当成什么？</p></a>
@@ -49,16 +78,8 @@ const fourWealthHref = `${base}/articles/yuanli-startup-four-wealth/`;
 
   <section class="section">
     <div class="container boundary-grid">
-      <div class="prose-wide">
-        <p class="eyebrow">What We Do</p>
-        <h2>把正典翻译成现实入口。</h2>
-        <p>我们把原力战略的正典语言翻译为用户看得懂的现实症状、时代洞察、案例和行动工具；让文章不只产生阅读量，还产生判断、行动、证据与回写候选。</p>
-      </div>
-      <div class="prose-wide">
-        <p class="eyebrow">Authority Boundary</p>
-        <h2>公开投影不等于最高正典。</h2>
-        <p>本仓不保存私密资料，不把页面、工具或Agent的存在等同于真实Outcome，也不自动修改最高正典。方法论正典、Schema、Policy与晋级由 <a href="https://github.com/moonstachain/yuanli-strategy-soul">yuanli-strategy-soul</a> 负责。</p>
-      </div>
+      <div class="prose-wide"><p class="eyebrow">What We Do</p><h2>把正典翻译成现实入口。</h2><p>把正典语言翻译为现实症状、时代洞察、案例和行动工具，让内容不只产生阅读量，还产生判断、行动、证据与回写候选。</p></div>
+      <div class="prose-wide"><p class="eyebrow">Authority Boundary</p><h2>公开投影不等于最高正典。</h2><p>本仓不保存私密资料，不把页面、工具或Agent的存在等同于真实Outcome，也不自动修改最高正典。</p></div>
     </div>
   </section>
 </BaseLayout>
@@ -69,6 +90,15 @@ const fourWealthHref = `${base}/articles/yuanli-startup-four-wealth/`;
   h1 { margin: var(--sp-5) 0; font-family: var(--serif); font-size: clamp(3rem, 7vw, 6rem); line-height: 1.02; letter-spacing: -.05em; }
   blockquote { margin: 0; font-family: var(--serif); font-size: clamp(1.35rem, 2.5vw, 2rem); line-height: 1.45; }
   .prose-wide { max-width: 1060px; margin: 0 auto; }
+  .user-ia { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-3); margin-top: var(--sp-7); }
+  .user-ia span { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-4); border-top: 1px solid var(--line); color: var(--ink); font-family: var(--serif); font-size: 1.2rem; }
+  .user-ia small { color: var(--accent); font-family: var(--mono); font-size: .7rem; }
+  .work-system { background: color-mix(in srgb, var(--panel) 52%, transparent); }
+  .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-5); }
+  .work-card { min-height: 260px; display: flex; flex-direction: column; }
+  .work-card h3 { margin: 0 0 var(--sp-4); font-family: var(--serif); font-size: 1.6rem; }
+  .work-card p { color: var(--ink2); }
+  .work-card strong { margin-top: auto; color: var(--accent); }
   .trilogy-grid, .wealth-grid, .boundary-grid { display: grid; gap: var(--sp-5); }
   .trilogy-grid { grid-template-columns: repeat(3, 1fr); margin-top: var(--sp-7); }
   .trilogy-grid span { color: var(--accent); font-family: var(--mono); font-weight: 800; }
@@ -82,6 +112,6 @@ const fourWealthHref = `${base}/articles/yuanli-startup-four-wealth/`;
   .wealth-card span { align-self: end; font-family: var(--serif); font-size: 1.45rem; font-weight: 760; }
   .mother-line { max-width: 900px; margin: var(--sp-9) auto 0; text-align: center; }
   .boundary-grid { grid-template-columns: 1fr 1fr; }
-  @media (max-width: 900px) { .about-grid, .trilogy-grid, .wealth-grid, .boundary-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 620px) { .about-grid, .trilogy-grid, .wealth-grid, .boundary-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .about-grid, .work-grid, .trilogy-grid, .wealth-grid, .boundary-grid { grid-template-columns: 1fr 1fr; } .user-ia { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .about-grid, .work-grid, .trilogy-grid, .wealth-grid, .boundary-grid, .user-ia { grid-template-columns: 1fr; } }
 </style>

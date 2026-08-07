@@ -19,18 +19,16 @@ const { title, module, description, principle } = Astro.props;
     <aside class="tool-note yl-card yl-card--static">
       <p class="eyebrow">本地工作协议</p>
       <h2>先形成假设，再进入现实检验</h2>
-      <p>输入只保存在当前浏览器的本地存储，不自动上传。不要填写客户姓名、密钥或未经授权的经营真账。</p>
+      <p>输入与生成资产只保存在当前浏览器，不自动上传。不要填写客户姓名、密钥或未经授权的经营真账。</p>
       <div class="save-state" aria-live="polite">
         <div class="state-row"><span>完成进度</span><strong id="tool-progress-label">0%</strong></div>
         <div class="progress-track" aria-hidden="true"><span id="tool-progress-bar"></span></div>
         <p id="autosave-status" class="meta">尚未产生本地草稿</p>
       </div>
-      <button class="button quiet" type="button" id="clear-local-draft">清除本地草稿</button>
+      <button class="button quiet" type="button" id="clear-local-draft">删除已保存草稿</button>
     </aside>
 
-    <div class="tool-main">
-      <slot />
-    </div>
+    <div class="tool-main"><slot /></div>
   </section>
 
   <script is:inline>
@@ -43,65 +41,102 @@ const { title, module, description, principle } = Astro.props;
       const toolTitle = hero?.dataset.toolTitle || document.title;
       const toolModule = hero?.dataset.toolModule || '工具';
       const controls = [...form.querySelectorAll('input, textarea, select')].filter((el) => el.id && el.type !== 'button' && el.type !== 'submit' && el.type !== 'reset');
+      const initialValues = Object.fromEntries(controls.map((el) => [el.id, String(el.value || '')]));
+      const output = document.querySelector('.output-panel textarea, .output-panel [data-tool-output]');
       const status = document.getElementById('autosave-status');
       const label = document.getElementById('tool-progress-label');
       const bar = document.getElementById('tool-progress-bar');
       const clear = document.getElementById('clear-local-draft');
+      let generatedAsset = '';
+
+      const outputValue = () => {
+        if (!output) return '';
+        if ('value' in output) return String(output.value || '').trim();
+        return String(output.textContent || '').trim();
+      };
 
       const rememberJourney = (percent) => {
         localStorage.setItem(lastKey, JSON.stringify({
-          type: 'tool',
-          label: `${toolModule}｜${toolTitle}`,
-          href: location.pathname,
-          progress: percent,
-          updatedAt: new Date().toISOString(),
+          type: 'tool', label: `${toolModule}｜${toolTitle}`, href: location.pathname,
+          progress: percent, hasAsset: Boolean(generatedAsset), updatedAt: new Date().toISOString(),
         }));
       };
 
+      const isMeaningfullyFilled = (el) => {
+        const value = String(el.value || '').trim();
+        if (!value) return false;
+        if (el.tagName === 'SELECT') return value !== String(initialValues[el.id] || '').trim();
+        return true;
+      };
+
       const updateProgress = () => {
-        const filled = controls.filter((el) => String(el.value || '').trim()).length;
+        const filled = controls.filter(isMeaningfullyFilled).length;
         const percent = controls.length ? Math.round(filled / controls.length * 100) : 0;
         if (label) label.textContent = `${percent}%`;
-        if (bar) {
-          bar.style.setProperty('--progress', `${percent}%`);
-          bar.style.width = `${percent}%`;
-        }
-        if (percent > 0) rememberJourney(percent);
+        if (bar) { bar.style.setProperty('--progress', `${percent}%`); bar.style.width = `${percent}%`; }
+        if (percent > 0 || generatedAsset) rememberJourney(percent);
         return percent;
       };
 
+      const payloadNow = () => ({
+        fields: Object.fromEntries(controls.map((el) => [el.id, el.value])),
+        asset: generatedAsset || outputValue(),
+        updatedAt: new Date().toISOString(),
+      });
+
       const save = () => {
-        const payload = Object.fromEntries(controls.map((el) => [el.id, el.value]));
-        localStorage.setItem(key, JSON.stringify(payload));
+        localStorage.setItem(key, JSON.stringify(payloadNow()));
         if (status) status.textContent = `已于 ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} 保存到本机`;
         updateProgress();
       };
 
+      const captureAsset = () => {
+        const value = outputValue();
+        if (!value) return;
+        generatedAsset = value;
+        localStorage.setItem(key, JSON.stringify(payloadNow()));
+        if (status) status.textContent = '已保存当前输入与生成资产到本机';
+        rememberJourney(updateProgress());
+      };
+
       try {
         const payload = JSON.parse(localStorage.getItem(key) || '{}');
+        const fields = payload.fields && typeof payload.fields === 'object' ? payload.fields : payload;
         let restored = false;
         controls.forEach((el) => {
-          if (Object.prototype.hasOwnProperty.call(payload, el.id)) {
-            el.value = payload[el.id];
-            restored = restored || Boolean(String(payload[el.id]).trim());
+          if (Object.prototype.hasOwnProperty.call(fields, el.id)) {
+            el.value = fields[el.id];
+            restored = restored || Boolean(String(fields[el.id] || '').trim());
           }
         });
-        if (restored && status) status.textContent = '已恢复当前浏览器中的本地草稿';
-      } catch {
-        localStorage.removeItem(key);
-      }
+        generatedAsset = typeof payload.asset === 'string' ? payload.asset : '';
+        if (generatedAsset && output) {
+          if ('value' in output) output.value = generatedAsset;
+          else output.textContent = generatedAsset;
+          restored = true;
+        }
+        if (restored && status) status.textContent = generatedAsset ? '已恢复本地草稿与上次生成资产' : '已恢复当前浏览器中的本地草稿';
+      } catch { localStorage.removeItem(key); }
 
       controls.forEach((el) => el.addEventListener('input', save));
+      document.querySelectorAll('.tool-main button').forEach((button) => button.addEventListener('click', () => {
+        if (button.type === 'reset') return;
+        setTimeout(captureAsset, 0);
+        setTimeout(captureAsset, 100);
+      }));
+
       form.addEventListener('reset', () => {
         setTimeout(() => {
+          generatedAsset = '';
+          if (output) { if ('value' in output) output.value = ''; else output.textContent = ''; }
           localStorage.removeItem(key);
-          if (status) status.textContent = '表单与本地草稿已清空';
+          if (status) status.textContent = '当前内容与已保存草稿已清空';
           updateProgress();
         });
       });
       clear?.addEventListener('click', () => {
         localStorage.removeItem(key);
-        if (status) status.textContent = '本地草稿已清除；当前页面输入仍保留';
+        if (status) status.textContent = '已删除保存草稿；当前页面内容仍保留，刷新后不再恢复';
       });
       updateProgress();
     })();
@@ -114,7 +149,7 @@ const { title, module, description, principle } = Astro.props;
   .tool-hero h1 { margin: var(--sp-5) 0 var(--sp-4); font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: 1.08; }
   .tool-hero blockquote { margin: 0; padding: var(--sp-7); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--panel); color: var(--ink); font-family: var(--serif); font-size: 1.2rem; line-height: 1.6; }
   .tool-layout { display: grid; grid-template-columns: minmax(0, 280px) minmax(0, 1fr); gap: var(--sp-7); padding-top: var(--sp-8); padding-bottom: var(--sp-10); align-items: start; }
-  .tool-note { position: sticky; top: calc(var(--header-h) + var(--sp-5)); }
+  .tool-note { position: sticky; top: calc(var(--header-h) + 52px); }
   .tool-note h2 { margin: var(--sp-2) 0 var(--sp-4); font-family: var(--serif); font-size: 1.35rem; line-height: 1.35; }
   .tool-note > p:not(.eyebrow) { color: var(--ink2); }
   .save-state { margin: var(--sp-7) 0 var(--sp-4); padding-top: var(--sp-5); border-top: 1px solid var(--line); }
@@ -129,9 +164,7 @@ const { title, module, description, principle } = Astro.props;
   .field.full { grid-column: 1 / -1; }
   .field label { color: var(--ink); font-weight: 760; }
   .field small { color: var(--ink3); }
-  .tool-form input, .tool-form textarea, .tool-form select, .output-panel textarea {
-    width: 100%; border: 1px solid var(--line); border-radius: var(--r-m); padding: var(--sp-4) var(--sp-5); background: var(--panel-deep); color: var(--ink); font: inherit;
-  }
+  .tool-form input, .tool-form textarea, .tool-form select, .output-panel textarea { width: 100%; border: 1px solid var(--line); border-radius: var(--r-m); padding: var(--sp-4) var(--sp-5); background: var(--panel-deep); color: var(--ink); font: inherit; }
   .tool-form textarea { min-height: 118px; resize: vertical; }
   .tool-form input:focus, .tool-form textarea:focus, .tool-form select:focus { border-color: var(--accent); box-shadow: var(--glow); outline: 0; }
   .tool-actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
@@ -139,9 +172,5 @@ const { title, module, description, principle } = Astro.props;
   .output-panel h2 { margin-top: 0; font-family: var(--serif); }
   .output-panel textarea { min-height: 360px; font-family: var(--mono); font-size: .9rem; }
   .tool-status { min-height: 1.5em; color: var(--accent-light); }
-  @media (max-width: 820px) {
-    .tool-hero-grid, .tool-layout { grid-template-columns: 1fr; }
-    .tool-note { position: static; }
-    .field-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 820px) { .tool-hero-grid, .tool-layout { grid-template-columns: 1fr; } .tool-note { position: static; } .field-grid { grid-template-columns: 1fr; } }
 </style>

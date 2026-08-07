@@ -3,23 +3,15 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 
-const articles = (await getCollection('articles', ({ data }) => data.status === 'published'))
-  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
-const types = [
-  ['all', '全部类型'],
-  ['insight', '时代洞察'],
-  ['canon', '正典解释'],
-  ['case', '案例'],
-  ['tool', '行动工具'],
-  ['library', '文明书房'],
-];
+const articles = (await getCollection('articles', ({ data }) => data.status === 'published')).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const types = [['all','全部类型'],['insight','时代洞察'],['canon','正典解释'],['case','案例'],['tool','行动工具'],['library','文明书房']];
 ---
-<BaseLayout title="文章 · 原力战略" description="搜索原力战略的时势洞察、正典概念、案例、工具与跨学科文章。">
+<BaseLayout title="文章 · 原力战略" description="搜索原力战略的时势洞察、正典概念、案例、工具与跨学科文章。" mode="paper">
   <section class="section article-center-hero">
     <div class="container">
-      <p class="eyebrow">ARTICLE CENTER · 深度用户入口</p>
+      <p class="eyebrow">ARTICLE CENTER · 阅读与案例入口</p>
       <h1 class="display small">第一次来不必筛选。<br />需要查资料时，再使用文章中心。</h1>
-      <p class="lead">首页负责推荐下一步；这里负责搜索、筛选和精确检索。每篇文章仍应连接一个判断、行动或可回写资产。</p>
+      <p class="lead">首页负责推荐下一步；这里负责文章、案例、关键词与精确检索。顶部“案例”会直接进入案例筛选，不再经过栏目系统。</p>
     </div>
   </section>
 
@@ -31,28 +23,19 @@ const types = [
           <input id="article-search-input" type="search" placeholder="例如：品类、AI、C4、创始人依赖" autocomplete="off" />
         </div>
         <div class="type-filter" role="group" aria-label="文章类型筛选">
-          {types.map(([value, label], index) => (
-            <button class="filter-button" type="button" data-filter-type={value} aria-pressed={index === 0 ? 'true' : 'false'}>{label}</button>
-          ))}
+          {types.map(([value,label]) => <button class="filter-button" type="button" data-filter-type={value} aria-pressed="false">{label}</button>)}
         </div>
-        <div class="search-meta">
-          <strong id="article-result-count">{articles.length}篇文章</strong>
-          <button class="button quiet" type="button" id="article-search-clear">清除筛选</button>
-        </div>
+        <div class="search-meta"><strong id="article-result-count">{articles.length}篇文章</strong><button class="button quiet" type="button" id="article-search-clear">清除筛选</button></div>
       </div>
 
       <div class="grid cols-3 article-grid" id="article-search-results">
         {articles.map((article) => (
-          <div
-            data-search-item
-            data-type={article.data.articleType}
-            data-search={`${article.data.title} ${article.data.description} ${article.data.module} ${article.data.trilogy} ${article.data.userSymptoms.join(' ')} ${article.data.coreConcepts.join(' ')}`.toLowerCase()}
-          >
+          <div data-search-item data-type={article.data.articleType} data-search={`${article.data.title} ${article.data.description} ${article.data.module} ${article.data.trilogy} ${article.data.userSymptoms.join(' ')} ${article.data.coreConcepts.join(' ')}`.toLowerCase()}>
             <ArticleCard article={article} />
           </div>
         ))}
       </div>
-      <p class="empty-state" id="article-empty-state" hidden>没有找到匹配文章。尝试缩短关键词，或清除类型筛选。</p>
+      <p class="empty-state" id="article-empty-state" hidden>没有找到匹配内容。尝试缩短关键词，或清除类型筛选。</p>
     </div>
   </section>
 
@@ -64,8 +47,11 @@ const types = [
       const empty = document.getElementById('article-empty-state');
       const items = [...document.querySelectorAll('[data-search-item]')];
       const filters = [...document.querySelectorAll('[data-filter-type]')];
-      let activeType = 'all';
+      const requestedType = new URLSearchParams(location.search).get('type');
+      const allowed = new Set(filters.map((item) => item.dataset.filterType));
+      let activeType = requestedType && allowed.has(requestedType) ? requestedType : 'all';
 
+      const syncPressed = () => filters.forEach((item) => item.setAttribute('aria-pressed', String(item.dataset.filterType === activeType)));
       const apply = () => {
         const query = String(input?.value || '').trim().toLowerCase();
         let visible = 0;
@@ -75,23 +61,24 @@ const types = [
           item.hidden = !(typeMatch && queryMatch);
           if (!item.hidden) visible += 1;
         });
-        if (count) count.textContent = `${visible}篇文章`;
+        if (count) count.textContent = `${visible}篇${activeType === 'case' ? '案例' : '文章'}`;
         if (empty) empty.hidden = visible !== 0;
       };
 
-      input?.addEventListener('input', apply);
       filters.forEach((button) => button.addEventListener('click', () => {
         activeType = button.dataset.filterType || 'all';
-        filters.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-        apply();
+        syncPressed(); apply();
+        const url = new URL(location.href);
+        if (activeType === 'all') url.searchParams.delete('type'); else url.searchParams.set('type', activeType);
+        history.replaceState({}, '', url);
       }));
+      input?.addEventListener('input', apply);
       clear?.addEventListener('click', () => {
         if (input) input.value = '';
-        activeType = 'all';
-        filters.forEach((item) => item.setAttribute('aria-pressed', String(item.dataset.filterType === 'all')));
-        apply();
-        input?.focus();
+        activeType = 'all'; syncPressed(); apply();
+        const url = new URL(location.href); url.searchParams.delete('type'); history.replaceState({}, '', url); input?.focus();
       });
+      syncPressed(); apply();
     })();
   </script>
 </BaseLayout>
@@ -108,7 +95,6 @@ const types = [
   .filter-button { padding: 7px 12px; border: 1px solid var(--line); border-radius: var(--r-pill); background: transparent; color: var(--ink2); cursor: pointer; }
   .filter-button[aria-pressed='true'] { border-color: var(--accent); background: var(--accent); color: var(--accent-fg); }
   .search-meta { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4); }
-  .article-grid { margin-top: 0; }
   [data-search-item][hidden] { display: none; }
   .empty-state { padding: var(--sp-8); border: 1px dashed var(--line); border-radius: var(--r-l); color: var(--ink2); text-align: center; }
   @media (max-width: 680px) { .search-meta { align-items: flex-start; flex-direction: column; } }

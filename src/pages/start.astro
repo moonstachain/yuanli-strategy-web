@@ -3,105 +3,64 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const questions = [
-  {
-    module: 'A1',
-    axis: '找到不可复制',
-    question: '我做过很多事，却仍说不清自己持续产生差异的源头。',
-    detail: '能力、经历和标签很多，但无法找到那条不断生成新判断的主线。',
-  },
-  {
-    module: 'A2',
-    axis: '找到不可复制',
-    question: '我越来越会迎合市场，却越来越不像自己。',
-    detail: '外部反馈、流量和短期机会正在替代长期热爱、品味与承诺。',
-  },
-  {
-    module: 'A3/A4',
-    axis: '找到不可复制',
-    question: '我有独特判断，但它还没有稳定变成作品、产品或可见结果。',
-    detail: '想得清楚，却没有让外部世界持续看见、选择和验证。',
-  },
-  {
-    module: 'B1',
-    axis: '让市场选择你',
-    question: '我很努力，但没有踩中正在放大的时代力量。',
-    detail: '业务更多依赖个人勤奋，而不是新技术、新人群、新媒介或新制度的势能。',
-  },
-  {
-    module: 'B2',
-    axis: '让市场选择你',
-    question: '用户认可我的专业，却无法快速理解为什么必须选择我。',
-    detail: '内容有人喜欢、客户觉得不错，但没有形成稳定的品类入口和选择标准。',
-  },
-  {
-    module: 'B3',
-    axis: '让市场选择你',
-    question: '业务一增长，我的时间、团队成本和交付压力也同步增长。',
-    detail: '增长仍然主要依靠增加人手、项目和创始人投入，缺少结构性杠杆。',
-  },
-  {
-    module: 'B4',
-    axis: '让市场选择你',
-    question: '我有流量或客户，却缺少长期控制权。',
-    detail: '入口依赖平台、交付容易替代、关系难以留存，或用户心智尚未形成稳定占位。',
-  },
-  {
-    module: 'C1/C2',
-    axis: '让事业持续进化',
-    question: '团队和AI产出越来越多，但越来越难保持“像我”。',
-    detail: '创始人的意图、品味、边界、证据和判断没有成为系统可读取的上下文。',
-  },
-  {
-    module: 'C4',
-    axis: '让事业持续进化',
-    question: '项目完成后留下了文件，却没有让下一次明显更强。',
-    detail: '行动、结果、反例和规则没有被回写，新的任务仍然从头开始。',
-  },
+  { module: 'A1', axis: '找到不可复制', question: '我做过很多事，却仍说不清自己持续产生差异的源头。', detail: '能力、经历和标签很多，但无法找到那条不断生成新判断的主线。' },
+  { module: 'A2', axis: '找到不可复制', question: '我越来越会迎合市场，却越来越不像自己。', detail: '外部反馈、流量和短期机会正在替代长期热爱、品味与承诺。' },
+  { module: 'A3/A4', axis: '找到不可复制', question: '我有独特判断，但它还没有稳定变成作品、产品或可见结果。', detail: '想得清楚，却没有让外部世界持续看见、选择和验证。' },
+  { module: 'B1', axis: '让市场选择你', question: '我很努力，但没有踩中正在放大的时代力量。', detail: '业务更多依赖个人勤奋，而不是新技术、新人群、新媒介或新制度的势能。' },
+  { module: 'B2', axis: '让市场选择你', question: '用户认可我的专业，却无法快速理解为什么必须选择我。', detail: '内容有人喜欢、客户觉得不错，但没有形成稳定的品类入口和选择标准。' },
+  { module: 'B3', axis: '让市场选择你', question: '业务一增长，我的时间、团队成本和交付压力也同步增长。', detail: '增长仍然主要依靠增加人手、项目和创始人投入，缺少结构性杠杆。' },
+  { module: 'B4', axis: '让市场选择你', question: '我有流量或客户，却缺少长期控制权。', detail: '入口依赖平台、交付容易替代、关系难以留存，或用户心智尚未形成稳定占位。' },
+  { module: 'C1/C2', axis: '让事业持续进化', question: '团队和AI产出越来越多，但越来越难保持“像我”。', detail: '创始人的意图、品味、边界、证据和判断没有成为系统可读取的上下文。' },
+  { module: 'C4', axis: '让事业持续进化', question: '项目完成后留下了文件，却没有让下一次明显更强。', detail: '行动、结果、反例和规则没有被回写，新的任务仍然从头开始。' },
 ];
 ---
-<BaseLayout
-  title="3分钟原力导航 · 原力战略"
-  description="从真实症状出发，找到当前最值得优先验证的一环，并获得一个现实行动。"
-  mode="cockpit"
->
+<BaseLayout title="3分钟原力导航 · 原力战略" description="从真实症状出发，找到当前最值得优先验证的一环，并获得一个现实行动。" mode="cockpit">
   <section class="navigation-hero">
     <div class="container navigation-hero-grid">
       <div>
         <p class="eyebrow">FIRST SUCCESS · 3分钟原力导航</p>
         <h1>不要先理解整套体系。<br />先找到你最值得验证的一环。</h1>
-        <p class="lead">回答9个现实症状，获得一个导航性原力坐标、判断依据和唯一下一步。整个过程保存在当前浏览器，不自动上传。</p>
+        <p class="lead">从找原力、做生意、建系统中的一个阶段开始，或完成全部9题。结果只是导航假设，答案默认只保存在当前浏览器。</p>
       </div>
       <aside class="yl-card yl-card--panel yl-card--static">
         <p class="eyebrow">边界</p>
         <strong>不是人格测评，也不是战略定论。</strong>
-        <p>结果只是根据当前回答生成的优先验证假设。真正的判断需要进入现实行动、证据和Outcome。</p>
+        <p>真正的判断需要进入现实行动、证据与Outcome。</p>
       </aside>
     </div>
   </section>
 
-  <section class="navigation-shell" data-base={base} data-navigation-version="yuanli-navigation:v0.1">
+  <section class="navigation-shell" data-base={base} data-navigation-version="yuanli-navigation:v0.2">
     <div class="container navigation-grid">
       <aside class="navigation-progress yl-card yl-card--static">
         <p class="eyebrow">你的进度</p>
+        <strong id="navigation-scope-label">全面导航</strong>
         <div class="progress-head"><strong id="navigation-step-label">第1题 / 9题</strong><span id="navigation-percent">0%</span></div>
         <div class="progress-track" aria-hidden="true"><span id="navigation-progress-bar"></span></div>
         <p class="meta" id="navigation-save-state">尚未产生本地进度</p>
         <div class="axis-map" aria-label="三阶段地图">
-          <span data-axis="A">找到不可复制</span>
-          <span data-axis="B">让市场选择你</span>
-          <span data-axis="C">让事业持续进化</span>
+          <span data-axis="A">找原力</span>
+          <span data-axis="B">做生意</span>
+          <span data-axis="C">建系统</span>
         </div>
       </aside>
 
       <div class="navigation-main">
+        <section class="resume-conflict yl-card yl-card--panel yl-card--static" id="resume-conflict" hidden aria-live="polite">
+          <p class="eyebrow">发现上次进度</p>
+          <h2>你这次选择了新的入口。</h2>
+          <p id="resume-conflict-copy"></p>
+          <div class="actions">
+            <button class="button" id="continue-stored" type="button">继续上次进度</button>
+            <button class="button primary" id="start-requested" type="button">按这次选择开始</button>
+          </div>
+        </section>
+
         <form id="navigation-form" novalidate>
           <div id="question-stage">
             {questions.map((item, index) => (
               <fieldset class="navigation-question" data-question-index={index} data-module={item.module} hidden={index !== 0}>
-                <legend>
-                  <span>{item.axis} · {item.module}</span>
-                  {item.question}
-                </legend>
+                <legend><span>{item.axis} · {item.module}</span>{item.question}</legend>
                 <p>{item.detail}</p>
                 <div class="answer-grid">
                   <label><input type="radio" name={`q${index}`} value="0" /> <span><strong>基本不符合</strong><small>这不是我当前的主要问题</small></span></label>
@@ -111,7 +70,6 @@ const questions = [
               </fieldset>
             ))}
           </div>
-
           <div class="navigation-actions" id="navigation-actions">
             <button class="button" type="button" id="navigation-back" disabled>上一题</button>
             <button class="button primary" type="button" id="navigation-next" disabled>下一题</button>
@@ -123,16 +81,10 @@ const questions = [
           <div class="result-coordinate" id="result-coordinate">A1</div>
           <h2 id="result-title">发现母体</h2>
           <p class="result-reason" id="result-reason"></p>
-          <div class="result-why">
-            <strong>为什么先从这里开始</strong>
-            <p id="result-why"></p>
-          </div>
-          <div class="result-next">
-            <strong>唯一下一步</strong>
-            <p id="result-action-copy"></p>
-            <a class="button primary" id="result-action" href={`${base}/tools/ai-clearance/`}>开始行动</a>
-          </div>
-          <p class="navigation-disclaimer">这是导航性判断，不是人格结论、能力评级或已经验证的战略结论。完成推荐动作后，请用真实任务、反例和Outcome更新它。</p>
+          <p class="tie-note" id="result-tie-note" hidden></p>
+          <div class="result-why"><strong>为什么先从这里开始</strong><p id="result-why"></p></div>
+          <div class="result-next"><strong>唯一下一步</strong><p id="result-action-copy"></p><a class="button primary" id="result-action" href={`${base}/tools/ai-clearance/`}>开始这个行动</a></div>
+          <p class="navigation-disclaimer">这是导航性判断，不是人格结论、能力评级或已经验证的战略结论。并列位置会显式展示，并按上游优先原则给出首个验证建议。</p>
           <button class="button quiet" type="button" id="navigation-restart">重新导航</button>
         </section>
       </div>
@@ -141,209 +93,155 @@ const questions = [
 
   <script is:inline>
     (() => {
-      const STORAGE_KEY = 'yuanli-navigation:v0.1';
+      const STORAGE_KEY = 'yuanli-navigation:v0.2';
+      const LEGACY_KEY = 'yuanli-navigation:v0.1';
       const LAST_KEY = 'yuanli-journey:last';
       const root = document.querySelector('.navigation-shell');
       const base = root?.dataset.base || '';
       const questions = [...document.querySelectorAll('.navigation-question')];
       const form = document.getElementById('navigation-form');
       const result = document.getElementById('navigation-result');
+      const conflict = document.getElementById('resume-conflict');
+      const conflictCopy = document.getElementById('resume-conflict-copy');
+      const continueStored = document.getElementById('continue-stored');
+      const startRequested = document.getElementById('start-requested');
       const back = document.getElementById('navigation-back');
       const next = document.getElementById('navigation-next');
       const restart = document.getElementById('navigation-restart');
       const stepLabel = document.getElementById('navigation-step-label');
+      const scopeLabel = document.getElementById('navigation-scope-label');
       const percentLabel = document.getElementById('navigation-percent');
       const progressBar = document.getElementById('navigation-progress-bar');
       const saveState = document.getElementById('navigation-save-state');
       const axisLabels = [...document.querySelectorAll('.axis-map span')];
 
+      const scopes = {
+        ALL: { label: '全面导航', indexes: [0,1,2,3,4,5,6,7,8] },
+        A: { label: '找原力', indexes: [0,1,2] },
+        B: { label: '做生意', indexes: [3,4,5,6] },
+        C: { label: '建系统', indexes: [7,8] },
+      };
+      const requested = new URLSearchParams(location.search).get('path');
+      const requestedScope = Object.prototype.hasOwnProperty.call(scopes, requested) ? requested : 'ALL';
+
       const resultMap = {
-        'A1': {
-          title: '发现母体',
-          why: '你当前最需要的不是再增加能力标签，而是从长期经历、反复注意和关键选择中提出一个生成源假设。',
-          action: '用AI清算卡区分表层能力与生成性母体，并写下置信度与反证条件。',
-          href: '/tools/ai-clearance/',
-          label: '开始10分钟AI清算',
-        },
-        'A2': {
-          title: '回到母体',
-          why: '你的问题更像是外部选择正在覆盖内部生成源。先恢复长期注意、品味与承诺，再讨论规模化。',
-          action: '完成AI清算卡，并特别标记哪些工作让你更像自己、哪些工作只是在迎合短期反馈。',
-          href: '/tools/ai-clearance/',
-          label: '找回我的生成线索',
-        },
-        'A3/A4': {
-          title: '获得与显化原力',
-          why: '独特判断只有进入作品、产品、关系和真实选择，才会从自我感觉变成可验证资产。',
-          action: '完成AI清算卡，选择一个7天内可以公开交付或接受用户选择的最小实验。',
-          href: '/tools/ai-clearance/',
-          label: '设计一个显化实验',
-        },
-        'B1': {
-          title: '原力借势',
-          why: '当前瓶颈可能不是不够努力，而是缺少一个正在放大的时代、技术或人群势能。',
-          action: '用贵任务与价值账户卡重新描述用户变化，找到正在变贵、变急或变可能的问题。',
-          href: '/tools/category-hypothesis/',
-          label: '寻找正在变贵的任务',
-        },
-        'B2': {
-          title: '品类独创',
-          why: '用户认可你的能力，但尚未形成稳定的选择入口。你需要拥有一个问题的解释权，而不是继续罗列专业能力。',
-          action: '完成贵任务与价值账户卡，形成一个用户能理解、支付和转述的品类假设。',
-          href: '/tools/category-hypothesis/',
-          label: '形成我的品类假设',
-        },
-        'B3': {
-          title: '模式升维',
-          why: '增长正在同步放大成本和创始人负担，说明价值生产、交换或积累链路尚未形成结构性杠杆。',
-          action: '用贵任务与价值账户卡先冻结最贵用户任务，再识别哪些交付可以产品化、系统化或递归积累。',
-          href: '/tools/category-hypothesis/',
-          label: '重新设计价值链路',
-        },
-        'B4': {
-          title: '壁垒锁定',
-          why: '你拥有业务活动，但尚未把它变成心智、交付、入口或留存控制权。',
-          action: '用贵任务与价值账户卡确认用户为何选择你，再画出当前最薄弱的一种控制权。',
-          href: '/tools/category-hypothesis/',
-          label: '找到最薄弱的控制权',
-        },
-        'C1/C2': {
-          title: '文脉与大脑',
-          why: '团队和AI没有稳定读取创始人的意图、品味、证据与边界，因此产出越多，漂移风险越高。',
-          action: '用项目回写卡记录一次真实任务中的上下文、证据、裁决和失败边界。',
-          href: '/tools/project-backwrite/',
-          label: '建立第一条可读取上下文',
-        },
-        'C4': {
-          title: '一条链路',
-          why: '你已经完成许多项目，但行动、结果和规则没有进入下一次任务，因此Output尚未转化为复利。',
-          action: '完成项目回写卡，明确旧规则、真实Outcome、Changed Rule候选和下一次加载点。',
-          href: '/tools/project-backwrite/',
-          label: '让这次项目进入下一次',
-        },
-        'ROOT': {
-          title: '先建立全景',
-          why: '当前回答没有出现明显短板。先理解三部曲全景，再选择一个真实任务进行验证。',
-          action: '阅读原力战略三部曲总纲，随后带着一个真实问题重新完成导航。',
-          href: '/articles/what-is-yuanli-strategy-trilogy/',
-          label: '先看原力战略是什么',
-        },
+        'A1': { title: '发现母体', why: '先从长期经历、反复注意和关键选择中提出生成源假设。', action: '用AI清算卡区分表层能力与生成性母体，并写下置信度与反证条件。', href: '/tools/ai-clearance/', label: '开始10分钟AI清算' },
+        'A2': { title: '回到母体', why: '外部反馈正在覆盖内部生成源，先恢复长期注意、品味与承诺。', action: '完成AI清算卡，并标记哪些工作让你更像自己、哪些只是迎合短期反馈。', href: '/tools/ai-clearance/', label: '找回我的生成线索' },
+        'A3/A4': { title: '获得与显化原力', why: '独特判断只有进入作品、产品、关系和真实选择，才会成为可验证资产。', action: '选择一个7天内可以公开交付或接受用户选择的最小实验。', href: '/tools/ai-clearance/', label: '设计一个显化实验' },
+        'B1': { title: '原力借势', why: '当前瓶颈可能不是不够努力，而是缺少正在放大的时代、技术或人群势能。', action: '重新描述用户变化，找到正在变贵、变急或变可能的问题。', href: '/tools/category-hypothesis/', label: '寻找正在变贵的任务' },
+        'B2': { title: '品类独创', why: '用户认可你的能力，但尚未形成稳定的选择入口。', action: '形成一个用户能理解、支付和转述的品类假设。', href: '/tools/category-hypothesis/', label: '形成我的品类假设' },
+        'B3': { title: '模式升维', why: '增长正在同步放大成本和创始人负担，说明价值链路缺少结构性杠杆。', action: '先冻结最贵用户任务，再识别哪些交付可以产品化、系统化或递归积累。', href: '/tools/category-hypothesis/', label: '重新设计价值链路' },
+        'B4': { title: '壁垒锁定', why: '你拥有业务活动，但尚未把它变成心智、交付、入口或留存控制权。', action: '确认用户为何选择你，再画出当前最薄弱的一种控制权。', href: '/tools/category-hypothesis/', label: '找到最薄弱的控制权' },
+        'C1/C2': { title: '文脉与大脑', why: '团队和AI没有稳定读取创始人的意图、品味、证据与边界。', action: '用项目回写卡记录一次真实任务中的上下文、证据、裁决和失败边界。', href: '/tools/project-backwrite/', label: '建立第一条可读取上下文' },
+        'C4': { title: '一条链路', why: '行动、结果和规则没有进入下一次任务，因此Output尚未转化为复利。', action: '明确旧规则、真实Outcome、Changed Rule候选和下一次加载点。', href: '/tools/project-backwrite/', label: '让这次项目进入下一次' },
+        ROOT: { title: '先建立全景', why: '当前没有出现明显单点短板。', action: '阅读三部曲总纲，随后带着一个真实问题重新完成导航。', href: '/articles/what-is-yuanli-strategy-trilogy/', label: '先看原力战略是什么' },
       };
 
-      const emptyState = { step: 0, answers: Array(questions.length).fill(null), result: null };
-      let state = { ...emptyState, answers: [...emptyState.answers] };
-
-      const initialPath = new URLSearchParams(location.search).get('path');
-      const pathStarts = { A: 0, B: 3, C: 7 };
-
+      const blankState = (scope) => ({ scope, position: 0, answers: Array(questions.length).fill(null), result: null, ties: [] });
+      const hasProgress = (value) => Boolean(value && Array.isArray(value.answers) && value.answers.some((item) => item !== null));
+      const normalize = (value) => ({ ...blankState(value?.scope || 'ALL'), ...value, scope: scopes[value?.scope] ? value.scope : 'ALL', answers: Array.isArray(value?.answers) && value.answers.length === questions.length ? value.answers : Array(questions.length).fill(null) });
+      let stored = null;
       try {
-        const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-        if (stored && Array.isArray(stored.answers) && stored.answers.length === questions.length) {
-          state = { ...emptyState, ...stored };
-        } else if (initialPath && Object.prototype.hasOwnProperty.call(pathStarts, initialPath)) {
-          state.step = pathStarts[initialPath];
+        stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+        if (!stored) {
+          const legacy = JSON.parse(localStorage.getItem(LEGACY_KEY) || 'null');
+          if (legacy) stored = { ...legacy, scope: 'ALL', position: Number(legacy.step || 0) };
         }
-      } catch {
-        localStorage.removeItem(STORAGE_KEY);
-      }
+      } catch { stored = null; }
+      stored = stored ? normalize(stored) : null;
+      let state = blankState(requestedScope);
 
+      const indexes = () => scopes[state.scope].indexes;
+      const axisForIndex = (index) => index < 3 ? 'A' : index < 7 ? 'B' : 'C';
       const save = () => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         if (saveState) saveState.textContent = `已于 ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} 保存到本机`;
       };
 
-      const axisForStep = (step) => step < 3 ? 'A' : step < 7 ? 'B' : 'C';
-
       const renderStep = () => {
+        conflict.hidden = true;
         form.hidden = false;
         result.hidden = true;
+        const visibleIndexes = indexes();
+        state.position = Math.max(0, Math.min(state.position, visibleIndexes.length - 1));
+        const globalIndex = visibleIndexes[state.position];
         questions.forEach((question, index) => {
-          question.hidden = index !== state.step;
+          question.hidden = index !== globalIndex;
           const selected = state.answers[index];
-          question.querySelectorAll('input').forEach((input) => { input.checked = Number(input.value) === selected; });
+          question.querySelectorAll('input').forEach((input) => { input.checked = selected !== null && Number(input.value) === selected; });
         });
-        const completed = state.answers.filter((value) => value !== null).length;
-        const percent = Math.round(completed / questions.length * 100);
-        stepLabel.textContent = `第${state.step + 1}题 / ${questions.length}题`;
+        const completed = visibleIndexes.filter((index) => state.answers[index] !== null).length;
+        const percent = Math.round(completed / visibleIndexes.length * 100);
+        scopeLabel.textContent = scopes[state.scope].label;
+        stepLabel.textContent = `第${state.position + 1}题 / ${visibleIndexes.length}题`;
         percentLabel.textContent = `${percent}%`;
         progressBar.style.width = `${percent}%`;
-        back.disabled = state.step === 0;
-        next.disabled = state.answers[state.step] === null;
-        next.textContent = state.step === questions.length - 1 ? '生成导航结果' : '下一题';
-        const axis = axisForStep(state.step);
+        back.disabled = state.position === 0;
+        next.disabled = state.answers[globalIndex] === null;
+        next.textContent = state.position === visibleIndexes.length - 1 ? '生成导航结果' : '下一题';
+        const axis = axisForIndex(globalIndex);
         axisLabels.forEach((label) => label.classList.toggle('active', label.dataset.axis === axis));
-      };
-
-      const calculate = () => {
-        const scores = questions.map((question, index) => ({
-          module: question.dataset.module,
-          score: Number(state.answers[index] || 0),
-          index,
-        }));
-        const maxScore = Math.max(...scores.map((item) => item.score));
-        const winner = maxScore === 0 ? { module: 'ROOT', index: 0 } : scores.filter((item) => item.score === maxScore).sort((a, b) => b.index - a.index)[0];
-        state.result = winner.module;
-        save();
-        showResult(winner.module);
       };
 
       const showResult = (module) => {
         const config = resultMap[module] || resultMap.ROOT;
+        conflict.hidden = true;
         form.hidden = true;
         result.hidden = false;
         document.getElementById('result-coordinate').textContent = module;
         document.getElementById('result-title').textContent = config.title;
-        document.getElementById('result-reason').textContent = module === 'ROOT'
-          ? '当前没有出现明显的单点短板。'
-          : `你当前更值得优先验证：${module}｜${config.title}。`;
+        const ties = Array.isArray(state.ties) ? state.ties : [];
+        document.getElementById('result-reason').textContent = module === 'ROOT' ? '当前没有出现明显的单点短板。' : `当前更值得优先验证：${module}｜${config.title}。`;
+        const tieNote = document.getElementById('result-tie-note');
+        if (ties.length > 1) {
+          tieNote.hidden = false;
+          tieNote.textContent = `并列位置：${ties.join('、')}。系统没有暗中选择后置模块，而是按A→B→C的上游优先顺序先推荐${module}；你也可以带着其他并列位置进入现实验证。`;
+        } else tieNote.hidden = true;
         document.getElementById('result-why').textContent = config.why;
         document.getElementById('result-action-copy').textContent = config.action;
         const action = document.getElementById('result-action');
         action.href = `${base}${config.href}`;
         action.textContent = config.label;
-        localStorage.setItem(LAST_KEY, JSON.stringify({
-          type: 'navigation',
-          label: `${module}｜${config.title}`,
-          href: `${base}/start/`,
-          actionHref: `${base}${config.href}`,
-          updatedAt: new Date().toISOString(),
-        }));
-        result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const resumeHref = state.scope === 'ALL' ? `${base}/start/` : `${base}/start/?path=${state.scope}`;
+        localStorage.setItem(LAST_KEY, JSON.stringify({ type: 'navigation', label: `${module}｜${config.title}`, href: resumeHref, actionHref: `${base}${config.href}`, updatedAt: new Date().toISOString() }));
       };
 
-      questions.forEach((question, index) => {
-        question.querySelectorAll('input').forEach((input) => input.addEventListener('change', () => {
-          state.answers[index] = Number(input.value);
-          next.disabled = false;
-          save();
-        }));
-      });
-
-      back.addEventListener('click', () => {
-        if (state.step > 0) state.step -= 1;
-        save();
-        renderStep();
-      });
-
-      next.addEventListener('click', () => {
-        if (state.answers[state.step] === null) return;
-        if (state.step < questions.length - 1) {
-          state.step += 1;
-          save();
-          renderStep();
-        } else {
-          calculate();
+      const calculate = () => {
+        const scored = indexes().map((index) => ({ module: questions[index].dataset.module, score: Number(state.answers[index] || 0), index }));
+        const maxScore = Math.max(...scored.map((item) => item.score));
+        if (maxScore === 0) {
+          state.result = 'ROOT'; state.ties = []; save(); showResult('ROOT'); return;
         }
-      });
+        const winners = scored.filter((item) => item.score === maxScore).sort((a, b) => a.index - b.index);
+        state.result = winners[0].module;
+        state.ties = winners.map((item) => item.module);
+        save();
+        showResult(state.result);
+      };
 
-      restart.addEventListener('click', () => {
-        state = { ...emptyState, answers: [...emptyState.answers] };
-        localStorage.removeItem(STORAGE_KEY);
+      questions.forEach((question, index) => question.querySelectorAll('input').forEach((input) => input.addEventListener('change', () => {
+        state.answers[index] = Number(input.value); next.disabled = false; save();
+      })));
+      back.addEventListener('click', () => { if (state.position > 0) state.position -= 1; save(); renderStep(); });
+      next.addEventListener('click', () => {
+        const globalIndex = indexes()[state.position];
+        if (state.answers[globalIndex] === null) return;
+        if (state.position < indexes().length - 1) { state.position += 1; save(); renderStep(); } else calculate();
+      });
+      restart.addEventListener('click', () => { state = blankState(requestedScope); localStorage.removeItem(STORAGE_KEY); renderStep(); document.querySelector('.navigation-shell')?.scrollIntoView({ behavior: 'smooth' }); });
+      continueStored.addEventListener('click', () => { state = normalize(stored); state.result ? showResult(state.result) : renderStep(); });
+      startRequested.addEventListener('click', () => { state = blankState(requestedScope); save(); renderStep(); });
+
+      if (stored && requestedScope !== 'ALL' && stored.scope !== requestedScope && hasProgress(stored)) {
+        form.hidden = true; result.hidden = true; conflict.hidden = false;
+        conflictCopy.textContent = `上次保存的是“${scopes[stored.scope].label}”，这次你选择了“${scopes[requestedScope].label}”。请选择继续旧进度，或按本次意图重新开始。`;
+      } else if (stored && (requestedScope === 'ALL' || stored.scope === requestedScope)) {
+        state = stored;
+        state.result ? showResult(state.result) : renderStep();
+      } else {
+        state = blankState(requestedScope);
         renderStep();
-        document.querySelector('.navigation-shell')?.scrollIntoView({ behavior: 'smooth' });
-      });
-
-      if (state.result) showResult(state.result); else renderStep();
+      }
     })();
   </script>
 </BaseLayout>
@@ -356,15 +254,17 @@ const questions = [
   .navigation-hero aside p:last-child { color: var(--ink2); }
   .navigation-shell { padding: var(--sp-9) 0 var(--sp-10); }
   .navigation-grid { display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 780px); gap: var(--sp-8); justify-content: center; align-items: start; }
-  .navigation-progress { position: sticky; top: calc(var(--header-h) + var(--sp-5)); }
+  .navigation-progress { position: sticky; top: calc(var(--header-h) + 52px); }
   .progress-head { display: flex; justify-content: space-between; gap: var(--sp-4); margin: var(--sp-5) 0 var(--sp-3); }
   .axis-map { display: grid; gap: var(--sp-2); margin-top: var(--sp-6); }
   .axis-map span { padding: var(--sp-3) var(--sp-4); border-left: 2px solid var(--line); color: var(--ink3); font-size: .84rem; }
   .axis-map span.active { border-color: var(--accent); color: var(--ink); background: var(--panel-soft); }
+  .resume-conflict h2 { margin-top: 0; font-family: var(--serif); font-size: 2rem; }
+  .resume-conflict > p:not(.eyebrow) { color: var(--ink2); }
   .navigation-question { margin: 0; padding: clamp(24px, 5vw, 48px); border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--panel); }
   .navigation-question legend { width: 100%; color: var(--ink); font-family: var(--serif); font-size: clamp(1.7rem, 4vw, 3rem); line-height: 1.2; }
   .navigation-question legend span { display: block; margin-bottom: var(--sp-4); color: var(--accent); font-family: var(--sans); font-size: .75rem; font-weight: 780; letter-spacing: .1em; }
-  .navigation-question > p { color: var(--ink2); font-size: 1.02rem; }
+  .navigation-question > p { color: var(--ink2); }
   .answer-grid { display: grid; gap: var(--sp-3); margin-top: var(--sp-7); }
   .answer-grid label { display: grid; grid-template-columns: auto 1fr; gap: var(--sp-4); align-items: start; padding: var(--sp-5); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--panel-deep); cursor: pointer; }
   .answer-grid label:hover { border-color: var(--accent); }
@@ -376,12 +276,9 @@ const questions = [
   .result-coordinate { color: var(--accent); font-family: var(--serif); font-size: clamp(3rem, 8vw, 6rem); line-height: 1; }
   .navigation-result h2 { margin: var(--sp-3) 0 var(--sp-4); font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 4rem); }
   .result-reason { color: var(--ink2); font-size: 1.15rem; }
+  .tie-note { padding: var(--sp-4); border-left: 3px solid var(--info); background: var(--panel-soft); color: var(--ink2); }
   .result-why, .result-next { margin-top: var(--sp-6); padding-top: var(--sp-5); border-top: 1px solid var(--line); }
-  .result-why strong, .result-next strong { font-family: var(--serif); font-size: 1.25rem; }
   .result-why p, .result-next p { color: var(--ink2); }
   .navigation-disclaimer { margin-top: var(--sp-7); padding: var(--sp-4); border-left: 3px solid var(--warn); background: var(--panel-soft); color: var(--ink2); font-size: .88rem; }
-  @media (max-width: 860px) {
-    .navigation-hero-grid, .navigation-grid { grid-template-columns: 1fr; }
-    .navigation-progress { position: static; }
-  }
+  @media (max-width: 860px) { .navigation-hero-grid, .navigation-grid { grid-template-columns: 1fr; } .navigation-progress { position: static; } }
 </style>
