@@ -1,0 +1,75 @@
+---
+import '../styles/global.css';
+import { producerNav, studioSnapshot } from '../data/studio';
+const { title = '原力 Studio', description = '把信号变成判断，把判断变成作品，把结果变成下一次。', eyebrow = 'PRODUCER CONTROL PLANE' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const current = Astro.url.pathname;
+const hrefOf = (href: string) => `${base}${href}`;
+const active = (href: string) => href === '/studio/' ? current.endsWith('/studio/') : current.includes(href);
+---
+<!doctype html>
+<html lang="zh-CN" data-mode="cockpit">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} /><meta name="theme-color" content="#07100f" />
+  <title>{title}</title>
+</head>
+<body class="studio-body">
+  <a class="skip-link" href="#studio-main">跳到生产工作区</a>
+  <header class="studio-header">
+    <div class="container studio-topbar">
+      <a class="studio-brand" href={hrefOf('/studio/')}><span>原</span><strong>原力 Studio</strong><small>Producer OS</small></a>
+      <div class="studio-truth">只读控制面 · 真源仍在六仓 <b>Observed {studioSnapshot.observedAt}</b></div>
+      <a class="consumer-link" href={hrefOf('/')}>查看C端门户 →</a>
+    </div>
+    <nav class="container studio-nav" aria-label="生产者主导航">
+      {producerNav.map((item) => <a href={hrefOf(item.href)} aria-current={active(item.href) ? 'page' : undefined}>{item.label}</a>)}
+    </nav>
+  </header>
+  <main id="studio-main">
+    <div class="container studio-page-head"><p class="eyebrow">{eyebrow}</p><slot name="heading" /></div>
+    <slot />
+  </main>
+  <footer class="studio-footer"><div class="container"><strong>Studio不是第七个真源。</strong><span>读事实、看门槛、去真源执行；未经Human Gate不晋级Canon或Changed Rule。</span></div></footer>
+</body>
+</html>
+<style>
+  .studio-body { min-height:100vh; background:var(--bg-scene); }
+  .studio-header { position:sticky; top:0; z-index:var(--z-nav); background:color-mix(in srgb,var(--bg) 93%,transparent); backdrop-filter:blur(18px); border-bottom:1px solid var(--line); }
+  .studio-topbar { min-height:68px; display:flex; align-items:center; gap:var(--sp-5); }
+  .studio-brand { display:flex; align-items:center; gap:10px; color:var(--ink); }
+  .studio-brand>span { width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--accent);border-radius:50%;color:var(--accent); }
+  .studio-brand small { color:var(--ink3); font-family:var(--mono); }
+  .studio-truth { margin-left:auto; color:var(--ink3); font-size:.76rem; }
+  .studio-truth b { margin-left:10px;color:var(--accent);font-family:var(--mono);font-weight:700; }
+  .consumer-link { color:var(--ink2); font-size:.82rem; }
+  .studio-nav { display:flex; gap:var(--sp-6); overflow:auto; scrollbar-width:none; }
+  .studio-nav a { padding:14px 0 12px; border-bottom:2px solid transparent; color:var(--ink2); white-space:nowrap; font-size:.85rem; }
+  .studio-nav a[aria-current='page'] { border-color:var(--accent); color:var(--ink); }
+  .studio-page-head { padding:var(--sp-8) 0 var(--sp-5); }
+  .studio-page-head :global(h1) { margin:var(--sp-2) 0 0; font-family:var(--serif); font-size:clamp(2.4rem,5vw,4.4rem); line-height:1.05; }
+  .studio-section { padding:0 0 var(--sp-8); }
+  .studio-grid { display:grid; gap:var(--sp-4); }
+  .studio-grid.two { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .studio-grid.three { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .studio-card { padding:var(--sp-5); border:1px solid var(--line); border-radius:var(--r-l); background:var(--panel); box-shadow:var(--shadow); }
+  .studio-card h2,.studio-card h3 { margin:0 0 var(--sp-3); font-family:var(--serif); }
+  .studio-card p { color:var(--ink2); }
+  .studio-card .meta-line { display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--sp-3); }
+  .studio-chip { padding:5px 9px;border:1px solid var(--line);border-radius:var(--r-pill);color:var(--ink3);font:700 .7rem var(--mono); }
+  .studio-chip.warn { color:var(--warn);border-color:color-mix(in srgb,var(--warn) 45%,var(--line)); }
+  .studio-chip.ok { color:var(--ok); }
+  .studio-link { color:var(--accent);font-weight:760; }
+  .studio-table { width:100%;border-collapse:collapse; }
+  .studio-table th,.studio-table td { padding:13px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top; }
+  .studio-table th { color:var(--ink3);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em; }
+  .studio-table td { color:var(--ink2); }
+  .studio-kpi { display:flex;justify-content:space-between;gap:20px;align-items:flex-end; }
+  .studio-kpi strong { font:800 clamp(1.5rem,4vw,2.5rem) var(--serif);color:var(--ink); }
+  .studio-kpi span { color:var(--ink3);font-size:.78rem; }
+  .studio-footer { margin-top:var(--sp-8);border-top:1px solid var(--line);padding:var(--sp-6) 0; }
+  .studio-footer .container { display:flex;justify-content:space-between;gap:20px;color:var(--ink3);font-size:.8rem; }
+  .studio-footer strong { color:var(--accent); }
+  @media(max-width:850px){.studio-truth{display:none}.studio-grid.two,.studio-grid.three{grid-template-columns:1fr}.studio-footer .container{display:grid}.studio-nav{gap:var(--sp-5)}}
+  @media(max-width:560px){.consumer-link{display:none}.studio-brand small{display:none}}
+</style>
