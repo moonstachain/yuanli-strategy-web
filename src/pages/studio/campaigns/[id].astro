@@ -8,11 +8,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <Fragment slot="heading"><h1>{s.campaign.title}</h1></Fragment>
   <section class="studio-section"><div class="container studio-grid two">
     <article class="studio-card"><div class="meta-line"><span class="studio-chip">{s.campaign.id}</span><span class="studio-chip">{s.campaign.module}</span><span class="studio-chip warn">{s.campaign.nextGate}</span></div><h2>为什么现在</h2><p>{s.campaign.symptom}</p><h3>目标用户</h3><p>{s.campaign.user}</p><h3>核心主张</h3><p>{s.campaign.coreClaim}</p></article>
-    <article class="studio-card"><p class="eyebrow">Gate Stack</p><table class="studio-table"><tbody><tr><td>Evidence</td><td>{s.campaign.nextGate}</td></tr><tr><td>Production</td><td>{s.campaign.productionState}</td></tr><tr><td>Action</td><td>{s.campaign.actionStatus}</td></tr><tr><td>Outcome</td><td>{s.campaign.outcomeStatus}</td></tr><tr><td>Changed Rule</td><td>{s.campaign.changedRuleStatus}</td></tr></tbody></table></article>
+    <article class="studio-card"><p class="eyebrow">Gate Stack</p><table class="studio-table"><tbody><tr><td>Evidence</td><td>Minimum Pack MERGED · Human Review OPEN</td></tr><tr><td>Production</td><td>{s.campaign.productionState}</td></tr><tr><td>Action</td><td>{s.campaign.actionStatus}</td></tr><tr><td>Outcome</td><td>{s.campaign.outcomeStatus}</td></tr><tr><td>Changed Rule</td><td>{s.campaign.changedRuleStatus}</td></tr></tbody></table></article>
   </div></section>
   <section class="studio-section"><div class="container studio-grid three">
-    <article class="studio-card"><h3>Evidence</h3><p>Brain #2仍需完成3个一手来源、反例与冲突协议。</p><a class="studio-link" href="https://github.com/moonstachain/yuanli-brain/issues/2">推进证据 →</a></article>
+    <article class="studio-card"><h3>Evidence</h3><p>Brain最小Evidence Pack已合并；C01 scoped verified、C02 derived、C03 hypothesis、C04 derived-risk。独立Human Evidence Review仍未完成。</p><a class="studio-link" href="https://github.com/moonstachain/yuanli-brain/issues/2">查看证据与Human Review门 →</a></article>
     <article class="studio-card"><h3>Works</h3><p>现有Hook / Mechanism / Action只作为Web公开产物指针，不在Studio复制正文。</p><a class="studio-link" href={`${base}/campaigns/ai-distillation/`}>查看C端战役 →</a></article>
-    <article class="studio-card"><h3>Outcome</h3><p>目标是10名真实用户完成AI清算，并产生可观察行动；当前NOT_RUN。</p><a class="studio-link" href="https://github.com/moonstachain/yuanli-content-engine-os/issues/35">推进Campaign →</a></article>
+    <article class="studio-card"><h3>Outcome</h3><p>目标是10名真实用户完成AI清算并形成匿名Action Receipt；当前0/10，7日Outcome仍NOT_RUN。</p><a class="studio-link" href="https://github.com/moonstachain/yuanli-content-engine-os/issues/35">查看Campaign真实运行门 →</a></article>
   </div></section>
 </StudioLayout>
