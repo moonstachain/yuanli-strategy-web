@@ -1,18 +1,72 @@
 ---
 import StudioLayout from '../../../layouts/StudioLayout.astro';
-import { studioSnapshot as s } from '../../../data/studio';
+import { studioView as s } from '../../../data/studio';
 export function getStaticPaths(){ return [{ params:{ id:s.campaign.slug } }]; }
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const hrefOf = (href: string) => href.startsWith('/') ? `${base}${href}` : href;
+const room = s.campaignRoom ?? {
+  contract: { owner:s.campaign.owner, wip:'见 PMO 真源', module:s.campaign.module, question:s.campaign.question, user:s.campaign.user, sourceRef:s.sources.find(x=>x.key==='pmo')?.sourceRef ?? '' },
+  evidence: { status:s.campaign.productionState, humanReview:'NOT_RUN', sourceRef:s.sources.find(x=>x.key==='brain')?.sourceRef ?? '', reviewRef:s.campaign.nextGateRef },
+  works:s.works,
+  distribution: { runtimeState:s.campaign.productionState, publicPageStatus:s.campaign.publicPageStatus, conflictState:s.conflicts.some(x=>x.field==='campaign.publicPageStatus')?'CONFLICT':'LIVE', runtimeRef:s.sources.find(x=>x.key==='content')?.sourceRef ?? '', workbenchRef:'https://os-zk.84000.art/content-engine-workbench/index.html#orchestration/overview', publicPath:`/campaigns/${s.campaign.slug}/` },
+  reality: { producerValidation:'0/3-5 · NOT_RUN', actionStatus:s.campaign.actionStatus, outcomeStatus:s.campaign.outcomeStatus, producerTestRef:'https://github.com/moonstachain/yuanli-strategy-web/issues/31', actionRef:'https://github.com/moonstachain/yuanli-content-engine-os/issues/35' },
+  learning: { changedRuleStatus:s.campaign.changedRuleStatus, task2Status:s.campaign.task2Status, humanGate:'WIRED', humanGateRef:s.sources.find(x=>x.key==='soul')?.sourceRef ?? '' }
+};
+const deepLinks = s.deepLinks ?? [];
 ---
-<StudioLayout title={`${s.campaign.title} · Campaign Room`} eyebrow="CAMPAIGN ROOM">
+<StudioLayout title={`${s.campaign.title} · Campaign Room`} eyebrow="CAMPAIGN ROOM v2">
   <Fragment slot="heading"><h1>{s.campaign.title}</h1></Fragment>
+
   <section class="studio-section"><div class="container studio-grid two">
-    <article class="studio-card"><div class="meta-line"><span class="studio-chip">{s.campaign.id}</span><span class="studio-chip">{s.campaign.module}</span><span class="studio-chip warn">{s.campaign.nextGate}</span></div><h2>为什么现在</h2><p>{s.campaign.symptom}</p><h3>目标用户</h3><p>{s.campaign.user}</p><h3>核心主张</h3><p>{s.campaign.coreClaim}</p></article>
-    <article class="studio-card"><p class="eyebrow">Gate Stack</p><table class="studio-table"><tbody><tr><td>Evidence</td><td>Minimum Pack MERGED · Human Review OPEN</td></tr><tr><td>Production</td><td>{s.campaign.productionState}</td></tr><tr><td>Action</td><td>{s.campaign.actionStatus}</td></tr><tr><td>Outcome</td><td>{s.campaign.outcomeStatus}</td></tr><tr><td>Changed Rule</td><td>{s.campaign.changedRuleStatus}</td></tr></tbody></table></article>
+    <article class="studio-card">
+      <div class="meta-line"><span class="studio-chip">{s.campaign.id}</span><span class="studio-chip">{room.contract.module}</span><span class="studio-chip warn">{s.campaign.nextGate}</span></div>
+      <p class="eyebrow">Contract</p><h2>这场战役为什么存在</h2>
+      <p><strong>Owner：</strong>{room.contract.owner}</p><p><strong>User：</strong>{room.contract.user}</p><p><strong>Question：</strong>{room.contract.question}</p><p><strong>WIP：</strong>{room.contract.wip}</p>
+      <a class="studio-link" href={room.contract.sourceRef}>去 PMO 查看 Owner / WIP / Gate →</a>
+    </article>
+    <article class="studio-card">
+      <p class="eyebrow">Evidence</p><h2>证据允许我们说到哪里</h2>
+      <div class="meta-line"><span class="studio-chip">{room.evidence.status}</span><span class="studio-chip warn">{room.evidence.humanReview}</span></div>
+      <table class="studio-table"><thead><tr><th>Claim</th><th>Nature</th><th>Status</th></tr></thead><tbody>{s.claims.map((claim)=><tr><td>{claim.id}</td><td>{claim.nature}</td><td><span class={`studio-chip ${claim.state.includes('Hypothesis') ? 'warn' : ''}`}>{claim.state}</span></td></tr>)}</tbody></table>
+      <p>C03 继续保持 Hypothesis；Minimum Pack Ready 不等于 Human Review Approved。</p>
+      <p><a class="studio-link" href={room.evidence.sourceRef}>查看 public-safe Evidence Pack →</a> · <a class="studio-link" href={room.evidence.reviewRef}>进入 Human Evidence Review →</a></p>
+    </article>
   </div></section>
-  <section class="studio-section"><div class="container studio-grid three">
-    <article class="studio-card"><h3>Evidence</h3><p>Brain最小Evidence Pack已合并；C01 scoped verified、C02 derived、C03 hypothesis、C04 derived-risk。独立Human Evidence Review仍未完成。</p><a class="studio-link" href="https://github.com/moonstachain/yuanli-brain/issues/2">查看证据与Human Review门 →</a></article>
-    <article class="studio-card"><h3>Works</h3><p>现有Hook / Mechanism / Action只作为Web公开产物指针，不在Studio复制正文。</p><a class="studio-link" href={`${base}/campaigns/ai-distillation/`}>查看C端战役 →</a></article>
-    <article class="studio-card"><h3>Outcome</h3><p>目标是10名真实用户完成AI清算并形成匿名Action Receipt；当前0/10，7日Outcome仍NOT_RUN。</p><a class="studio-link" href="https://github.com/moonstachain/yuanli-content-engine-os/issues/35">查看Campaign真实运行门 →</a></article>
+
+  <section class="studio-section"><div class="container studio-grid two">
+    <article class="studio-card">
+      <p class="eyebrow">Works</p><h2>已经产出了什么</h2>
+      {room.works.map((work)=><div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="meta-line"><span class="studio-chip">{work.type}</span><span class="studio-chip">{work.state}</span></div><strong>{work.title}</strong><br/><a class="studio-link" href={hrefOf(work.href)}>查看公开产物 →</a></div>)}
+      <p>Studio只保存指针，不复制文章正文或工具资产。</p>
+    </article>
+    <article class="studio-card">
+      <p class="eyebrow">Distribution</p><h2>进入世界，不等于现实成立</h2>
+      <div class="meta-line"><span class={`studio-chip ${room.distribution.conflictState === 'CONFLICT' ? 'warn' : 'ok'}`}>{room.distribution.conflictState}</span><span class="studio-chip">PUBLIC {room.distribution.publicPageStatus}</span></div>
+      <p><strong>Content runtime：</strong>{room.distribution.runtimeState}</p>
+      {room.distribution.conflictState === 'CONFLICT' && <p><strong>SOURCE CONFLICT：</strong>Content 仍保留旧的 MISSING_ROUTE 投影；Web 按字段法权显示 ROUTE_PRESENT。冲突继续公开，不静默修正 Content。</p>}
+      <p><a class="studio-link" href={room.distribution.runtimeRef}>查看 Campaign runtime →</a> · <a class="studio-link" href={room.distribution.workbenchRef}>查看 Workbench 工程真相 →</a></p>
+      <a class="studio-link" href={hrefOf(room.distribution.publicPath)}>查看 C 端 Campaign →</a>
+    </article>
+  </div></section>
+
+  <section class="studio-section"><div class="container studio-grid two">
+    <article class="studio-card">
+      <p class="eyebrow">Reality</p><h2>现在真正发生了什么</h2>
+      <table class="studio-table"><tbody><tr><td>Producer Test</td><td>{room.reality.producerValidation}</td></tr><tr><td>Real Action</td><td>{room.reality.actionStatus}</td></tr><tr><td>Day7 Outcome</td><td>{room.reality.outcomeStatus}</td></tr></tbody></table>
+      <p>页面、点击和内部 dry-run 均不算真实用户行动。</p>
+      <p><a class="studio-link" href={room.reality.producerTestRef}>进入 P01–P03 Producer Test Gate →</a> · <a class="studio-link" href={room.reality.actionRef}>查看真实 Action / Outcome 门 →</a></p>
+    </article>
+    <article class="studio-card">
+      <p class="eyebrow">Learning</p><h2>结果如何改变下一次</h2>
+      <table class="studio-table"><tbody><tr><td>Changed Rule</td><td>{room.learning.changedRuleStatus}</td></tr><tr><td>Human Gate</td><td>{room.learning.humanGate}</td></tr><tr><td>Task2</td><td>{room.learning.task2Status}</td></tr></tbody></table>
+      <p>没有真实 Outcome，就没有第一条 Changed Rule；没有 Human Gate 批准，就不能加载到 Task2。</p>
+      <a class="studio-link" href={room.learning.humanGateRef}>查看 Soul Human Gate →</a>
+    </article>
+  </div></section>
+
+  <section class="studio-section"><div class="container studio-card">
+    <p class="eyebrow">Verified Deep Links</p><h2>从对象直接进入正确真源</h2>
+    <table class="studio-table"><thead><tr><th>对象</th><th>Owner System</th><th>边界</th><th>入口</th></tr></thead><tbody>{deepLinks.map((link)=><tr><td>{link.label}</td><td>{link.ownerSystem}</td><td>{link.note}</td><td><a class="studio-link" href={hrefOf(link.href)}>打开 →</a></td></tr>)}</tbody></table>
+    <p>这里只展示已经验证的路由；Workbench 当前只链接 verified overview，不猜测不存在的 Campaign hash route。</p>
   </div></section>
 </StudioLayout>

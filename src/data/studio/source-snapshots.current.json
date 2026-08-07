@@ -3,7 +3,13 @@
   "classification": "public-safe",
   "derivedInput": true,
   "authoritative": false,
-  "observedAt": "2026-08-07T14:57:00+08:00",
+  "observedAt": "2026-08-07T15:32:00+08:00",
+  "intake": {
+    "mode": "governed_connector",
+    "runId": "studio-source-intake-20260807T1532+0800",
+    "directCrossRepoCredentialUsedByWebCi": false,
+    "note": "Owner-system facts are committed as a public-safe intake envelope. Web CI validates and derives them but does not fetch private owner systems."
+  },
   "northStar": "每月形成一条“认知 → 行动 → Outcome → Changed Rule → 第二任务复用”的公开安全证据链。",
   "campaignSeed": {
     "id": "MG-D2-ai-distillation-v1",
@@ -16,7 +22,7 @@
     "coreClaim": "多个知识密集型组织已把知识与部分工作流程接入AI调用层；真正更难复制的价值是否位于生成性母体、边界判断与责任机制，仍需真实行动验证。",
     "action": "完成AI清算卡",
     "actionTarget": "10名真实目标用户",
-    "sourceRef": "https://github.com/moonstachain/yuanli-strategy-web/commit/c30893bb2e0335355488b942e1785591227d3959"
+    "sourceRef": "https://github.com/moonstachain/yuanli-strategy-web/commit/b4ad5544f0b1b2ba3c52c5bff14128d029d777bc"
   },
   "sources": [
     {
@@ -51,7 +57,7 @@
       "role": "Claim、Evidence、Conflict、Gap、Human Evidence Review",
       "sourceRef": "https://github.com/moonstachain/yuanli-brain/blob/feat/three-seams-p2-convergence/docs/evidence/public-safe/AI-DISTILLATION-EVD-v1.json",
       "sourceRevision": "7bafa2686d434bdc9b667e4038885b809b082bb2",
-      "observedAt": "2026-08-07T14:57:00+08:00",
+      "observedAt": "2026-08-07T15:32:00+08:00",
       "freshness": "LIVE",
       "businessState": "MINIMUM PACK READY · Human Review NOT_RUN",
       "classification": "public-safe",
@@ -62,30 +68,10 @@
         "conflictCount": 2,
         "gapCount": 4,
         "claims": [
-          {
-            "id": "C01",
-            "nature": "Source Fact",
-            "state": "Verified · scoped",
-            "text": "多个知识密集型组织已经把内部知识、智力资本、会议信息或标准工作流程接入生成式AI，供员工调用。"
-          },
-          {
-            "id": "C02",
-            "nature": "Interpretation",
-            "state": "Derived",
-            "text": "组织知识正在部分从人找人、人找文档，迁移为人通过AI调用知识并由人负责校验与决策。"
-          },
-          {
-            "id": "C03",
-            "nature": "Hypothesis",
-            "state": "Hypothesis",
-            "text": "真正更难复制的价值可能不是稳定答案，而是生成答案的母体、边界判断与责任机制。"
-          },
-          {
-            "id": "C04",
-            "nature": "Interpretation",
-            "state": "Derived · Risk",
-            "text": "AI可提高部分知识任务表现，但在能力边界外也可能降低正确率，因此AI调用必须保留边界识别与人工校验。"
-          }
+          {"id":"C01","nature":"Source Fact","state":"Verified · scoped","text":"多个知识密集型组织已经把内部知识、智力资本、会议信息或标准工作流程接入生成式AI，供员工调用。"},
+          {"id":"C02","nature":"Interpretation","state":"Derived","text":"组织知识正在部分从人找人、人找文档，迁移为人通过AI调用知识并由人负责校验与决策。"},
+          {"id":"C03","nature":"Hypothesis","state":"Hypothesis","text":"真正更难复制的价值可能不是稳定答案，而是生成答案的母体、边界判断与责任机制。"},
+          {"id":"C04","nature":"Interpretation","state":"Derived · Risk","text":"AI可提高部分知识任务表现，但在能力边界外也可能降低正确率，因此AI调用必须保留边界识别与人工校验。"}
         ]
       }
     },
@@ -95,11 +81,12 @@
       "role": "Campaign runtime、Work、Distribution、Action contract",
       "sourceRef": "https://github.com/moonstachain/yuanli-content-engine-os/blob/feat/ai-distillation-campaign-run/dify/campaigns/MG-D2-ai-distillation-v1/run-state.json",
       "sourceRevision": "882e9b5ce45b83ce7a157d08ae7338f308718b7b",
-      "observedAt": "2026-08-07T14:57:00+08:00",
+      "observedAt": "2026-08-07T15:32:00+08:00",
       "freshness": "LIVE",
       "businessState": "IMPLEMENTED · BLOCKED BY #37",
       "classification": "public-safe",
       "facts": {
+        "owner": "moonstachain",
         "prRef": "https://github.com/moonstachain/yuanli-content-engine-os/pull/36",
         "prHead": "3c149ad12e0eb80911e1d373698e1bdbc5c37d42",
         "prState": "OPEN",
@@ -139,34 +126,19 @@
       "name": "Web",
       "role": "C端公开路由、工具、生产者首次成功验证",
       "sourceRef": "https://github.com/moonstachain/yuanli-strategy-web/issues/31",
-      "sourceRevision": "c30893bb2e0335355488b942e1785591227d3959",
-      "observedAt": "2026-08-07T14:57:00+08:00",
+      "sourceRevision": "issue#31@2026-08-07T07:22:21Z+main@b4ad5544f0b1",
+      "observedAt": "2026-08-07T15:32:00+08:00",
       "freshness": "LIVE",
-      "businessState": "LIVE · producer validation NOT_RUN",
+      "businessState": "STUDIO V2 PHASE 1 DEPLOYED · producer validation NOT_RUN",
       "classification": "public-safe",
       "facts": {
         "webCampaignPageStatus": "ROUTE_PRESENT",
         "campaignPath": "/campaigns/ai-distillation/",
         "producerValidation": "0/3-5 · NOT_RUN",
         "works": [
-          {
-            "type": "Hook",
-            "title": "当你的经验被公司蒸馏成 Skill，你还剩下什么？",
-            "state": "Output · Evidence pack ready",
-            "href": "/articles/when-experience-becomes-skill/"
-          },
-          {
-            "type": "Mechanism",
-            "title": "可提取能力，不等于生成性母体",
-            "state": "Canon-aligned mechanism",
-            "href": "/articles/extractable-ability-vs-generative-source/"
-          },
-          {
-            "type": "Action",
-            "title": "AI清算卡",
-            "state": "Output · use 0/10",
-            "href": "/tools/ai-clearance/"
-          }
+          {"type":"Hook","title":"当你的经验被公司蒸馏成 Skill，你还剩下什么？","state":"Output · Evidence pack ready","href":"/articles/when-experience-becomes-skill/"},
+          {"type":"Mechanism","title":"可提取能力，不等于生成性母体","state":"Canon-aligned mechanism","href":"/articles/extractable-ability-vs-generative-source/"},
+          {"type":"Action","title":"AI清算卡","state":"Output · use 0/10","href":"/tools/ai-clearance/"}
         ]
       }
     },
@@ -180,10 +152,7 @@
       "freshness": "LIVE",
       "businessState": "OPEN · design validation pending",
       "classification": "public-safe",
-      "facts": {
-        "gate": "OPEN",
-        "viewportValidation": "NOT_RUN"
-      }
+      "facts": {"gate":"OPEN","viewportValidation":"NOT_RUN"}
     }
   ]
 }

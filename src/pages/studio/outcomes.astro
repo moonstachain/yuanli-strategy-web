@@ -1,13 +1,15 @@
 ---
 import StudioLayout from '../../layouts/StudioLayout.astro';
-import { studioSnapshot as s } from '../../data/studio';
+import { studioView as s } from '../../data/studio';
+const reality = s.campaignRoom?.reality;
+const learning = s.campaignRoom?.learning;
 ---
 <StudioLayout title="学习 · 原力 Studio" eyebrow="OUTCOME & LEARNING">
   <Fragment slot="heading"><h1>真正的生产闭环，<br/>从用户行动之后才开始。</h1></Fragment>
   <section class="studio-section"><div class="container studio-grid three">
-    <article class="studio-card"><p class="eyebrow">Action</p><div class="studio-kpi"><strong>{s.campaign.actionStatus}</strong><span>{s.campaign.actionTarget}</span></div><p>目标动作：{s.campaign.action}。</p></article>
-    <article class="studio-card"><p class="eyebrow">Outcome</p><div class="studio-kpi"><strong>{s.campaign.outcomeStatus}</strong><span>7d / 30d</span></div><p>没有真实回访，不写成Validated案例。</p></article>
-    <article class="studio-card"><p class="eyebrow">Changed Rule</p><div class="studio-kpi"><strong>{s.campaign.changedRuleStatus}</strong><span>Human Gate required</span></div><p>规则文件存在不等于复用；必须在Task2开始前显式加载。</p></article>
+    <article class="studio-card"><p class="eyebrow">Action</p><div class="studio-kpi"><strong>{reality?.actionStatus ?? s.campaign.actionStatus}</strong><span>{s.campaign.actionTarget}</span></div><p>目标动作：{s.campaign.action}。</p></article>
+    <article class="studio-card"><p class="eyebrow">Outcome</p><div class="studio-kpi"><strong>{reality?.outcomeStatus ?? s.campaign.outcomeStatus}</strong><span>7d / 30d</span></div><p>没有真实回访，不写成 Validated 案例。</p></article>
+    <article class="studio-card"><p class="eyebrow">Changed Rule</p><div class="studio-kpi"><strong>{learning?.changedRuleStatus ?? s.campaign.changedRuleStatus}</strong><span>Human Gate required</span></div><p>Task2：{learning?.task2Status ?? s.campaign.task2Status}。</p></article>
   </div></section>
-  <section class="studio-section"><div class="container studio-card"><h2>学习梯度</h2><p>Published → Used → Validated → Compounding。当前首个战役仍处于Output层，不能提前晋级。</p><a class="studio-link" href="https://github.com/moonstachain/yuanli-strategy-soul/issues/457">去 Soul #457 建立Human Gate与Evolution Note接口 →</a></div></section>
+  <section class="studio-section"><div class="container studio-card"><h2>学习梯度</h2><p>Published → Used → Validated → Compounding。当前首个战役仍处于 Output 层，不能提前晋级。</p><p>Human Gate 已接通，但第一条 Changed Rule 尚未由真实 Outcome 产生，更没有 founder approval；因此 Task2 当前必须保持 <code>WAITING_CHANGED_RULE</code>。</p><a class="studio-link" href={learning?.humanGateRef ?? s.sources.find(x=>x.key==='soul')?.sourceRef}>查看 Soul Human Gate →</a></div></section>
 </StudioLayout>

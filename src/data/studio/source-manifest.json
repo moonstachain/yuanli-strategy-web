@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "studio-source-manifest/v1",
+  "classification": "public-safe",
+  "producer": "studio-snapshot-producer/v1",
+  "refreshPolicy": {
+    "maxAgeHours": 24,
+    "healthCheckHours": 6,
+    "healthCheckCron": "17 */6 * * *"
+  },
+  "security": {
+    "webCiCrossRepoCredential": "NONE",
+    "directCrossRepoFetchFromWebCi": false,
+    "privateOwnerSystemsAllowed": true,
+    "intakeBoundary": "governed_connector"
+  },
+  "sources": [
+    {"key":"pmo","ownerSystem":"PMO","consumed":true,"intakeMode":"governed_connector","directCiFetch":false},
+    {"key":"brain","ownerSystem":"Brain","consumed":true,"intakeMode":"governed_connector","directCiFetch":false},
+    {"key":"content","ownerSystem":"Content Engine","consumed":true,"intakeMode":"governed_connector","directCiFetch":false},
+    {"key":"soul","ownerSystem":"Soul","consumed":true,"intakeMode":"governed_connector","directCiFetch":false},
+    {"key":"web","ownerSystem":"Web","consumed":true,"intakeMode":"governed_connector_plus_local_validation","directCiFetch":false},
+    {"key":"taste","ownerSystem":"Taste","consumed":true,"intakeMode":"governed_connector","directCiFetch":false},
+    {"key":"bao","ownerSystem":"Bao","consumed":false,"intakeMode":"registered_only","directCiFetch":false},
+    {"key":"deploy","ownerSystem":"Deploy","consumed":false,"intakeMode":"registered_only","directCiFetch":false}
+  ]
+}
