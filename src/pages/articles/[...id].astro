@@ -15,25 +15,19 @@ const { article } = Astro.props;
 const { Content } = await render(article);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const moduleName = article.data.module === 'ROOT' ? '总纲' : moduleNames[article.data.module];
-const actionHref = article.data.nextAction?.href?.startsWith('http')
-  ? article.data.nextAction.href
-  : `${base}${article.data.nextAction?.href ?? '/articles/'}`;
-const roleLabels = {
-  hook: '时代钩子',
-  evidence: '证据包',
-  mechanism: '机制解释',
-  action: '行动手柄',
-  reflection: '复盘回写',
-};
-const sourceLabels = {
-  not_required: '无需外部来源',
-  source_pack_ready: '来源包就绪',
-  needs_sources: '来源待补',
-  verified_sources: '来源已核验',
-};
+const actionHref = article.data.nextAction?.href?.startsWith('http') ? article.data.nextAction.href : `${base}${article.data.nextAction?.href ?? '/articles/'}`;
+const articleCenterHref = article.data.articleType === 'case' ? `${base}/articles/?type=case` : `${base}/articles/`;
+const articleCenterLabel = article.data.articleType === 'case' ? '案例' : '文章';
+const roleLabels = { hook: '时代钩子', evidence: '证据包', mechanism: '机制解释', action: '行动手柄', reflection: '复盘回写' };
+const sourceLabels = { not_required: '无需外部来源', source_pack_ready: '来源包就绪', needs_sources: '来源待补', verified_sources: '来源已核验' };
 ---
 <BaseLayout title={`${article.data.title} · 原力战略`} description={article.data.description} mode="paper" showReadingProgress={true}>
   <article>
+    <div class="container article-context" aria-label="当前位置">
+      <a href={`${base}/`}>首页</a><span>/</span><a href={articleCenterHref}>{articleCenterLabel}</a><span>/</span><span>{moduleName}</span>
+      <a id="previous-location" class="previous-location" href={articleCenterHref} hidden>返回上一页 ↑</a>
+    </div>
+
     <header class="article-hero">
       <div class="container hero-grid">
         <div>
@@ -48,7 +42,7 @@ const sourceLabels = {
           {article.data.campaign && <p class="campaign-line">战役：{article.data.campaign}</p>}
         </div>
         <aside class="hero-note yl-card yl-card--compact yl-card--static">
-          <p class="eyebrow">阅读协议</p>
+          <p class="eyebrow">证据与阅读边界</p>
           <strong>区分事实、推论与行动。</strong>
           <p>本文的验收不是读完，而是能否形成一个更清晰的判断，并进入现实验证。</p>
           {article.data.sourceStatus && <small>{sourceLabels[article.data.sourceStatus]}</small>}
@@ -62,7 +56,7 @@ const sourceLabels = {
           <p class="eyebrow">本文目录</p>
           <nav id="article-toc" class="toc"><span class="meta">目录正在生成</span></nav>
           <div class="rail-divider"></div>
-          <p class="eyebrow">证据纪律</p>
+          <p class="eyebrow evidence-title">证据纪律</p>
           <p class="rail-note">当前标记：<strong>{article.data.evidenceLevel}</strong>。反例、边界和未验证部分不应被包装成正典。</p>
         </div>
       </aside>
@@ -78,11 +72,15 @@ const sourceLabels = {
         )}
         <div class="prose">
           <ActionPanel
-            title={article.data.nextAction?.label ?? '把今天的判断写成一张行动卡'}
+            title={article.data.nextAction?.label ?? '把今天的判断变成一个现实行动'}
             description="原力文章的更高验收，是发生新的判断、行动、证据与回写候选。"
             href={actionHref}
-            label="进入下一步"
+            label={article.data.nextAction?.label ?? '开始这个行动'}
           />
+          <div class="article-return-actions">
+            <a href={articleCenterHref}>返回{articleCenterLabel}中心</a>
+            <a href={`${base}/start/`}>找到我的起点</a>
+          </div>
         </div>
       </div>
     </div>
@@ -93,25 +91,30 @@ const sourceLabels = {
       const article = document.getElementById('article-content');
       const toc = document.getElementById('article-toc');
       const progress = document.getElementById('reading-progress-bar');
+      const previous = document.getElementById('previous-location');
+      if (document.referrer) {
+        try {
+          const ref = new URL(document.referrer);
+          if (ref.origin === location.origin && ref.pathname !== location.pathname && previous) {
+            previous.href = ref.href;
+            previous.hidden = false;
+          }
+        } catch {}
+      }
       if (!article) return;
-
       const headings = [...article.querySelectorAll('h2, h3')];
       if (toc) {
         toc.innerHTML = '';
-        if (!headings.length) {
-          toc.innerHTML = '<span class="meta">本文暂无分节目录</span>';
-        } else {
-          headings.forEach((heading, index) => {
-            if (!heading.id) heading.id = `section-${index + 1}`;
-            const link = document.createElement('a');
-            link.href = `#${heading.id}`;
-            link.textContent = heading.textContent || `第${index + 1}节`;
-            link.dataset.level = heading.tagName.toLowerCase();
-            toc.appendChild(link);
-          });
-        }
+        if (!headings.length) toc.innerHTML = '<span class="meta">本文暂无分节目录</span>';
+        else headings.forEach((heading, index) => {
+          if (!heading.id) heading.id = `section-${index + 1}`;
+          const link = document.createElement('a');
+          link.href = `#${heading.id}`;
+          link.textContent = heading.textContent || `第${index + 1}节`;
+          link.dataset.level = heading.tagName.toLowerCase();
+          toc.appendChild(link);
+        });
       }
-
       const updateProgress = () => {
         if (!progress) return;
         const rect = article.getBoundingClientRect();
@@ -127,7 +130,10 @@ const sourceLabels = {
 </BaseLayout>
 
 <style>
-  .article-hero { padding: var(--sp-10) 0 var(--sp-9); border-bottom: 1px solid var(--line); }
+  .article-context { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); padding-top: var(--sp-5); color: var(--ink3); font-size: .78rem; }
+  .article-context a:hover { color: var(--accent); }
+  .previous-location { margin-left: auto; color: var(--accent); }
+  .article-hero { padding: var(--sp-8) 0 var(--sp-9); border-bottom: 1px solid var(--line); }
   .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: var(--sp-9); align-items: end; }
   .article-hero h1 { max-width: 920px; margin: var(--sp-7) 0 var(--sp-5); font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: 1.08; letter-spacing: -.04em; text-wrap: balance; }
   .article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); }
@@ -136,24 +142,23 @@ const sourceLabels = {
   .hero-note p:last-of-type { margin-bottom: var(--sp-3); color: var(--ink2); font-size: .9rem; }
   .hero-note small { color: var(--ink3); }
   .article-shell { display: grid; grid-template-columns: var(--rail) minmax(0, var(--reading)); gap: var(--sp-9); justify-content: center; padding-top: var(--sp-9); padding-bottom: var(--sp-10); }
-  .article-rail { min-width: 0; }
-  .rail-sticky { position: sticky; top: calc(var(--header-h) + var(--sp-6)); }
+  .rail-sticky { position: sticky; top: calc(var(--header-h) + 52px); }
   .toc { display: grid; gap: var(--sp-2); }
   .toc :global(a) { padding: var(--sp-2) 0; border-bottom: 1px solid var(--line); color: var(--ink2); font-size: .86rem; line-height: 1.45; }
   .toc :global(a[data-level='h3']) { padding-left: var(--sp-4); color: var(--ink3); }
-  .toc :global(a:hover) { color: var(--accent); }
   .rail-divider { height: 1px; margin: var(--sp-7) 0; background: var(--line); }
   .rail-note { color: var(--ink3); font-size: .84rem; }
   .article-body { width: 100%; }
   .outcome-question { margin-top: var(--sp-9); padding-top: var(--sp-7); border-top: 1px solid var(--line); }
   .outcome-question h2 { margin-top: 0; }
+  .article-return-actions { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--sp-4); margin: var(--sp-7) 0; padding-top: var(--sp-5); border-top: 1px solid var(--line); color: var(--accent); font-weight: 720; }
   @media (max-width: 900px) {
     .hero-grid, .article-shell { grid-template-columns: 1fr; }
-    .hero-note { display: none; }
+    .hero-note { display: block; margin-top: var(--sp-3); }
     .article-rail { order: -1; }
     .rail-sticky { position: static; padding: var(--sp-5); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--panel-soft); }
     .toc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .rail-divider, .rail-note, .article-rail > .rail-sticky > .eyebrow:nth-of-type(2) { display: none; }
+    .rail-divider, .rail-note, .evidence-title { display: none; }
   }
-  @media (max-width: 560px) { .toc { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .toc { grid-template-columns: 1fr; } .previous-location { width: 100%; margin-left: 0; } }
 </style>
