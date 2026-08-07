@@ -1,8 +1,22 @@
 ---
 import StudioLayout from '../../layouts/StudioLayout.astro';
-import { studioSnapshot as s } from '../../data/studio';
+import { studioView as s } from '../../data/studio';
+import { studioFieldAuthority, studioSourceRegistry } from '../../lib/studio/source-registry';
 ---
-<StudioLayout title="系统 · 原力 Studio" eyebrow="GOVERNED CONTROL PLANE">
+<StudioLayout title="系统 · 原力 Studio" eyebrow="TRUTH & HEALTH">
   <Fragment slot="heading"><h1>Studio负责看见和推进，<br/>不负责另存一份真相。</h1></Fragment>
-  <section class="studio-section"><div class="container studio-card"><h2>六仓职责与当前指针</h2><table class="studio-table"><thead><tr><th>系统</th><th>职责</th><th>快照状态</th><th>真源</th></tr></thead><tbody>{s.sources.map(x=><tr><td><strong>{x.name}</strong></td><td>{x.role}</td><td><span class="studio-chip">{x.state}</span></td><td><a class="studio-link" href={x.href}>打开 →</a></td></tr>)}</tbody></table><p>状态为2026-08-07公开仓快照；Studio不自动覆盖这些真源。</p></div></section>
+
+  <section class="studio-section"><div class="container studio-grid three">
+    <article class="studio-card"><p class="eyebrow">Delivery</p><div class="studio-kpi"><strong>{s.deliveryStatus}</strong><span>{s.sourceCount} sources</span></div><p>Observed {s.observedAt}</p></article>
+    <article class="studio-card"><p class="eyebrow">Conflicts</p><div class="studio-kpi"><strong>{s.conflictCount}</strong><span>open projection conflicts</span></div><p>冲突不静默覆盖；字段法权决定展示值，但保留漂移回执。</p></article>
+    <article class="studio-card"><p class="eyebrow">Boundary</p><h2>Derived Projection</h2><p>authoritative=false · public-safe · Studio不是第七个真源。</p></article>
+  </div></section>
+
+  <section class="studio-section"><div class="container studio-card"><h2>Source Health 与当前指针</h2><table class="studio-table"><thead><tr><th>系统</th><th>职责</th><th>业务状态</th><th>Freshness</th><th>Revision</th><th>真源</th></tr></thead><tbody>{s.sources.map((source)=><tr><td><strong>{source.name}</strong></td><td>{source.role}</td><td><span class="studio-chip">{source.state}</span></td><td><span class={`studio-chip ${source.freshness === 'LIVE' ? 'ok' : 'warn'}`}>{source.freshness}</span></td><td><code>{source.sourceRevision.slice(0,12)}</code></td><td><a class="studio-link" href={source.href}>打开 →</a></td></tr>)}</tbody></table></div></section>
+
+  {s.conflicts.length > 0 && <section class="studio-section"><div class="container studio-card"><h2>Source Conflicts</h2>{s.conflicts.map((conflict)=><div><div class="meta-line"><span class="studio-chip warn">{conflict.state}</span><span class="studio-chip">Authority: {conflict.authority}</span><span class="studio-chip">{conflict.severity}</span></div><h3>{conflict.field}</h3><p>{conflict.summary}</p><table class="studio-table"><tbody>{conflict.sources.map((source)=><tr><td>{source.key}</td><td><code>{source.value}</code></td><td><a class="studio-link" href={source.href}>source →</a></td></tr>)}</tbody></table><p><strong>Resolution：</strong>{conflict.resolution}</p></div>)}</div></section>}
+
+  <section class="studio-section"><div class="container studio-card"><h2>字段法权</h2><table class="studio-table"><thead><tr><th>字段</th><th>最终法权</th><th>系统职责</th></tr></thead><tbody>{Object.entries(studioFieldAuthority).map(([field, owner])=><tr><td><code>{field}</code></td><td><strong>{studioSourceRegistry[owner].name}</strong></td><td>{studioSourceRegistry[owner].role}</td></tr>)}</tbody></table></div></section>
+
+  <section class="studio-section"><div class="container studio-card"><h2>专业作业入口</h2><div class="studio-grid two"><div><h3>Bao · Signal Workbench</h3><p>{studioSourceRegistry.bao.role}</p><a class="studio-link" href={studioSourceRegistry.bao.operatorEntry}>进入 Bao →</a></div><div><h3>Content Workbench · Expert Console</h3><p>{studioSourceRegistry.content.role}；Phase 1 只使用已验证 overview，不猜测未验证的 Campaign 深链。</p><a class="studio-link" href={studioSourceRegistry.content.operatorEntry}>查看工程真相 →</a></div></div></div></section>
 </StudioLayout>

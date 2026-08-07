@@ -1,17 +1,26 @@
 ---
 import StudioLayout from '../../layouts/StudioLayout.astro';
-import { studioSnapshot as s } from '../../data/studio';
+import { studioView as s } from '../../data/studio';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const decisions = s.today.filter((item) => item.lane === '等待裁决');
+const blockers = s.today.filter((item) => item.lane === '当前阻塞');
+const reality = s.today.filter((item) => item.lane === '等待现实');
 ---
 <StudioLayout title="今日作战室 · 原力 Studio">
   <Fragment slot="heading"><h1>今天最重要的，不是多生产，<br/>而是把下一道门推过去。</h1></Fragment>
   <section class="studio-section"><div class="container studio-grid three">
-    <article class="studio-card"><p class="eyebrow">本周唯一问题</p><h2>{s.campaign.title}</h2><p>{s.campaign.question}</p><a class="studio-link" href={`${base}/studio/campaigns/${s.campaign.slug}/`}>进入战役作战室 →</a></article>
-    <article class="studio-card"><p class="eyebrow">下一道门</p><div class="studio-kpi"><strong>{s.campaign.nextGate}</strong><span>{s.campaign.productionState}</span></div><p>在证据包就绪前，不把Hook升级为事实结论。</p></article>
-    <article class="studio-card"><p class="eyebrow">现实验证</p><div class="studio-kpi"><strong>{s.campaign.actionStatus}</strong><span>{s.campaign.actionTarget}</span></div><p>页面与工具存在不等于Used；真实执行仍未建立。</p></article>
+    <article class="studio-card"><div class="meta-line"><span class="studio-chip">{s.campaign.id}</span><span class="studio-chip">OWNER {s.campaign.owner}</span></div><p class="eyebrow">当前唯一战役</p><h2>{s.campaign.title}</h2><p>{s.campaign.question}</p><a class="studio-link" href={`${base}/studio/campaigns/${s.campaign.slug}/`}>进入战役作战室 →</a></article>
+    <article class="studio-card"><p class="eyebrow">Current Gate</p><div class="studio-kpi"><strong>{s.campaign.nextGate}</strong><span>{s.campaign.productionState}</span></div><p>下一门由 Brain / PMO 的当前Gate事实推导；不是完成百分比。</p><a class="studio-link" href={s.campaign.nextGateRef}>去负责这道门的真源 →</a></article>
+    <article class="studio-card"><p class="eyebrow">Waiting Reality</p><div class="studio-kpi"><strong>{s.campaign.actionStatus}</strong><span>{s.campaign.actionTarget}</span></div><p>{s.campaign.outcomeStatus} · {s.campaign.changedRuleStatus} · {s.campaign.task2Status}</p></article>
   </div></section>
-  <section class="studio-section"><div class="container"><div class="studio-grid three">
-    {['等待裁决','正在推进','等待现实'].map((lane)=><article class="studio-card"><p class="eyebrow">{lane}</p>{s.today.filter(x=>x.lane===lane).map(x=><div><h3>{x.title}</h3><p>{x.source}</p><a class="studio-link" href={x.href}>去真源推进 →</a></div>)}</article>)}
-  </div></div></section>
+
+  <section class="studio-section"><div class="container studio-grid three">
+    <article class="studio-card"><p class="eyebrow">等待我决定</p>{decisions.map((item)=><div><h3>{item.title}</h3><p>{item.source}</p><a class="studio-link" href={item.href}>查看证据与Gate →</a></div>)}</article>
+    <article class="studio-card"><p class="eyebrow">系统阻塞</p>{blockers.map((item)=><div><h3>{item.title}</h3><p>{item.source}</p><a class="studio-link" href={item.href}>去解除阻塞 →</a></div>)}</article>
+    <article class="studio-card"><p class="eyebrow">等待现实</p>{reality.map((item)=><div><h3>{item.title}</h3><p>{item.source}</p><a class="studio-link" href={item.href}>查看真实回执门 →</a></div>)}</article>
+  </div></section>
+
+  {s.conflicts.length > 0 && <section class="studio-section"><div class="container studio-card"><div class="meta-line"><span class="studio-chip warn">SOURCE CONFLICT</span><span class="studio-chip">{s.conflicts.length} OPEN</span></div><h2>系统发现了事实投影漂移，没有静默替你“修好”。</h2>{s.conflicts.map((conflict)=><div><h3>{conflict.field}</h3><p>{conflict.summary}</p><p><strong>仲裁：</strong>{conflict.resolution}</p></div>)}<a class="studio-link" href={`${base}/studio/system/`}>查看字段法权与冲突详情 →</a></div></section>}
+
   <section class="studio-section"><div class="container studio-card"><p class="eyebrow">North Star</p><h2>发布不是Done，学习才是复利的开始。</h2><p>{s.northStar}</p></div></section>
 </StudioLayout>

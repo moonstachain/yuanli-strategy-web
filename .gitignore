@@ -5,3 +5,4 @@ dist/
 .env
 .env.*
 !.env.example
+src/data/studio/studio-view.generated.json

@@ -1,71 +1,32 @@
 # 原力 Studio｜B端生产者门户 v1
 
-- 状态：`MVP / engineering execution`
-- 路径：`/studio/`
-- 定位：六仓之上的只读生产控制面，不是第七个真源
-- 首个运行对象：`MG-D2-ai-distillation-v1｜AI正在蒸馏你`
+- 状态：`SUPERSEDED BY STUDIO v2 CONSTITUTION`
+- 历史用途：记录 PR #30 的只读 MVP 决策与首次成功定义。
+- 当前正本：`docs/STUDIO-PRODUCT-CONSTITUTION-v2.md`
+- 数据正本合同：`docs/STUDIO-DATA-CONTRACT-v1.md`
+- Deep Link：`docs/STUDIO-DEEPLINK-CONTRACT-v1.md`
+- Reality：`docs/STUDIO-REALITY-CONTRACT-v1.md`
 
-## 1. 战略原点
+## v1 保留不变的原则
 
-B端不是CMS。母问题是：如何让一次内容生产，不只是产生Content，而是产生可追溯、可验证、可行动、可学习的认知资产？
+Studio 不是第七个真源；它是六仓之上的生产控制面。
 
-最小生产脊柱：
+首个运行对象仍是：`MG-D2-ai-distillation-v1｜AI正在蒸馏你`。
 
-```text
-Signal → Evidence → Judgment → Work → Action → Outcome → Learning
-```
+生产者首次成功仍要求：15分钟内理解一个 Signal 为什么值得研究、其证据缺口在哪里、下一道门是什么，并能去正确真源继续执行。
 
-后台映射既有法权：
+真人生产者测试在真实执行前保持 `NOT_RUN`。
 
-```text
-CTX → EVD → DEC → WPK → ACT → OUT → LRN
-```
+## v2 发生的升级
 
-不新增核心Schema。
-
-## 2. 信息架构
+v1 的 `src/data/studio.ts` 曾手工维护聚合运行状态。v2 不再允许这种模式：
 
 ```text
-今日 / 雷达 / 研究 / 生产 / 发布 / 学习 / 系统
+Owner Systems
+→ public-safe source snapshot
+→ deterministic derived projection
+→ Last Known Good / Conflict visibility
+→ Studio
 ```
 
-- 今日：下一道门、等待裁决、正在推进、等待现实
-- 雷达：Signal与Why now
-- 研究：Claim / Evidence / Conflict / Gap
-- 生产：Campaign / Work Package / Output
-- 发布：Ready / Published / Distribution；发布不等于Done
-- 学习：Action / Outcome / Changed Rule / Task2
-- 系统：Soul / Brain / Content Engine / Web / Taste / PMO真源指针
-
-## 3. 五个生产对象
-
-```text
-Signal → Claim → Campaign → Work → Learning
-```
-
-Studio使用生产语言，六仓继续使用各自治理语言。
-
-## 4. 状态纪律
-
-生产状态与成熟度分离：
-
-```text
-生产：Inbox / Research / Decision / Production / Review / Published
-成熟度：Draft / Output / Used / Validated / Compounding
-```
-
-MVP不建立新数据库，只呈现2026-08-07公开安全快照和真源链接。
-
-## 5. Human Gate
-
-Studio不得自动批准Canon或Changed Rule。Soul #457完成前，Human Gate仅显示为待建立接口。
-
-## 6. 首次成功
-
-生产者首次成功定义为：15分钟内理解一个Signal为什么值得研究、其证据缺口在哪里、下一道门是什么，并能去正确真源继续执行。
-
-真人生产者测试在执行前保持`NOT_RUN`。
-
-## 7. WIP
-
-第一期只运行一个Campaign：`AI正在蒸馏你`。在Evidence Pack、真实Action、Outcome、Changed Rule与Task2复用跑通前，不增加第二个B端战役。
+旧导航在 Phase 1 保持兼容，最终 IA 按 v2 Constitution 分阶段迁移，不为了导航完整度提前制造空页面。
