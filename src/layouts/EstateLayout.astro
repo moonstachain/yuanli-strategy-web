@@ -1,0 +1,78 @@
+---
+import '../styles/global.css';
+import '../styles/estate.css';
+import { estateMeta, estateNav } from '../data/estate';
+
+const {
+  title = 'Yuanli GitHub Estate',
+  description = '原力 GitHub 全域治理驾驶舱：看见 Reality、理解 Authority、进入 Human Gate。',
+  eyebrow = 'GITHUB ESTATE GOVERNANCE',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const current = Astro.url.pathname;
+const hrefOf = (href: string) => `${base}${href}`;
+const active = (href: string) => href === '/estate/' ? current.endsWith('/estate/') : current.includes(href);
+---
+<!doctype html>
+<html lang="zh-CN" data-mode="cockpit">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#07100f" />
+  <title>{title}</title>
+</head>
+<body class="estate-body">
+  <a class="skip-link" href="#estate-main">跳到治理工作区</a>
+
+  <header class="estate-header">
+    <div class="container estate-topbar">
+      <a class="estate-brand" href={hrefOf('/estate/')}>
+        <span>原</span>
+        <div><strong>GitHub Estate</strong><small>Governance Portal</small></div>
+      </a>
+      <div class="estate-truth">
+        <span>Derived Projection · 非真源</span>
+        <b class:list={{ warn: estateMeta.phase0Status !== 'PASS' }}>{estateMeta.phase0Status}</b>
+      </div>
+      <a class="estate-exit" href={hrefOf('/')}>原力战略门户 →</a>
+    </div>
+
+    <nav class="container estate-nav" aria-label="GitHub Estate 主导航">
+      {estateNav.map((item) => (
+        <a href={hrefOf(item.href)} aria-current={active(item.href) ? 'page' : undefined}>{item.label}</a>
+      ))}
+    </nav>
+
+    <div class="estate-banner">
+      <div class="container">
+        <strong>G0 {estateMeta.g0Status}</strong>
+        <span>可观察 ≠ 可治理 ≠ 可修改。当前 Portal mutation={estateMeta.mutationMode}；PR-1+ 与物理迁移不由此页面授权。</span>
+        <a href={hrefOf('/estate/gates/')}>查看 Gate →</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="estate-main">
+    <div class="container estate-page-head">
+      <p class="eyebrow">{eyebrow}</p>
+      <slot name="heading" />
+    </div>
+    <slot />
+  </main>
+
+  <footer class="estate-footer">
+    <div class="container">
+      <div>
+        <strong>One Soul · One Reality · Governed Evolution</strong>
+        <p>Portal 读取证据、解释状态、导航法权；不成为新的 Registry、Canon、Runtime 或 Mutation Authority。</p>
+      </div>
+      <div class="estate-footer-meta">
+        <span>Observed {estateMeta.observedAt}</span>
+        <span>Scope {estateMeta.scopeRevision}</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

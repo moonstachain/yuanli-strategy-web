@@ -1,0 +1,66 @@
+---
+import EstateLayout from '../../layouts/EstateLayout.astro';
+import { authorityNodes, topologyEdges } from '../../data/estate';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const groupOrder = ['L0', 'L1', 'Control', 'L2'];
+const goldenQueries = [
+  ['原力方法正典是谁？', 'Soul'],
+  ['GitHub Physical Registry 在哪？', 'os-yuanli/yuanli-governance'],
+  ['GitHub Owner 是否决定 Authority？', 'NO'],
+  ['Projection 能否覆盖 Source？', 'NO'],
+  ['Portfolio / WIP 在哪？', 'PMO'],
+  ['Canon Promotion 在哪？', 'CanonOps（语义已接受；运行能力另证）'],
+  ['Zhiku 是第五个原力 OS 模块吗？', 'NO'],
+  ['Authority Conflict 能让 AI 自动裁决吗？', 'NO · FAIL_CLOSED'],
+];
+---
+<EstateLayout title="Authority Map｜GitHub Estate" eyebrow="AUTHORITY / TOPOLOGY GRAPH">
+  <Fragment slot="heading">
+    <h1>关键不是“东西在哪”，<br />而是“谁对什么说了算”。</h1>
+    <p class="lead">Authority Graph 把 Method、C1–C4、Estate Governance、Portfolio、Promotion 与 Capability/Runtime 分开。一个问题应该有明确的法权入口。</p>
+  </Fragment>
+
+  <section class="container estate-section">
+    {groupOrder.map((group) => {
+      const nodes = authorityNodes.filter((node) => node.layer === group);
+      return <div style="margin-bottom:2rem">
+        <div class="card-topline"><h2>{group}</h2><span class="estate-meta">{nodes.length} authority / infrastructure nodes</span></div>
+        <div class="authority-grid">
+          {nodes.map((node) => <article class="estate-card authority-node">
+            <span class="node-layer">{node.layer}</span>
+            <h3>{node.label}</h3>
+            <p class="node-question">{node.question}</p>
+            <span class:list={['estate-chip', node.status.includes('NOT_VERIFIED') ? 'warn' : node.status.includes('AUTHORITATIVE') ? 'ok' : 'info']}>{node.status}</span>
+            <div class="node-answer">{node.answer}</div>
+            <p class="estate-meta">{node.repo}</p>
+          </article>)}
+        </div>
+      </div>;
+    })}
+  </section>
+
+  <section class="container estate-section">
+    <p class="eyebrow">REALITY SPINE</p><h2 class="section-title">不是仓库互相同步，而是同一任务沿 Trace 穿过器官。</h2>
+    <div class="edge-list">
+      {topologyEdges.map((edge) => <div class="edge"><code>{edge.from}</code><span>→</span><code>{edge.to}</code><span>{edge.relation}</span></div>)}
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="estate-grid two">
+      <article class="estate-card">
+        <p class="eyebrow">OS SPINE</p><h2>CTX → EVD → DEC → ACT → OUT → LRN</h2>
+        <p>文脉稳定身份；大脑给出证据；地图生成判断；链路完成现实行动。直到 LRN 被下一次任务真实加载，闭环才算复利。</p>
+      </article>
+      <article class="estate-card">
+        <p class="eyebrow">CAPABILITY SPINE</p><h2>Registry → Zhiku → RAS → Runtime → Outcome</h2>
+        <p>Capability Identity 不等于 Repository。存在于目录，也不等于安装、使用、产生结果或形成复利。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="card-topline"><div><p class="eyebrow">GOLDEN QUERIES</p><h2 class="section-title">8 个问题，守住整个 Estate 的法权骨架。</h2></div><a class="button quiet" href={`${base}/estate/gates/`}>查看 Human Gate</a></div>
+    <div class="estate-table-wrap"><table class="estate-table"><thead><tr><th>Query</th><th>Expected answer</th></tr></thead><tbody>{goldenQueries.map(([query, answer]) => <tr><td>{query}</td><td><strong>{answer}</strong></td></tr>)}</tbody></table></div>
+  </section>
+</EstateLayout>

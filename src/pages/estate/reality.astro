@@ -1,0 +1,63 @@
+---
+import EstateLayout from '../../layouts/EstateLayout.astro';
+import { estateMeta, observationSurfaces, estateRings } from '../../data/estate';
+
+const surfaceClass = (status: string) => status === 'OBSERVED' || status === 'DERIVED_PROJECTION' ? 'ok' : 'warn';
+---
+<EstateLayout title="Reality Observatory｜GitHub Estate" eyebrow="REALITY OBSERVATORY">
+  <Fragment slot="heading">
+    <h1>Reality 不是某一个 Connector。</h1>
+    <p class="lead">每个 Observation Surface 都只是一个带权限、时间与覆盖边界的摄像头。门户保留它们各自的成功与失败，不允许“Codex 看见了”去覆盖“GPT 没看见”。</p>
+  </Fragment>
+
+  <section class="container estate-section">
+    <article class="estate-card">
+      <div class="card-topline"><div><p class="eyebrow">SURFACE MATRIX</p><h2>谁在什么时候，看见了什么？</h2></div><span class="estate-meta">Portal observed {estateMeta.observedAt}</span></div>
+      <div class="estate-table-wrap">
+        <table class="estate-table">
+          <thead><tr><th>Surface</th><th>Observed</th><th>Managed expected</th><th>Status</th><th>Observed at</th><th>Role / Boundary</th></tr></thead>
+          <tbody>
+            {observationSurfaces.map((surface) => <tr>
+              <td><strong>{surface.label}</strong></td>
+              <td>{surface.observed ?? '—'}</td>
+              <td>{surface.managedExpected ?? '—'}</td>
+              <td><span class={`estate-chip ${surfaceClass(surface.status)}`}>{surface.status}</span></td>
+              <td>{surface.observedAt}</td>
+              <td>{surface.note}</td>
+            </tr>)}
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </section>
+
+  <section class="container estate-section">
+    <div class="estate-grid four">
+      <article class="estate-card"><p class="eyebrow">DOCTRINE 01</p><h3>MISSING ≠ DOES NOT EXIST</h3><p>某个凭证看不见仓库，只能证明这一 Observation Surface 有缺口。</p></article>
+      <article class="estate-card"><p class="eyebrow">DOCTRINE 02</p><h3>OBSERVED ≠ GOVERNED</h3><p>外部协作仓即使可读，也默认保持 Ring B · NOT_GOVERNED。</p></article>
+      <article class="estate-card"><p class="eyebrow">DOCTRINE 03</p><h3>GOVERNED ≠ MUTATION AUTHORIZED</h3><p>属于 Managed Estate 也不等于当前 Agent 有 rename/archive/transfer 权。</p></article>
+      <article class="estate-card"><p class="eyebrow">DOCTRINE 04</p><h3>PHASE 0 PASS ≠ G0 PASS</h3><p>证据包完整，只意味着可以提交给 Human Gate，不意味着自动开 PR-1。</p></article>
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="estate-grid two">
+      <article class="estate-card">
+        <p class="eyebrow">HARD GATE</p><h2>GPT fresh export 仍是 Phase 0 PASS 的硬条件。</h2>
+        <p>旧 297/309 只保留为 <strong>REPORTED_HISTORICAL_SURFACE</strong>。在同一审计窗口的新鲜逐仓导出未提供或无法验证完整分页前，Phase 0 必须保持：</p>
+        <p><span class="estate-chip warn">PARTIAL_GPT_SURFACE_INCOMPLETE</span></p>
+      </article>
+      <article class="estate-card">
+        <p class="eyebrow">NO CROSS-SURFACE GREENING</p><h2>三个表面各算各的。</h2>
+        <p>Registry、GPT Connector、Codex 的每个 repo 状态必须独立保存为 OBSERVED / MISSING / ACCESS_FAILED / OUT_OF_SCOPE / UNKNOWN_PENDING_EXPORT。一个表面的成功不能修改另一个表面的事实。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <p class="eyebrow">RING ASSIGNMENT</p><h2 class="section-title">管理范围靠冻结边界，不靠名字猜。</h2>
+    <div class="estate-grid three">
+      {estateRings.map((ring) => <article class="estate-card ring-card"><span class="ring-id">{ring.id}</span><h3>{ring.title}</h3><p>{ring.rule}</p><p class="estate-meta">{ring.owners.join(' · ')}</p><p>{ring.forbidden}</p></article>)}
+    </div>
+  </section>
+</EstateLayout>

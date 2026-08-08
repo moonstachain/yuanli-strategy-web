@@ -1,0 +1,37 @@
+---
+import EstateLayout from '../../layouts/EstateLayout.astro';
+import { lineages } from '../../data/estate';
+---
+<EstateLayout title="Evolution & Lineage｜GitHub Estate" eyebrow="EVOLUTION / LINEAGE">
+  <Fragment slot="heading">
+    <h1>Archive 不是垃圾桶。<br />历史应该有继承关系。</h1>
+    <p class="lead">治理不是抹掉旧系统，而是说明旧资产如何演化、被谁继承、哪些经验被保留。没有 lineage 的“清理”，很容易把历史证据一起清掉。</p>
+  </Fragment>
+
+  <section class="container estate-section">
+    <div class="stack">
+      {lineages.map((lineage) => (
+        <article class="estate-card">
+          <div class="card-topline"><div><p class="eyebrow">LINEAGE</p><h2>{lineage.title}</h2></div><span class:list={['estate-chip', lineage.state.includes('NEEDS') ? 'warn' : 'info']}>{lineage.state}</span></div>
+          <div class="lineage">
+            {lineage.steps.map(([name, meaning], index) => (
+              <div class="lineage-step">
+                <span class="dot">{String(index + 1).padStart(2, '0')}</span>
+                <div><strong>{name}</strong><span>{meaning}</span></div>
+              </div>
+            ))}
+          </div>
+          <p class="estate-note">Learning：{lineage.learning}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="estate-grid three">
+      <article class="estate-card"><p class="eyebrow">KEEP</p><h3>保留有效资产</h3><p>代码、规则、Evidence、release、案例与真实消费者都可能是可继承资产。</p></article>
+      <article class="estate-card"><p class="eyebrow">SUCCESSION</p><h3>声明继任关系</h3><p>Deprecated / Superseded 的关键不是贴状态，而是指明 successor 与迁移证据。</p></article>
+      <article class="estate-card"><p class="eyebrow">LEARN</p><h3>让历史改变未来</h3><p>只有旧系统留下的 LRN 真正进入下一次设计与 Admission Rule，Evolution 才形成复利。</p></article>
+    </div>
+  </section>
+</EstateLayout>

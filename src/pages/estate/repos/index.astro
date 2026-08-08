@@ -1,0 +1,88 @@
+---
+import EstateLayout from '../../../layouts/EstateLayout.astro';
+import { estateMeta, repoRecords } from '../../../data/estate';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const layers = [...new Set(repoRecords.map((repo) => repo.layer))].sort();
+const rings = [...new Set(repoRecords.map((repo) => repo.ring))].sort();
+const statuses = [...new Set(repoRecords.map((repo) => repo.semanticStatus))].sort();
+---
+<EstateLayout title="Repository Explorer｜GitHub Estate">
+  <Fragment slot="heading">
+    <h1>Repository 不是文件夹。<br />它是一张身份证。</h1>
+    <p class="lead">这里先展示 Core / P0 的受控 bootstrap 样本，用来验证“身份—法权—现实—关系”是否足够清楚。完整 309 行不会在页面里手工维护，后续必须由 Expanded Phase 0 的 normalized snapshot 导入。</p>
+  </Fragment>
+
+  <section class="container estate-section">
+    <div class="estate-note">当前数据模式：<strong>{estateMeta.dataMode}</strong>。本页不是全量 Registry，也不对未出现的仓库作“不存在”判断。</div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="estate-toolbar" aria-label="Repository 筛选">
+      <input id="repo-search" type="search" placeholder="搜索 repo / role / authority" aria-label="搜索 Repository" />
+      <select id="repo-ring" aria-label="按 Ring 筛选">
+        <option value="">全部 Ring</option>
+        {rings.map((ring) => <option value={ring}>Ring {ring}</option>)}
+      </select>
+      <select id="repo-layer" aria-label="按系统层筛选">
+        <option value="">全部 Layer</option>
+        {layers.map((layer) => <option value={layer}>{layer}</option>)}
+      </select>
+      <select id="repo-status" aria-label="按语义状态筛选">
+        <option value="">全部 Semantic Status</option>
+        {statuses.map((status) => <option value={status}>{status}</option>)}
+      </select>
+    </div>
+
+    <div class="estate-table-wrap">
+      <table class="estate-table" id="repo-table">
+        <thead><tr><th>Repository</th><th>Ring / Layer</th><th>Primary Role</th><th>Authority</th><th>Semantic</th><th>Operational</th></tr></thead>
+        <tbody>
+          {repoRecords.map((repo) => (
+            <tr
+              data-search={`${repo.fullName} ${repo.primaryRole} ${repo.authority} ${repo.semanticStatus}`.toLowerCase()}
+              data-ring={repo.ring}
+              data-layer={repo.layer}
+              data-status={repo.semanticStatus}
+            >
+              <td><a href={`${base}/estate/repos/${repo.id}/`}>{repo.fullName}</a><div class="estate-meta">ID {repo.githubId ?? 'PENDING_PHASE0_BINDING'}</div></td>
+              <td><span class="estate-chip info">Ring {repo.ring}</span> <span class="estate-chip">{repo.layer}</span></td>
+              <td>{repo.primaryRole}</td>
+              <td>{repo.authority}</td>
+              <td><span class:list={['estate-chip', repo.semanticStatus.includes('NEEDS') || repo.semanticStatus.includes('CONFLICT') ? 'warn' : 'ok']}>{repo.semanticStatus}</span></td>
+              <td><span class:list={['estate-chip', repo.operationalStatus === 'VERIFIED' ? 'ok' : 'warn']}>{repo.operationalStatus}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div class="estate-empty" id="repo-empty">没有匹配当前筛选条件的 Core / P0 bootstrap 记录。</div>
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="estate-grid two">
+      <article class="estate-card"><p class="eyebrow">STABLE IDENTITY</p><h2>名字不是身份证。</h2><p>Repo rename / transfer 应优先通过 numeric GitHub repository ID 识别连续性。名字是 locator，不是长期物理身份。</p></article>
+      <article class="estate-card"><p class="eyebrow">NO BULK JUDGMENT</p><h2>模式只能产生候选。</h2><p>“agency-*”“yuanli-*”“archived”“fork”都不能被批量推导成内部 Layer、Authority 或 Lifecycle。Evidence 不足时保持 NEEDS_REVIEW。</p></article>
+    </div>
+  </section>
+
+  <script is:inline>
+    const search = document.getElementById('repo-search');
+    const ring = document.getElementById('repo-ring');
+    const layer = document.getElementById('repo-layer');
+    const status = document.getElementById('repo-status');
+    const rows = [...document.querySelectorAll('#repo-table tbody tr')];
+    const empty = document.getElementById('repo-empty');
+    const apply = () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      rows.forEach((row) => {
+        const match = (!query || row.dataset.search.includes(query)) && (!ring.value || row.dataset.ring === ring.value) && (!layer.value || row.dataset.layer === layer.value) && (!status.value || row.dataset.status === status.value);
+        row.hidden = !match;
+        if (match) visible += 1;
+      });
+      empty.style.display = visible ? 'none' : 'block';
+    };
+    [search, ring, layer, status].forEach((control) => control.addEventListener('input', apply));
+  </script>
+</EstateLayout>
