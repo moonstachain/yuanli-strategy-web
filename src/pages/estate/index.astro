@@ -1,0 +1,80 @@
+---
+import EstateLayout from '../../layouts/EstateLayout.astro';
+import { estateMeta, estateSummary, estateRings, healthSignals, governanceInbox, observationSurfaces } from '../../data/estate';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const stateClass = (state: string) => state === 'OK' || state.includes('VERIFIED') ? 'ok' : state === 'BLOCK' ? 'block' : 'warn';
+---
+<EstateLayout title="GitHub Estate｜原力全域治理门户">
+  <Fragment slot="heading">
+    <h1>让整个 GitHub<br />第一次变得可理解。</h1>
+    <p class="lead">不是把 300+ Repository 整理得更漂亮，而是让每个重要数字资产都有身份、法权、关系、生命周期和证据边界。</p>
+  </Fragment>
+
+  <section class="container estate-section">
+    <div class="estate-hero">
+      <div class="estate-hero-copy">
+        <div>
+          <p class="eyebrow">GOVERNING AXIOM</p>
+          <blockquote>“看得见，不等于管得着；管得着，不等于可以改。门户只把 Reality 与 Authority 解释清楚。”</blockquote>
+        </div>
+        <div class="hero-actions">
+          <a class="button primary" href={`${base}/estate/inbox/`}>查看需要我裁决的事</a>
+          <a class="button" href={`${base}/estate/map/`}>打开法权地图</a>
+          <a class="button quiet" href={`${base}/estate/reality/`}>检查 Observation Surface</a>
+        </div>
+      </div>
+      <div class="estate-card estate-health">
+        <div class="card-topline">
+          <div><p class="eyebrow">ESTATE HEALTH</p><h2>当前治理状态</h2></div>
+          <span class={`estate-chip ${stateClass(estateMeta.phase0Status)}`}>{estateMeta.phase0Status}</span>
+        </div>
+        {healthSignals.map((signal) => <div class="health-row"><span>{signal.label}</span><b class={`estate-chip ${stateClass(signal.state)}`}>{signal.text}</b></div>)}
+        <p class="estate-note">{estateMeta.truthNotice}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="card-topline">
+      <div><p class="eyebrow">REALITY SNAPSHOT</p><h2 class="section-title">先看事实，不先改仓。</h2></div>
+      <span class="estate-meta">Observed {estateMeta.observedAt}</span>
+    </div>
+    <div class="estate-grid three">
+      {estateSummary.map((item) => (
+        <article class="estate-card estate-kpi">
+          <div>
+            <div class="card-topline"><span class={`estate-chip ${stateClass(item.state)}`}>{item.state}</span><span class="estate-meta">{item.source}</span></div>
+            <strong>{item.value}{item.suffix ?? ''}</strong><small>{item.label}</small>
+          </div>
+          <p>{item.note}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <p class="eyebrow">THREE RINGS</p><h2 class="section-title">“整个 GitHub”不是一个治理圈。</h2>
+    <div class="estate-grid three">
+      {estateRings.map((ring) => (
+        <article class="estate-card ring-card">
+          <span class="ring-id">{ring.id}</span><h3>{ring.title}</h3><span class={`estate-chip ${ring.id === 'A' ? 'info' : 'warn'}`}>{ring.status}</span>
+          <ul><li><strong>规则：</strong>{ring.rule}</li><li><strong>允许：</strong>{ring.allowed}</li><li><strong>禁止：</strong>{ring.forbidden}</li></ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="estate-grid two">
+      <article class="estate-card">
+        <div class="card-topline"><div><p class="eyebrow">NEEDS YOUR DECISION</p><h2>治理 Inbox</h2></div><a class="button quiet" href={`${base}/estate/inbox/`}>查看全部</a></div>
+        {governanceInbox.slice(0, 4).map((item) => <div class="health-row"><span><b>{item.priority}</b> · {item.title}</span><a class="estate-chip warn" href={`${base}/estate/inbox/#${item.id}`}>{item.state}</a></div>)}
+      </article>
+      <article class="estate-card">
+        <div class="card-topline"><div><p class="eyebrow">OBSERVATION SURFACES</p><h2>谁看见了什么？</h2></div><a class="button quiet" href={`${base}/estate/reality/`}>进入现实台</a></div>
+        {observationSurfaces.map((surface) => <div class="health-row"><span>{surface.label}</span><b>{surface.observed ?? '—'} · {surface.status}</b></div>)}
+      </article>
+    </div>
+  </section>
+</EstateLayout>
