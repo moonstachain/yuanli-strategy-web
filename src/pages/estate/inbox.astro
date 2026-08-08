@@ -1,0 +1,38 @@
+---
+import EstateLayout from '../../layouts/EstateLayout.astro';
+import { governanceInbox } from '../../data/estate';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<EstateLayout title="Governance Inbox｜GitHub Estate" eyebrow="GOVERNANCE INBOX">
+  <Fragment slot="heading">
+    <h1>不要每天盯 300 个仓。<br />只看真正需要处理的事。</h1>
+    <p class="lead">Inbox 把 Observation、Authority、Capability、Projection 与 Portfolio 风险变成可读的治理候选。这里排序问题，不替人作最终裁决。</p>
+  </Fragment>
+
+  <section class="container estate-section">
+    <div class="estate-note">所有条目都是 <strong>candidate / evidence request / gate input</strong>。Portal v1 不执行 rename、archive、transfer、authority mutation 或 Registry write。</div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="stack">
+      {governanceInbox.map((item) => (
+        <article class="estate-card issue-card" id={item.id}>
+          <div><span class="issue-priority">{item.priority}</span><div class="estate-meta">{item.id}</div></div>
+          <div>
+            <div class="card-topline"><div><span class="estate-chip info">{item.type}</span><h3>{item.title}</h3></div><span class="estate-chip warn">{item.state}</span></div>
+            <p><strong>Evidence：</strong>{item.evidence}</p>
+            <p class="issue-next"><strong>Next evidence/action：</strong>{item.next}</p>
+          </div>
+          <div><span class="estate-chip">Gate · {item.gate}</span></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="estate-grid two">
+      <article class="estate-card"><p class="eyebrow">FAIL CLOSED</p><h2>证据不足，不自动“聪明判断”。</h2><p>UNKNOWN、NOT_VERIFIED、NEEDS_REVIEW 都是合法终态。AI 不得因为命名、README 文案、活跃度或归档状态替 Human Gate 作权力裁决。</p></article>
+      <article class="estate-card"><p class="eyebrow">HUMAN SOVEREIGNTY</p><h2>Inbox 的终点是 Decision Card。</h2><p>当证据足够时，问题进入 Human Gate；只有被明确授权的动作才进入后续执行链。</p><a class="button" href={`${base}/estate/gates/`}>进入 Human Gate Center</a></article>
+    </div>
+  </section>
+</EstateLayout>
