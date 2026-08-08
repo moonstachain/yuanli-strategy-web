@@ -1,12 +1,17 @@
 ---
 import EstateLayout from '../../layouts/EstateLayout.astro';
 import { estateMeta, humanGates } from '../../data/estate';
+const g0ContractState = 'G0 UNAPPROVED';
 ---
 <EstateLayout title="Human Gate Center｜GitHub Estate" eyebrow="HUMAN GATE CENTER">
   <Fragment slot="heading">
     <h1>AI 可以准备证据。<br />法权升级必须由人批准。</h1>
     <p class="lead">Human Gate Center 把“事实完成”和“执行授权”彻底分开。当前这里只展示 Gate 状态与可做/不可做边界，不提供写 GitHub 的 mutation API。</p>
   </Fragment>
+
+  <section class="container estate-section">
+    <div class="estate-note"><strong>{g0ContractState}</strong> · Phase 0 的完成不会自动改变这条法权事实。</div>
+  </section>
 
   <section class="container estate-section">
     <div class="estate-grid four">
