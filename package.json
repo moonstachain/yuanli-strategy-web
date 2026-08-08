@@ -9,8 +9,9 @@
     "dev": "npm run produce:studio && npm run build:studio && astro dev",
     "check:studio": "node scripts/check-studio-contract.mjs",
     "check:studio-age": "node scripts/check-studio-source-age.mjs --max-hours 24",
+    "check:estate": "node scripts/check-estate-contract.mjs",
     "check:design": "node scripts/check-design-contract.mjs",
-    "build": "npm run produce:studio && npm run build:studio && npm run check:studio && npm run check:design && astro build",
+    "build": "npm run produce:studio && npm run build:studio && npm run check:studio && npm run check:estate && npm run check:design && astro build",
     "preview": "astro preview"
   },
   "dependencies": {
