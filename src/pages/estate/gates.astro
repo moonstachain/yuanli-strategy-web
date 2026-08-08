@@ -1,0 +1,54 @@
+---
+import EstateLayout from '../../layouts/EstateLayout.astro';
+import { estateMeta, humanGates } from '../../data/estate';
+---
+<EstateLayout title="Human Gate Center｜GitHub Estate" eyebrow="HUMAN GATE CENTER">
+  <Fragment slot="heading">
+    <h1>AI 可以准备证据。<br />法权升级必须由人批准。</h1>
+    <p class="lead">Human Gate Center 把“事实完成”和“执行授权”彻底分开。当前这里只展示 Gate 状态与可做/不可做边界，不提供写 GitHub 的 mutation API。</p>
+  </Fragment>
+
+  <section class="container estate-section">
+    <div class="estate-grid four">
+      {humanGates.map((gate) => (
+        <article class="estate-card gate-card">
+          <div class="card-topline"><span class="estate-chip info">{gate.id}</span><span class="estate-chip block">{gate.status}</span></div>
+          <h3>{gate.title}</h3>
+          <p><strong>Scope：</strong>{gate.scope}</p>
+          <p><strong>现在可以：</strong>{gate.canDoNow}</p>
+          <p><strong>仍然禁止：</strong>{gate.cannotDo}</p>
+          <div class="gate-actions" aria-label={`${gate.id} 只读控件`}>
+            <button type="button" disabled>Approve · disabled</button>
+            <button type="button" disabled>Reject · disabled</button>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="estate-grid two">
+      <article class="estate-card">
+        <p class="eyebrow">CURRENT AUTHORITY</p><h2>Phase 0 可以完成，G0 仍然可以不通过。</h2>
+        <p>证据包的任务是让 Human Gate 有足够信息做裁决。即使 Phase 0 全绿，也不能由 Portal、CI 或 Codex 自动产生 G0 PASS。</p>
+        <p><span class="estate-chip warn">Phase0 {estateMeta.phase0Status}</span> <span class="estate-chip block">G0 {estateMeta.g0Status}</span></p>
+      </article>
+      <article class="estate-card">
+        <p class="eyebrow">MUTATION BOUNDARY</p><h2>Portal v1 只有 Read + Route。</h2>
+        <p>未来即使接入 Human Decision Receipt，真正的 GitHub 写操作仍应由受控 C4 / Governance 执行路径完成，并留下 ACT / receipt / rollback evidence。</p>
+        <p class="estate-note">mutation_mode = {estateMeta.mutationMode}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <article class="estate-card">
+      <p class="eyebrow">G0 MINIMUM PACKET</p><h2>一个可批准的 Gate，至少要让人看见这些。</h2>
+      <div class="estate-grid three">
+        <div><strong>Authority</strong><p>decision_id · trace_id · approved_by · approval evidence</p></div>
+        <div><strong>Scope</strong><p>authorized repos/actions · forbidden actions · base SHAs</p></div>
+        <div><strong>Time</strong><p>effective_at · expires_at · revocation conditions · rollback parent</p></div>
+      </div>
+    </article>
+  </section>
+</EstateLayout>
