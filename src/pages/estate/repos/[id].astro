@@ -1,0 +1,81 @@
+---
+import EstateLayout from '../../../layouts/EstateLayout.astro';
+import { repoRecords } from '../../../data/estate';
+
+export function getStaticPaths() {
+  return repoRecords.map((repo) => ({ params: { id: repo.id }, props: { repo } }));
+}
+
+const { repo } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const semanticClass = repo.semanticStatus.includes('NEEDS') || repo.semanticStatus.includes('CONFLICT') ? 'warn' : 'ok';
+const operationalClass = repo.operationalStatus === 'VERIFIED' ? 'ok' : 'warn';
+---
+<EstateLayout title={`${repo.fullName}｜Repository Passport`} eyebrow="REPOSITORY PASSPORT">
+  <Fragment slot="heading">
+    <h1>WHO AM I?</h1>
+    <p class="lead">Repository Passport 不用名字猜身份。它把物理身份、逻辑角色、法权声明、运行能力、关系与证据边界分开呈现。</p>
+  </Fragment>
+
+  <section class="container estate-section repo-passport">
+    <article class="passport-identity">
+      <p class="eyebrow">LOGICAL IDENTITY</p>
+      <h2>{repo.fullName}</h2>
+      <p>{repo.primaryRole}</p>
+      <div class="meta-line">
+        <span class="estate-chip info">Ring {repo.ring}</span>
+        <span class="estate-chip">{repo.layer}</span>
+        <span class="estate-chip">{repo.organ}</span>
+        <span class={`estate-chip ${semanticClass}`}>{repo.semanticStatus}</span>
+      </div>
+      <p class="estate-note">Authority：{repo.authority}</p>
+    </article>
+
+    <dl class="passport-facts">
+      <div class="fact"><dt>GitHub numeric ID</dt><dd>{repo.githubId ?? 'PENDING_PHASE0_BINDING'}</dd></div>
+      <div class="fact"><dt>Visibility</dt><dd>{repo.visibility}</dd></div>
+      <div class="fact"><dt>Lifecycle</dt><dd>{repo.lifecycle}</dd></div>
+      <div class="fact"><dt>Contract</dt><dd>{repo.contractStatus}</dd></div>
+      <div class="fact"><dt>Observation</dt><dd>{repo.observationStatus}</dd></div>
+      <div class="fact"><dt>Successor</dt><dd>{repo.successor ?? 'NONE / NOT_DECIDED'}</dd></div>
+    </dl>
+  </section>
+
+  <section class="container estate-section">
+    <p class="eyebrow">TWO STATES</p><h2 class="section-title">法权成立，不等于运行能力存在。</h2>
+    <div class="status-pair">
+      <article class="estate-card status-panel">
+        <span class="estate-chip info">SEMANTIC AUTHORITY</span>
+        <strong>{repo.semanticStatus}</strong>
+        <p>回答“它在治理模型中应该负责什么”。Claim、Contract、Registry binding 与 Human approval 必须分开验证。</p>
+      </article>
+      <article class="estate-card status-panel">
+        <span class={`estate-chip ${operationalClass}`}>OPERATIONAL CAPABILITY</span>
+        <strong>{repo.operationalStatus}</strong>
+        <p>回答“它现在实际上能不能做”。代码存在、README 声称或历史 ADR 都不能自动证明当前运行能力。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <div class="estate-grid two">
+      <article class="estate-card">
+        <p class="eyebrow">UPSTREAM</p><h2>我从哪里获得约束与输入？</h2>
+        {repo.upstream.length ? <ul class="estate-list">{repo.upstream.map((item) => <li>{item}</li>)}</ul> : <p>当前 bootstrap 未登记明确上游。</p>}
+      </article>
+      <article class="estate-card">
+        <p class="eyebrow">DOWNSTREAM</p><h2>谁可能依赖我？</h2>
+        {repo.downstream.length ? <ul class="estate-list">{repo.downstream.map((item) => <li>{item}</li>)}</ul> : <p>当前 bootstrap 未登记明确下游。</p>}
+      </article>
+    </div>
+  </section>
+
+  <section class="container estate-section">
+    <article class="estate-card">
+      <p class="eyebrow">EVIDENCE & BOUNDARY</p><h2>这张身份证还不能替代证据。</h2>
+      <ul class="estate-list">{repo.notes.map((note) => <li>{note}</li>)}</ul>
+      <p class="estate-note">本页是 Derived Projection。若 Passport 与 Source / Registry / Reality 冲突，必须标记 drift 或 conflict，不能让 Portal 覆盖真源。</p>
+      <div style="margin-top:1rem"><a class="button" href={`${base}/estate/repos/`}>返回 Repository Explorer</a></div>
+    </article>
+  </section>
+</EstateLayout>
