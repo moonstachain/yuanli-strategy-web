@@ -157,6 +157,8 @@ Private-repository names and high-level governance metadata should be minimized 
 
 Portal v1 is `Read + Explain + Route` only.
 
+**No GitHub mutation API is exposed by Portal v1.**
+
 UI controls for approval are intentionally disabled. No route may rename, archive, transfer, delete, change visibility, change permissions, write Registry state, bind a Contract, alter Authority, or create a governance decision receipt.
 
 When a later authorized write path is introduced, execution must remain a separate C4/Governance action with explicit Human Gate, ACT receipt and rollback evidence.
