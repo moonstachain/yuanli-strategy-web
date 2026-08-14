@@ -2,11 +2,71 @@
 import StudioLayout from '../../layouts/StudioLayout.astro';
 import { studioSnapshot as s } from '../../data/studio';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const scale = [
+  ['8', '长期栏目'],
+  ['12', '编辑月'],
+  ['52', '年度周'],
+  ['160', '候选规模'],
+];
+const quarters = [
+  ['Q1', '看见新财富', 'W01–W13'],
+  ['Q2', '建造新财富', 'W14–W26'],
+  ['Q3', '理解世界选择', 'W27–W39'],
+  ['Q4', '让新财富复利', 'W40–W52'],
+];
+const columns = [
+  ['从独特性到新财富', '30%'],
+  ['AI之后，人还剩什么？', '20%'],
+  ['新财富公司', '15%'],
+  ['原力时代志', '12%'],
+  ['世界差一点走向另一条路', '10%'],
+  ['原力实证局', '8%'],
+  ['把自己复制出去', '3%'],
+  ['原力人生', '2%'],
+];
+const roles = [
+  ['Anchor', '52', 'P0'],
+  ['Evidence', '52', 'P1'],
+  ['Expansion', '52', 'P2'],
+  ['Review', '4', 'P0'],
+];
+const governance = [
+  ['Topic', 'CANDIDATE', '候选不等于发布承诺'],
+  ['Evidence', 'TO_BUILD', '证据完成度不在公共投影展开'],
+  ['Release', 'NOT_AUTHORIZED', '发布继续需要 Human Gate'],
+  ['Outcome', 'NOT_RUN', '未发生的结果不写成已验证'],
+  ['Learning', 'NOT_RUN', '未经真实结果不回写规则'],
+];
 ---
-<StudioLayout title="生产 · 原力 Studio" eyebrow="PRODUCTION WORKBENCH">
-  <Fragment slot="heading"><h1>每个作品都必须同时看得见：<br/>为什么写、写给谁、证据是什么、希望用户做什么。</h1></Fragment>
+<StudioLayout title="内容 · 原力 Studio" eyebrow="EDITORIAL COCKPIT · PUBLIC-SAFE DERIVED PROJECTION">
+  <Fragment slot="heading"><h1>一眼看清全年内容战役，<br/>但不把候选题库变成公开真源。</h1></Fragment>
+
+  <section class="studio-section"><div class="container studio-grid four editorial-scale">
+    {scale.map(([value,label]) => <article class="studio-card"><div class="studio-kpi"><strong>{value}</strong><span>{label}</span></div></article>)}
+  </div></section>
+
+  <section class="studio-section"><div class="container studio-card">
+    <div class="meta-line"><span class="studio-chip ok">PUBLIC SAFE</span><span class="studio-chip">DETAIL WITHHELD BY HUMAN GATE</span></div>
+    <h2>年度四幕：从看见，到建造，到世界选择，再到复利。</h2>
+    <div class="editorial-quarter-grid">{quarters.map(([id,theme,weeks]) => <div class="editorial-quarter"><strong>{id}</strong><h3>{theme}</h3><p>{weeks}</p></div>)}</div>
+  </div></section>
+
   <section class="studio-section"><div class="container studio-grid two">
-    <article class="studio-card"><p class="eyebrow">Current Campaign</p><h2>{s.campaign.title}</h2><p><strong>User：</strong>{s.campaign.user}</p><p><strong>Core Claim：</strong>{s.campaign.coreClaim}</p><p><strong>Outcome Question：</strong>用户完成AI清算后，是否改变了一个真实的事业选择？</p><a class="studio-link" href={`${base}/studio/campaigns/${s.campaign.slug}/`}>打开完整Work Package →</a></article>
+    <article class="studio-card"><p class="eyebrow">Editorial Portfolio</p><h2>8 个栏目，不是 8 条平行信息流。</h2><table class="studio-table"><thead><tr><th>栏目</th><th>目标占比</th></tr></thead><tbody>{columns.map(([name,share]) => <tr><td>{name}</td><td>{share}</td></tr>)}</tbody></table></article>
+    <article class="studio-card"><p class="eyebrow">Production Roles</p><h2>一周是一场认知战役。</h2><table class="studio-table"><thead><tr><th>角色</th><th>年度数</th><th>优先级</th></tr></thead><tbody>{roles.map(([role,count,priority]) => <tr><td>{role}</td><td>{count}</td><td>{priority}</td></tr>)}</tbody></table><p>Anchor 建立主判断；Evidence 承重；Expansion 扩展；Review 只在真实证据窗口后复盘。</p></article>
+  </div></section>
+
+  <section class="studio-section"><div class="container studio-grid two">
+    <article class="studio-card"><p class="eyebrow">Governance</p><h2>候选、证据、发布、结果、学习必须分层。</h2><table class="studio-table"><thead><tr><th>层</th><th>当前公共状态</th><th>真相边界</th></tr></thead><tbody>{governance.map(([stage,state,note]) => <tr><td>{stage}</td><td><span class="studio-chip">{state}</span></td><td>{note}</td></tr>)}</tbody></table></article>
+    <article class="studio-card"><p class="eyebrow">Detail Projection</p><h2>160 个候选题的明细不在公共门户展开。</h2><p>这里展示的是经营结构，而不是第二题库。候选题标题、Topic ID、内部 Evidence 字段与未公开源定位继续由 Human Gate 保持私有。</p><p><strong>Portal ≠ Source of Record</strong><br/>Published ≠ Outcome<br/>Outcome ≠ Changed Rule</p></article>
+  </div></section>
+
+  <section class="studio-section"><div class="container studio-grid two">
+    <article class="studio-card"><p class="eyebrow">Current Campaign</p><h2>{s.campaign.title}</h2><p><strong>User：</strong>{s.campaign.user}</p><p><strong>Core Claim：</strong>{s.campaign.coreClaim}</p><p><strong>Outcome Question：</strong>用户完成行动后，是否改变了一个真实的事业选择？</p><a class="studio-link" href={`${base}/studio/campaigns/${s.campaign.slug}/`}>打开当前战役 →</a></article>
     <article class="studio-card"><p class="eyebrow">Works</p>{s.works.map(w=><div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="meta-line"><span class="studio-chip">{w.type}</span><span class="studio-chip">{w.state}</span></div><strong>{w.title}</strong><br/><a class="studio-link" href={`${base}${w.href}`}>查看公开产物 →</a></div>)}</article>
   </div></section>
 </StudioLayout>
+
+<style>
+  .studio-grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}.editorial-scale .studio-kpi{align-items:center}.editorial-scale strong{font-size:clamp(2rem,5vw,3.4rem)}.editorial-quarter-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sp-3);margin-top:var(--sp-5)}.editorial-quarter{padding:var(--sp-4);border:1px solid var(--line);border-radius:var(--r-m);background:color-mix(in srgb,var(--panel) 75%,transparent)}.editorial-quarter>strong{font:800 .75rem var(--mono);color:var(--accent)}.editorial-quarter h3{margin:8px 0;font-family:var(--serif)}.editorial-quarter p{margin:0}@media(max-width:850px){.studio-grid.four,.editorial-quarter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.studio-grid.four,.editorial-quarter-grid{grid-template-columns:1fr}}
+</style>
