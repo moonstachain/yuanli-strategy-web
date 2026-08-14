@@ -56,7 +56,7 @@ const checks = [
   ['src/pages/tools/index.astro', ['综合诊断｜建议完成基础导航后使用', '基础行动']],
   ['src/pages/about.astro', ['建设者信息结构', "title: '主题'", "title: '栏目'", "title: '战役'", "title: '旗舰'", "title: '发布状态'", "title: '回写协议'"]],
   ['src/layouts/StudioLayout.astro', ['原力 Studio', 'Mission Control', 'Derived Projection', 'Studio不是第七个真源', 'studioView']],
-  ['src/data/studio.ts', ['studioView', 'producerNav', "label: '今日'", "label: '雷达'", "label: '研究'", "label: '生产'", "label: '发布'", "label: '学习'", "label: '系统'"]],
+  ['src/data/studio.ts', ['studioView', 'producerNav', "label: '今日'", "label: '雷达'", "label: '研究'", "label: '内容'", "label: '发布'", "label: '学习'", "label: '系统'"]],
   ['src/data/studio/source-manifest.json', ['studio-source-manifest/v1', '"webCiCrossRepoCredential": "NONE"', '"directCrossRepoFetchFromWebCi": false', '"maxAgeHours": 24', '"healthCheckHours": 6']],
   ['src/data/studio/source-snapshots.current.json', ['MG-D2-ai-distillation-v1', 'governed_connector', 'UNASSIGNED_HUMAN / NOT_RUN', '0/10 · NOT_RUN', 'Day7 · NOT_RUN', 'MISSING_ROUTE', 'ROUTE_PRESENT']],
   ['scripts/produce-studio-snapshot.mjs', ['studio-snapshot-receipt/v1', 'inputSha256', 'localWebRouteVerified', 'directCrossRepoCredentialUsed', 'forbiddenKey']],
@@ -68,6 +68,7 @@ const checks = [
   ['src/content/articles/when-experience-becomes-skill.md', ['evidenceLevel: hypothesis', 'sourceStatus: source_pack_ready', 'Human Evidence Review', '7日 Outcome']],
   ['src/pages/studio/index.astro', ['Current Gate', 'Waiting Reality', '系统阻塞', 'SOURCE CONFLICT', 'North Star']],
   ['src/pages/studio/research.astro', ['Claim Board', 'MINIMUM PACK READY', 'Human Evidence Review', 'Hypothesis']],
+  ['src/pages/studio/production.astro', ['EDITORIAL COCKPIT', 'PUBLIC SAFE', '160', 'DETAIL WITHHELD BY HUMAN GATE', 'Portal ≠ Source of Record', 'CANDIDATE', 'NOT_AUTHORIZED', 'NOT_RUN']],
   ['src/pages/studio/campaigns/[id].astro', ['Contract', 'Evidence', 'Works', 'Distribution', 'Reality', 'Learning', 'Verified Deep Links', 'SOURCE CONFLICT', 'P01–P03']],
   ['src/pages/studio/publish.astro', ['最小包已就绪，人审未完成', 'C03 · HYPOTHESIS', 'Workbench verified overview']],
   ['src/pages/studio/outcomes.astro', ['Published → Used → Validated → Compounding', 'Human Gate required', 'WAITING_CHANGED_RULE']],
@@ -103,4 +104,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('Design contract passed: C-side IA remains stable while Studio v2 Phase 1.5/2 adds governed snapshot production, Campaign Room, verified deep links and producer-test readiness without weakening reality gates.');
+console.log('Design contract passed: C-side IA remains stable while Studio v2 adds a public-safe Editorial Cockpit without restoring a seventh truth source or weakening reality gates.');
