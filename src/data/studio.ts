@@ -13,7 +13,7 @@ export const producerNav = [
   { label: '今日', href: '/studio/' },
   { label: '雷达', href: '/studio/radar/' },
   { label: '研究', href: '/studio/research/' },
-  { label: '生产', href: '/studio/production/' },
+  { label: '内容', href: '/studio/production/' },
   { label: '发布', href: '/studio/publish/' },
   { label: '学习', href: '/studio/outcomes/' },
   { label: '系统', href: '/studio/system/' },
