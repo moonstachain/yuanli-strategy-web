@@ -11,7 +11,7 @@ Use the authorized GitHub connector when available. The `gh` CLI is an equivalen
 3. Keep portfolio registration, allocation and cross-project status in [os-yuanli/yuanli-pmo](https://github.com/os-yuanli/yuanli-pmo). PMO references the Web execution issue; it does not mirror each implementation task.
 4. Route changes to method definitions to [moonstachain/yuanli-strategy-soul](https://github.com/moonstachain/yuanli-strategy-soul). Client-specific delivery and private evidence belong in the relevant private destination.
 
-The current user instruction authorizes project setup and implementation against the approved website plan. Use this authorization as the Human Gate evidence for that scope. Keep subsequent decisions within the current private deployment boundary and record concrete decisions in the spec.
+The user authorized project setup and implementation, then approved the website audit recommendations and requested optimization. Keep changes within the approved application scope and preserve the observed Site audience. Read `docs/OPTIMIZATION-SPEC.md` for this iteration's acceptance criteria and release boundary.
 
 ## Ticket contract
 

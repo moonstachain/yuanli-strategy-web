@@ -11,13 +11,15 @@ const chapters = [
 const contact = `/contact?topic=${encodeURIComponent("读过「增长为什么停了？」后，我想讨论自己的增长约束：")}`;
 
 export default function GrowthChoicesPage() {
-  return <main className="light-page">
+  return <main className="light-page growth-reading">
     <div className="container page-intro editorial-divider">
+      <Link className="reading-back" href="/work">← 跟着明哥学商业</Link>
       <span className="eyebrow">STRATEGY NOTE / 001</span>
       <h1>增长为什么停了？<br />先找到真正的约束。</h1>
       <p className="intro-copy">同样是增长放缓，下一步可能是扩大触达、聚焦品类，也可能是改善交付。重要的，是知道什么证据支持哪种选择。</p>
       <div className="article-meta"><span className="tag">方法演示 · 非真实客户成果</span><span>演示版本 2026.10</span><span>四份可读工作样张</span></div>
     </div>
+    <section className="container growth-summary" aria-labelledby="growth-summary-title"><div className="judgment-summary"><p className="eyebrow">先看判断，再看依据</p><h2 id="growth-summary-title">在这个模拟情境中，先检验 B：聚焦客户与品类。</h2><p>已出现的线索是需求差异大、方案反复改写；触达不足与交付超载还缺少同等具体的记录。先检验一类客户、一种重要问题，能否形成清楚的选择理由与交付范围。</p><div className="summary-conditions"><p><strong>何时改看 A？</strong>适配客户理解价值、选择与交付较稳定，主要缺少接触机会时。</p><p><strong>何时先做 C？</strong>需求稳定出现，但未兑现承诺、返工或关键审核持续排队时。</p></div><p className="small-note">三条路径都缺少可靠材料时，下一步是补证据。本页为方法演示，不是对你的企业作出的诊断。</p><Link href="/practice?topic=direction" className="text-link">带着这个思路，写自己的问题卡 <Arrow /></Link></div></section>
     <div className="container section-space article-layout">
       <nav className="article-nav" aria-label="本篇目录"><span className="article-nav-label">IN THIS NOTE / 阅读顺序</span>{chapters.map(([id, label], index) => <a key={id} href={`#${id}`}><span>0{index + 1}</span>{label}</a>)}</nav>
       <article className="prose">
@@ -51,6 +53,7 @@ export default function GrowthChoicesPage() {
         <section id="options" className="article-section">
           <span className="eyebrow">03 / OPTIONS</span><h2>三条路径，各自需要什么证据？</h2>
           <p>每条路径都有成立条件。把它们放在一起，能够避免因某一种做法最熟悉，就直接把资源投进去。</p>
+          <p className="comparison-hint">窄屏可左右滑动表格，比较三条路径的完整条件。</p>
           <div className="comparison-scroll" role="region" aria-label="三条增长路径比较，可横向滚动" tabIndex={0}>
             <table className="comparison-table"><thead><tr><th scope="col">候选方向</th><th scope="col">支持它的证据</th><th scope="col">先防止的误判</th></tr></thead><tbody>
               <tr><td><span className="table-option">PATH A</span><strong>扩大有效触达</strong></td><td>适配客户理解价值，选择与交付相对稳定；主要缺少接触这类客户的机会。</td><td>把选择理由或交付问题，当作单纯的流量不足。</td></tr>
@@ -117,8 +120,9 @@ export default function GrowthChoicesPage() {
           </div>
           <p>这份演示最后留下的，是一个能够接着工作的判断结构。它的价值需要在真实情境中继续核验。</p>
         </section>
-        <div className="article-end"><h3>你的增长问题，卡在哪一环？</h3><p>你可以带着目前的处境和已尝试的做法，先把本次真正需要决定的事讲清楚。</p><Link href={contact} className="button">带着这个问题联系 <Arrow /></Link></div>
-        <p className="article-sources">材料性质：原力战略方法演示。本文为说明判断过程而编写，四份工作样张供理解合作方式；不构成对具体企业的诊断。<Link href="/method">了解方法结构</Link>，或返回<Link href="/work">战略拆解</Link>。</p>
+        <div className="article-end learning-article-end"><span className="eyebrow">现在，换成你的问题</span><h3>你的增长问题，卡在哪一环？</h3><p>写出一个具体处境、至少两种候选解释，以及最值得先补的一项证据。检查你写的是可核对的事实，还是尚待验证的判断。</p><Link href="/practice?topic=direction" className="button">填写自己的增长问题卡 <Arrow /></Link><p className="small-note">在本浏览器保存或导出，取得新信息后回来修改。练习内容不会自动提交给明哥。</p></div>
+        <nav className="reading-next" aria-label="继续阅读"><div><span>继续追问选择理由</span><Link href="/work/customer-choice">客户说不错，为什么仍没有选择？ →</Link></div><div><span>需要共同推敲</span><Link href={contact}>带着这个问题联系 →</Link></div></nav>
+        <p className="article-sources">材料性质：原力战略方法演示。本文为说明判断过程而编写，四份工作样张供理解合作方式；不构成对具体企业的诊断。<Link href="/method">了解方法结构</Link>，或返回<Link href="/work">「跟着明哥学商业」</Link>。</p>
       </article>
     </div>
   </main>;

@@ -31,6 +31,7 @@ export default function MethodPage() {
     <div className="container page-intro"><span className="eyebrow">METHOD / SELF × WORLD × TIME</span><h1>找到原力。进入世界。<br />形成复利。</h1><p className="intro-copy">原力战略三部曲：原力资产 × 原力创业 × 原力 OS。它们分别回答价值从哪里来、如何被选择，以及怎样让下一次工作站在已有经验之上。</p></div>
     <div className="container">
       <div className="method-opening"><h2 className="method-mother-question">如何既不把自己做平，<br />又不让事业<br />永远依赖自己？</h2><div><p>事业越有独特价值，关键判断就越容易集中在创始人身上。追求复制时，又需要小心保护原本值得被选择的品质。</p><p>原力战略围绕这一问题展开：如何在不牺牲创始人独特性的前提下，实现价值的放大、复制与长期复利？</p><p>十二模块为真实问题提供不同视角。实际工作可以跨模块展开，先处理当前需要作出的决定。</p></div></div>
+      <section className="method-learning-route" aria-labelledby="method-learning-title"><div><span className="eyebrow">USE THE METHOD / 带着一个问题来用</span><h2 id="method-learning-title">先完成一次，再回来查地图。</h2><p>选一篇对应阅读，写自己的问题卡，再根据缺口回查模块。三部曲提供相互衔接的视角，实际学习从你最需要决定的事情开始。</p></div><div className="method-reading-links"><Link href="/work/growth-choices"><strong>方向与增长</strong><span>比较三条路径，找到先补的证据 ↗</span></Link><Link href="/work/customer-choice"><strong>客户与选择</strong><span>分开客户原话与自己的解释 ↗</span></Link><Link href="/work/founder-judgment"><strong>团队与接续</strong><span>还原一项任务，辨认交接缺口 ↗</span></Link></div></section>
       {parts.map((part) => <section key={part.letter} id={part.anchor} className="method-chapter">
         <div className="method-chapter-head"><span className="chapter-letter">{part.letter}</span><h2>{part.title}</h2><p>{part.description}</p></div>
         <div className="module-list">{part.modules.map((module) => <details className="module" id={module.id.toLowerCase()} key={module.id}>
@@ -38,7 +39,7 @@ export default function MethodPage() {
           <div className="module-content"><dl><div><dt>从哪里开始</dt><dd>{module.input}</dd></div><div><dt>形成什么</dt><dd>{module.output}</dd></div><div><dt>应用边界</dt><dd>{module.boundary}</dd></div></dl></div>
         </details>)}</div>
       </section>)}
-      <div className="method-note reading-width prose"><h2>每一次输出，都能成为下一次输入。</h2><p>从真实行动得到反馈，再更新理解、证据、选择与工作方式。这个过程贯穿三部曲，而不是末尾新增的一个步骤。</p><p>这里介绍的是方法与合作逻辑。具体项目采用哪些模块、使用哪些工具，取决于问题、材料与承接条件。</p><Link href="/work/growth-choices" className="text-link">从一个完整示范看方法如何使用 <Arrow /></Link><p className="article-sources">本页保留《原力战略概念宪法 v1.2》的三部曲与十二模块名称；输入、产物与边界以面向访客的语言说明。</p></div>
+      <div className="method-note reading-width prose"><h2>每一次输出，都能成为下一次输入。</h2><p>从真实行动得到反馈，再更新理解、证据、选择与工作方式。这个过程贯穿三部曲，而不是末尾新增的一个步骤。</p><p>这里介绍的是方法与合作逻辑。具体项目采用哪些模块、使用哪些工具，取决于问题、材料与承接条件。</p><div className="inline-links"><Link href="/work" className="text-link">从对应阅读开始学一次 <Arrow /></Link><Link href="/practice" className="text-link">把自己的问题写下来 <Arrow /></Link></div><p className="article-sources">本页保留《原力战略概念宪法 v1.2》的三部曲与十二模块名称；输入、产物与边界以面向访客的语言说明。</p></div>
     </div>
     <div className="section-space" />
     <ClosingInvitation title="先找出，最值得推进的那个问题。" />

@@ -5,7 +5,7 @@ This application implements the approved RAY / 原力战略 commercial website. 
 ## Boundaries
 
 - Keep this application's source, dependencies and deployment isolated from the parent repository's Astro media application, Studio and Estate. Changes to the parent application's routes, build contracts or GitHub Pages workflow require their own explicit scope.
-- Keep releases private for the current phase. Record the deployment identifier and observed access state as evidence; source publication and site visibility are separate states.
+- Preserve the existing Site audience when publishing. The observed audience on 2026-10-21 is public (policy revision 2); record fresh deployment and access evidence. The original private release is historical. Search indexing remains disabled during this public preview.
 - Treat the GitHub repository as public. Store contact submissions and credentials only in the private application runtime; use synthetic fixtures and redacted evidence in code, issues and PRs.
 - Present confirmed method facts, proposed services, teaching examples and verified outcomes as distinct content types. Resolve terminology through the domain sources below.
 

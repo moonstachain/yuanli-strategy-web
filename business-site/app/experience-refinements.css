@@ -1,0 +1,26 @@
+/* Important labels use the same readable secondary ink as body annotations. */
+.method-part .tiny-label, .module-content dt { color: #53624e; font-size: 14px; }
+.note-footer .tiny-label { display: block; color: #53624e; font-size: 14px; }
+.note-footer { flex-wrap: wrap; }
+.article-meta, .article-nav a { font-size: 14px; }
+.article-meta { color: #53624e; }
+.form-field label > span, .contact-method legend > span { color: #566258; font-size: 14px; }
+.form-field input::placeholder, .form-field textarea::placeholder, .contact-method > input::placeholder { color: #566258; opacity: 1; }
+.desktop-nav .nav-link { font-size: 14px; white-space: nowrap; }
+.inbox-list-heading { font-size: 20px; }
+.inbox-meta { color: #53624e; font-size: 14px; }
+.inbox-status { color: #172d23; font-weight: 600; }
+.inbox-editor { margin-top: 28px; padding-top: 24px; border-top: 1px solid #c5ccbc; }
+.inbox-editor-title { font-size: 18px; margin-bottom: 22px; padding: 0; }
+.inbox-editor-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.inbox-editor .button { justify-self: start; }
+.inbox-notice { min-height: 1.75em; margin-top: 16px; color: #345139; }
+.inbox-delete { border-top: 1px solid #c5ccbc; padding-top: 15px; margin-top: 14px; }
+.inbox-delete > .text-link { color: #833c2f; border: 0; background: none; }
+.inbox-delete-confirm { background: #f6e9df; padding: 24px; }
+.inbox-delete-confirm h3 { font-size: 19px; }
+.inbox-delete-confirm p { font-size: 15px; margin: 12px 0 20px; }
+.button-danger { color: #fff8ef; background: #813e32; border-color: #813e32; }
+.button-danger:hover { background: #672d23; border-color: #672d23; }
+@media (min-width: 981px) and (max-width: 1180px) { .desktop-nav { gap: 14px; } .brand-caption { letter-spacing: .07em; } }
+@media (max-width: 760px) { .comparison-table { font-size: 14px; } .inbox-editor-row { grid-template-columns: 1fr; gap: 20px; } .inbox-delete-confirm { padding: 20px; } }

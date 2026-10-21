@@ -12,6 +12,9 @@ export const inquiries = sqliteTable("inquiries", {
   createdAt: text("created_at").notNull(),
   status: text("status").notNull().default("new"),
   submittedBy: text("submitted_by"),
+  nextAction: text("next_action"),
+  followUpAt: text("follow_up_at"),
+  updatedAt: text("updated_at"),
 }, (table) => [
   uniqueIndex("inquiries_request_key_unique").on(table.requestKey),
   index("inquiries_created_at_idx").on(table.createdAt),

@@ -6,8 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { Arrow, BrandSymbol } from "./site-icons";
 
 const links = [
-  { href: "/start", label: "从问题开始" }, { href: "/method", label: "原力方法" },
-  { href: "/work", label: "战略拆解" }, { href: "/work-with-ray", label: "合作方式" }, { href: "/ray", label: "关于 RAY" },
+  { href: "/start", label: "从问题开始" }, { href: "/work", label: "跟着明哥学商业" },
+  { href: "/method", label: "原力方法" }, { href: "/work-with-ray", label: "合作方式" }, { href: "/ray", label: "关于明哥" },
 ];
 
 export function SiteHeader() {
@@ -15,7 +15,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const button = useRef<HTMLButtonElement>(null);
   useEffect(() => { setOpen(false); }, [pathname]);
-  function active(href: string) { return pathname === href || (href === "/work" && pathname.startsWith("/work/")); }
+  function active(href: string) { return pathname === href || (href === "/work" && (pathname.startsWith("/work/") || pathname === "/practice")); }
   return <header className="site-header" onKeyDown={(event) => { if (event.key === "Escape" && open) { setOpen(false); button.current?.focus(); } }}>
     <div className="container header-inner">
       <Link href="/" className="brand" aria-label="原力战略首页"><BrandSymbol /><span><span className="brand-name">原力战略</span><span className="brand-caption">YUANLI STRATEGY · RAY</span></span></Link>
